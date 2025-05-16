@@ -54,4 +54,16 @@ public class ProductDao extends DBConectDao implements IProduct {
 
 	}
 
+	@Override
+	public List<ProductDTO> searchProduct(String text, Category category) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+	@Override
+	public ProductDTO productDetails(int productid) {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
 }
