@@ -55,6 +55,18 @@ public class CartDao extends DBConectDao implements ICart {
 		}
 	}
 
+	public void updateCartInCount(int cartId, int count) {
+		connect();
+		String sql = "update hba2025_3.carts set item_count=? where id=?";
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, count);// 削除するカートのIDを指定
+			ps.setInt(2, cartId);// 削除するカートのIDを指定
+			ps.executeUpdate(); // 実行（削除）
+		} catch (SQLException e) {
+			System.out.println(e); // エラー表示
+		}
+	}
+
 	// カートをすべて空にする（指定ユーザーのカートを全削除）
 	public void clearCart(int userId) {
 		connect(); // データベースに接続
@@ -85,7 +97,5 @@ public class CartDao extends DBConectDao implements ICart {
 		// CartDaoのインスタンスを作成
 		CartDao test = new CartDao();
 
-		// ユーザーID「1」のカートをすべて削除する
-		test.clearCart(1);
 	}
 }
