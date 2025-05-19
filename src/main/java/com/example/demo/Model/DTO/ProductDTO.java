@@ -1,20 +1,34 @@
 package com.example.demo.Model.DTO;
 
-import java.awt.Image;
-
-import com.example.demo.Model.Enum.Category;
-
 public class ProductDTO {
 
 	private int productId;
 	private String name;
 	private int price;
 	private int stock;
-	private Image image;
 	private String productionarea;
 	private String text;
-	private Category category;
+	private String category;
 
+	private String volume;
+	private String addeddate;
+	private String seller;
+	private int orderamount;
+
+	//一応でバック用にコンストラクタを作った
+	/*public ProductDTO(int productId, String name, int price, int stock, String productionarea, BufferedImage image, String text, Category category, String volume, String addeddate, String seller ,int orderamount) {
+		this.productId = productId;
+		this.name = name;
+		this.price = price;
+		this.stock = stock;
+		this.productionarea = productionarea;
+		this.image = image;
+		this.text = text;
+		this.category = category;
+		this.volume = volume;
+		this.addeddate = addeddate;
+		this.orderamount = orderamount;
+	}*/
 	/**
 	 * @return productId
 	 */
@@ -72,20 +86,6 @@ public class ProductDTO {
 	}
 
 	/**
-	 * @return image
-	 */
-	public Image getImage() {
-		return image;
-	}
-
-	/**
-	 * @param image セットする image
-	 */
-	public void setImage(Image image) {
-		this.image = image;
-	}
-
-	/**
 	 * @return productionarea
 	 */
 	public String getProductionarea() {
@@ -116,15 +116,54 @@ public class ProductDTO {
 	/**
 	 * @return category
 	 */
-	public Category getCategory() {
+	public String getCategory() {
 		return category;
 	}
 
 	/**
 	 * @param category セットする category
 	 */
-	public void setCategory(Category category) {
+	public void setCategory(String category) {
 		this.category = category;
 	}
 
+	public String getVolume() {
+		return volume;
+	}
+
+	public void setVolume(String volume) {
+		this.volume = volume;
+	}
+
+	public String getAddeddate() {
+		return addeddate;
+	}
+
+	public void setAddeddate(String addeddate) {
+		this.addeddate = addeddate;
+	}
+
+	public String getSeller() {
+		return seller;
+	}
+
+	public void setSeller(String seller) {
+		this.seller = seller;
+	}
+
+	public int getOrderamount() {
+		return orderamount;
+	}
+
+	public void setOrderamount(int orderamount) {
+		this.orderamount = orderamount;
+	}
+
+	@Override
+	public String toString() {
+		return "Product[id=" + productId + ",nama=" + name + ",price=" + price + ",stock=" + stock + ",area="
+				+ productionarea + ",text=" + text + ",category="
+				+ category + ",volume=" + volume + ",date=" + addeddate + ",seller=" + seller + ",amount="
+				+ orderamount + "]\n";
+	}
 }

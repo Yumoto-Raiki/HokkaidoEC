@@ -2,6 +2,6 @@ package com.example.demo.Model.Enum;
 
 public enum Sort {
 
-	PRICE_ASC, PRICE_DESC, FAVORITE_ASC
+	FAVORITE_DESC, PRICE_ASC, PRICE_DESC, DATE_ASC, DATE_DESC
 
 }
