@@ -48,7 +48,7 @@ public class FavoriteController {
 		return "";
 	}
 
-	public String clearFavorite(Model model,HttpSession session) {
+	public String clearFavorite(Model model, HttpSession session) {
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
@@ -59,6 +59,4 @@ public class FavoriteController {
 		return "";
 
 	}
-	}
-
 }
