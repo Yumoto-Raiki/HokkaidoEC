@@ -1,10 +1,17 @@
 package com.example.demo.Model.Dao;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import com.example.demo.Model.DTO.ProductDTO;
 import com.example.demo.Model.Enum.Category;
@@ -20,12 +27,12 @@ public class ProductDao extends DBConectDao implements IProduct {
 		connect();
 
 		// 商品を取得するSQL
-		String sql = "SELECT * FROM items ORDER BY order_amount DESC";
+		String sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id ORDER BY order_amount DESC";
 
 		// try-with-resources で自動的にリソースをクローズ
 		try (PreparedStatement ps = con.prepareStatement(sql)) {
 
-			// SQLを実行し、結果をResultSetに格納
+			// SQLを実行し、結果をResultSetに格納Li
 			ResultSet rs = ps.executeQuery();
 
 			// 次がなくなるまでループ
@@ -40,6 +47,32 @@ public class ProductDao extends DBConectDao implements IProduct {
 				dao.setProductionarea(rs.getString("production_area"));
 				dao.setText(rs.getString("explanatory_text"));
 				dao.setCategory(rs.getString("category"));
+
+				//DBのURL取得
+				URL url = null;
+				try {
+					url = new URL(rs.getString("item_photo_url"));
+				} catch (MalformedURLException e1) {
+					// TODO 自動生成された catch ブロック
+					e1.printStackTrace();
+				}
+				//URLの中身を確認している
+				InputStream input = null;
+				try {
+					input = url.openStream();
+				} catch (IOException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				//取得したURLを画像に変換
+				BufferedImage image = null;
+				try {
+					image = ImageIO.read(input);
+				} catch (IOException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				dao.setImage(image);
 
 				dao.setVolume(rs.getString("volume"));
 				dao.setAddeddate(rs.getString("added_date"));
@@ -252,8 +285,7 @@ public class ProductDao extends DBConectDao implements IProduct {
 		// DB接続
 		connect();
 
-		String sql = "SELECT * FROM items WHERE item_id = ?";
-
+		String sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE items.item_id = ?";
 		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, productid);
 
@@ -267,6 +299,32 @@ public class ProductDao extends DBConectDao implements IProduct {
 				dao.setProductionarea(rs.getString("production_area"));
 				dao.setText(rs.getString("explanatory_text"));
 				dao.setCategory(rs.getString("category"));
+
+				//DBのURL取得
+				URL url = null;
+				try {
+					url = new URL(rs.getString("item_photo_url"));
+				} catch (MalformedURLException e1) {
+					// TODO 自動生成された catch ブロック
+					e1.printStackTrace();
+				}
+				//URLの中身を確認している
+				InputStream input = null;
+				try {
+					input = url.openStream();
+				} catch (IOException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				//取得したURLを画像に変換
+				BufferedImage image = null;
+				try {
+					image = ImageIO.read(input);
+				} catch (IOException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+				dao.setImage(image);
 
 				dao.setVolume(rs.getString("volume"));
 				dao.setAddeddate(rs.getString("added_date"));
@@ -287,9 +345,9 @@ public class ProductDao extends DBConectDao implements IProduct {
 		ProductDao productDao = new ProductDao();
 		//		System.out.println(productDao.productfavoriteShow());
 		//		System.out.println(productDao.newproductShow());
-		System.out.println(productDao.searchProduct(Category.肉, Sort.PRICE_ASC));
+		//		System.out.println(productDao.searchProduct(Category.肉, Sort.PRICE_ASC));
 		//		System.out.println(productDao.searchProduct("%昆布%", Sort.PRICE_ASC));
-		//		System.out.println(productDao.productDetails(112));
+		System.out.println(productDao.productDetails(112));
 	}
 
 }

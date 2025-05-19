@@ -1,5 +1,7 @@
 package com.example.demo.Model.DTO;
 
+import java.awt.image.BufferedImage;
+
 public class ProductDTO {
 
 	private int productId;
@@ -9,6 +11,8 @@ public class ProductDTO {
 	private String productionarea;
 	private String text;
 	private String category;
+	private int photo_id;
+	private BufferedImage image;
 
 	private String volume;
 	private String addeddate;
@@ -164,6 +168,22 @@ public class ProductDTO {
 		return "Product[id=" + productId + ",nama=" + name + ",price=" + price + ",stock=" + stock + ",area="
 				+ productionarea + ",text=" + text + ",category="
 				+ category + ",volume=" + volume + ",date=" + addeddate + ",seller=" + seller + ",amount="
-				+ orderamount + "]\n";
+				+ orderamount + "image=" + image + "]\n";
+	}
+
+	public int getPhoto_id() {
+		return photo_id;
+	}
+
+	public void setPhoto_id(int photo_id) {
+		this.photo_id = photo_id;
+	}
+
+	public BufferedImage getImage() {
+		return image;
+	}
+
+	public void setImage(BufferedImage image) {
+		this.image = image;
 	}
 }
