@@ -100,7 +100,7 @@ public class ProductDao extends DBConectDao implements IProduct {
 		connect();
 
 		// 商品を取得するSQL
-		String sql = "SELECT * FROM items ORDER BY added_date DESC";
+		String sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id ORDER BY added_date DESC";
 
 		// try-with-resources で自動的にリソースをクローズ
 		try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -150,24 +150,27 @@ public class ProductDao extends DBConectDao implements IProduct {
 		// 商品を取得するSQL
 		String sql = null;
 
-		switch (sort) {
+		sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE category = ? ORDER BY"
+				+ sort.getSqlOrder();
+
+		/*switch (sort) {
 		case PRICE_ASC:
-			sql = "SELECT * FROM items WHERE category = ? ORDER BY price ASC";
+			sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE category = ? ORDER BY price ASC";
 			break;
 		case PRICE_DESC:
-			sql = "SELECT * FROM items WHERE category = ? ORDER BY price DESC";
+			sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE category = ? ORDER BY price DESC";
 			break;
 		case FAVORITE_DESC:
-			sql = "SELECT * FROM items WHERE category = ? ORDER BY order_amount ASC";
+			sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE category = ? ORDER BY order_amount ASC";
 			break;
 		case DATE_ASC:
-			sql = "SELECT * FROM items WHERE category = ? ORDER BY added_date ASC";
+			sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE category = ? ORDER BY added_date ASC";
 			break;
 		case DATE_DESC:
-			sql = "SELECT * FROM items WHERE category = ? ORDER BY added_date DESC";
+			sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE category = ? ORDER BY added_date DESC";
 			break;
-
-		}
+		
+		}*/
 
 		// try-with-resources で自動的にリソースをクローズ
 		try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -220,7 +223,10 @@ public class ProductDao extends DBConectDao implements IProduct {
 		// 商品を取得するSQL
 		String sql = null;
 
-		switch (sort) {
+		sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE item_name like  ?  ORDER BY"
+				+ sort.getSqlOrder();
+
+		/*switch (sort) {
 		case PRICE_ASC:
 			sql = "SELECT * FROM items WHERE item_name like  ?  ORDER BY price ASC";
 			break;
@@ -236,11 +242,11 @@ public class ProductDao extends DBConectDao implements IProduct {
 		case DATE_DESC:
 			sql = "SELECT * FROM items WHERE item_name like  ?  ORDER BY added_date DESC";
 			break;
-
-		}
+		
+		}*/
 		// try-with-resources で自動的にリソースをクローズ
 		try (PreparedStatement ps = con.prepareStatement(sql)) {
-			ps.setString(1, text);
+			ps.setString(1, "%" + text + "%");
 
 			// SQLを実行し、結果をResultSetに格納
 			ResultSet rs = ps.executeQuery();
@@ -346,8 +352,8 @@ public class ProductDao extends DBConectDao implements IProduct {
 		//		System.out.println(productDao.productfavoriteShow());
 		//		System.out.println(productDao.newproductShow());
 		//		System.out.println(productDao.searchProduct(Category.肉, Sort.PRICE_ASC));
-		//		System.out.println(productDao.searchProduct("%昆布%", Sort.PRICE_ASC));
-		System.out.println(productDao.productDetails(112));
+		System.out.println(productDao.searchProduct("昆布", Sort.PRICE_ASC));
+		//		System.out.println(productDao.productDetails(112));
 	}
 
 }

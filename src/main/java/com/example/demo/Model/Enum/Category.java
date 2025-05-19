@@ -6,7 +6,7 @@ public enum Category {
 
 	/*private final String label;
 	
-	Category() {
+	Category(Strring label) {
 		this.label = label;
 		// TODO 自動生成されたコンストラクター・スタブ
 	}

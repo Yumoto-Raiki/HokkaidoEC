@@ -49,18 +49,22 @@ public class ProductController {
 
 	}
 
+	//指定したカテゴリーの一覧を取得してHTMLに渡す
 	@GetMapping("/serchProduct")
 	public String serchProductListShow(Category category, Sort sort, Model model) {
 		model.addAttribute("products", iProduct.searchProduct(category, sort));
 		return "";
 	}
 
+	//商品の並び替えをしてHTMLに渡す
+	//カテゴリー別も検索もSortがあるからいらないかも？
 	@GetMapping("/changeSort")
 	public String changeSort(String sort, Model model) {
 
 		try {
 			// Enumのなかみと一致するときEnumに変換
 			Sort day = Sort.valueOf(sort);
+
 		} catch (IllegalArgumentException e) {
 			System.out.println("指定された文字列は有効なDayではありません: " + sort);
 			return "";
@@ -70,9 +74,17 @@ public class ProductController {
 		return "";
 	}
 
+	//商品を検索して取得したデータをHTMLに渡す
+	@GetMapping("/serchProductText")
+	public String serchProduxtText(String text, Sort sort, Model model) {
+		model.addAttribute("productstext", iProduct.searchProduct(text, sort));
+		return "";
+	}
+
+	//商品詳細を一件取得してHTMLに渡す
 	@GetMapping("/productShow")
 	public String productShow(int productId, Model model) {
-		iProduct.productDetails(productId);
+		model.addAttribute("puroduct", iProduct.productDetails(productId));
 		return "";
 	}
 
