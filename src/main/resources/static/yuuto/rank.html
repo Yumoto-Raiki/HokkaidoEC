@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>ランク情報</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		.rank-card {
+			background-color: #f8f9fa;
+			border-left: 5px solid #0d6efd;
+		}
+
+		/* 現在のランク表示用の小さめバッジ */
+		.rank-badge-small {
+			display: inline-block;
+			padding: 0.3rem 0.8rem;
+			border-radius: 50px;
+			font-weight: bold;
+			font-size: 1.2rem;
+		}
+
+		.bg-bronze {
+			background-color: #cd7f32 !important;
+			color: #fff;
+		}
+
+		.bg-silver {
+			background-color: #c0c0c0 !important;
+			color: #000;
+		}
+
+		.bg-warning-custom {
+			background-color: #ffd700 !important;
+			/* ゴールド：黄色寄り */
+			color: #000;
+		}
+
+		.bg-platinum {
+			background-color: #e5e4e2 !important;
+			color: #000;
+		}
+	</style>
+</head>
+
+<body class="bg-light">
+
+	<div class="container mt-5">
+		<h2 class="mb-4 text-center">ランク情報</h2>
+
+		<!-- 現在のステータス -->
+		<div class="card mb-4 shadow-sm p-4">
+			<h4 class="mb-3">現在のステータス</h4>
+			<p>保有ポイント：<strong th:text="${user.points}">800</strong> pt</p>
+			<p>
+				現在のランク：
+				<span class="rank-badge-small" th:classappend="${user.rank.toLowerCase()}"
+					th:text="${user.rank}">シルバー</span>
+			</p>
+			<p>次のランクまであと：<strong th:text="${user.nextRankPoints}">200</strong> pt</p>
+
+			
+		</div>
+
+		<!-- ランク一覧 -->
+		<div class="row row-cols-1 row-cols-md-2 g-4 mt-2">
+			<!-- ブロンズ -->
+			<div class="col">
+				<div class="card rank-card p-3">
+					<h5 class="card-title">
+						ブロンズ <span class="badge bg-bronze">0pt〜</span>
+					</h5>
+					<p class="card-text">決済額：0円〜</p>
+				</div>
+			</div>
+			<!-- シルバー -->
+			<div class="col">
+				<div class="card rank-card p-3">
+					<h5 class="card-title">
+						シルバー <span class="badge bg-silver">500pt〜</span>
+					</h5>
+					<p class="card-text">決済額：50,000円〜</p>
+				</div>
+			</div>
+			<!-- ゴールド -->
+			<div class="col">
+				<div class="card rank-card p-3">
+					<h5 class="card-title">
+						ゴールド <span class="badge bg-warning-custom">1,000pt〜</span>
+					</h5>
+					<p class="card-text">決済額：100,000円〜</p>
+				</div>
+			</div>
+			<!-- プラチナ -->
+			<div class="col">
+				<div class="card rank-card p-3">
+					<h5 class="card-title">
+						プラチナ <span class="badge bg-platinum">2,000pt〜</span>
+					</h5>
+					<p class="card-text">決済額：200,000円〜</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>
