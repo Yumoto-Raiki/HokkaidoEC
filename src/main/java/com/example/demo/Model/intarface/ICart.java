@@ -9,6 +9,8 @@ public interface ICart {
 
 	public void removeProductToCart(int cartId);
 
+	public void updateCartInCount(int cartId, int count);
+
 	public void clearCart(int userId);
 
 	public List<CartDTO> getCart(int userId);

@@ -49,19 +49,50 @@ public class CartController {
 		return ""; // 表示するビュー名（画面）を返す必要がある（例："cartView"）
 	}
 
-	public void removeProductToCart(int cartId) {
+	@GetMapping("/removeProductToCart")
+	public String removeProductToCart(Model model, @RequestParam("") int cartId, HttpSession session) {
+		int userId = (int) session.getAttribute("userId");
+		if (userId == 0) {
+			model.addAttribute("isComplete", false);
+			return "";
+		}
+		iCart.removeProductToCart(cartId);
+		model.addAttribute("isComplete", true);
+		return "";
+	}
+
+	public String updateCartInCount(int cartId, int count, Model model, HttpSession session) {
+		int userId = (int) session.getAttribute("userId");
+		if (userId == 0) {
+			model.addAttribute("isComplete", false);
+			return "";
+		}
+		iCart.updateCartInCount(cartId, count);
+		model.addAttribute("isComplete", true);
+		return "";
 
 	}
 
-	public void updateCartInCount(int cartId, int count) {
-
+	public String clearCart(Model model, HttpSession session) {
+		int userId = (int) session.getAttribute("userId");
+		if (userId == 0) {
+			model.addAttribute("isComplete", false);
+			return "";
+		}
+		iCart.clearCart(userId);
+		model.addAttribute("isComplete", true);
+		return "";
 	}
 
-	public void clearCart() {
-
-	}
-
-	public void showCart() {
+	public String showCart(Model model, HttpSession session) {
+		int userId = (int) session.getAttribute("userId");
+		if (userId == 0) {
+			model.addAttribute("isComplete", false);
+			return "";
+		}
+		model.addAttribute("products", iCart.getCart(userId));
+		model.addAttribute("isComplete", true);
+		return "";
 
 	}
 
