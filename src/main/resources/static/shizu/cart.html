@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>激ウマ‼ホタホタテ</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      background-color: #fdfaf6;
+      font-family: "Hiragino Kaku Gothic ProN", sans-serif, sans-serif;
+      color: #333;
+    }
+    .product-section {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+      max-width: 960px;
+      margin: auto;
+    }
+    .product-image {
+      width: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+    .product-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+    .product-price {
+      text-align: right;
+      font-size: 1.1rem;
+      color: #444;
+      margin-bottom: 1rem;
+    }
+    .btn-cart {
+      background-color: #e9e9e9;
+      border: none;
+      color: #333;
+      padding: 0.7rem 1.5rem;
+      font-size: 0.9rem;
+      width: 100%;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+    .btn-cart:hover {
+      background-color: #dcdcdc;
+    }
+    .btn-fav {
+      font-size: 1.8rem;
+      color: #bbb;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      transition: color 0.3s;
+      line-height: 1;
+    }
+    .btn-fav.active {
+      color: #cc0000;
+    }
+    .divider {
+      border-top: 1px solid #ddd;
+      margin: 2rem 0 1.5rem;
+    }
+    .product-desc {
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #555;
+      line-height: 1.4;
+    }
+    .product-details {
+      max-width: 700px;
+      margin: 0 auto 3rem;
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 1rem;
+      color: #444;
+    }
+    .product-details th,
+    .product-details td {
+      border: 1px solid #e3e3e3;
+      padding: 1.3rem 1.8rem;
+    }
+    .product-details th {
+      background-color: #f7f5f2;
+      width: 30%;
+      font-weight: 600;
+    }
+    .review-section {
+      max-width: 700px;
+      margin: 0 auto 3rem;
+    }
+    .review-card {
+      padding: 1.2rem 1.5rem;
+      border-bottom: 1px solid #ccc;
+    }
+    .review-stars {
+      color: #999;
+      font-size: 1.1rem;
+    }
+    .review-header {
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+      color: #666;
+    }
+    .review-body {
+      white-space: pre-wrap;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #444;
+    }
+    .btn-all-reviews {
+      display: block;
+      margin: 2rem auto 0;
+      padding: 0.7rem 2.2rem;
+      font-size: 1rem;
+      background-color: #f4f4f4;
+      color: #555;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      max-width: 200px;
+      text-align: center;
+    }
+    .btn-all-reviews:hover {
+      background-color: #e2e2e2;
+    }
+    @media (min-width: 768px) {
+      .product-row {
+        min-height: 360px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <div class="product-section">
+      <div class="row product-row align-items-center g-4">
+        <div class="col-md-5">
+          <img
+            src="images/hotate.png"
+            alt="ホタテ"
+            class="product-image"
+          />
+        </div>
+        <div class="col-md-7">
+          <div class="product-title">激ウマ‼ホタホタテ</div>
+          <div class="product-price">
+            価格：<span id="price">2,000</span>円（税込）
+          </div>
+
+          <form
+            onsubmit="event.preventDefault(); alert('カートに追加しました');"
+            class="mb-3"
+          >
+            <div class="row mb-3 align-items-center gx-2">
+              <label
+                for="quantity"
+                class="col-auto col-form-label"
+                >数量をご入力ください：</label
+              >
+              <div class="col-auto" style="min-width: 90px;">
+                <input
+                  type="number"
+                  id="quantity"
+                  class="form-control"
+                  value="1"
+                  min="1"
+                  step="1"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+              <button type="submit" class="btn btn-cart flex-grow-1">
+                カートに入れる
+              </button>
+              <button
+                type="button"
+                class="btn-fav"
+                id="favBtn"
+                aria-label="お気に入りに追加"
+                title="お気に入り"
+              >
+                <i class="bi bi-heart-fill"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <p class="product-desc">
+        大ぶりで肉厚。時間をかけて育てられた帆立は、歯ごたえある食感が特徴です。
+      </p>
+
+      <table class="product-details">
+        <tr>
+          <th>内容量</th>
+          <td>1kg</td>
+        </tr>
+        <tr>
+          <th>原産地</th>
+          <td>猿払</td>
+        </tr>
+        <tr>
+          <th>保存方法</th>
+          <td>冷蔵</td>
+        </tr>
+        <tr>
+          <th>販売元</th>
+          <td>冨士池水産</td>
+        </tr>
+      </table>
+
+      <div class="review-section">
+        <div class="fw-bold mb-2">
+          <span class="me-2">💬</span>この商品のレビュー
+        </div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <span class="review-stars">★★★★☆</span>
+            <span>2025-05-10 | <strong>たろう</strong></span>
+          </div>
+          <div class="review-body">
+            とても新鮮で味が濃厚！またリピートしたいです。
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-header">
+            <span class="review-stars">★★★★★</span>
+            <span>2025-05-08 | <strong>はなこ</strong></span>
+          </div>
+          <div class="review-body">
+            肉厚で食感が最高！家族みんな大満足でした。
+          </div>
+        </div>
+
+        <button class="btn-all-reviews">レビューを全件見る</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("favBtn").addEventListener("click", function () {
+      this.classList.toggle("active");
+    });
+  </script>
+</body>
+</html>
