@@ -116,6 +116,10 @@
 	<form method="post" action="/gg">
 		<button type="submit"th:if="${!canRoll}">🚪 セッション削除</button>
 	</form>
+	
+	<form method="post" action="/payment">
+		<button type="submit"th:if="${!canRoll}">決済完了画面へ</button>
+	</form>
 
 	<script>
 		// サイコロを振るボタンをクリックしたときにアニメーションを表示
