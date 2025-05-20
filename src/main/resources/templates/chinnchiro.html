@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>チンチロ決済画面</title>
+</head>
+
+<body>
+	<h1>チンチロリン</h1>
+	<form method="post" action="/roll" th:if="${canRoll}">
+		<button type="submit">サイコロを振る</button>
+	</form>
+
+	<p th:if="${!canRoll}">すでにサイコロを振っています。</p>
+
+	<div th:if="${dice}">
+		<p>出目: [[${dice[0]}]], [[${dice[1]}]], [[${dice[2]}]]</p>
+		<p>金額: [[${disount}]]</p>
+	</div>
+
+	<p th:if="${error}" th:text="${error}"></p>
+
+	<form method="post" action="/gg">
+		<button type="submit">セッション削除</button>
+</body>
+
+</html>
