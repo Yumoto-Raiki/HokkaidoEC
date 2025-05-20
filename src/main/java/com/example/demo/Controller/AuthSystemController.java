@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpSession;
 public class AuthSystemController {
 
 	@GetMapping("/login")
-	public String login(@RequestParam("") String userName, String pass, HttpSession session) {
+	public String login(@RequestParam("") String userName, @RequestParam("") String pass, HttpSession session) {
 		IAuthSystem iAuthSystem = new AuthSystemDao();
 		session.setAttribute("userId", iAuthSystem.login(userName, pass));
 		return "";

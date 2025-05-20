@@ -41,11 +41,15 @@ public class ProductController {
 	@GetMapping("/productListShow")
 	public String productListShow(Model model) {
 
-		model.addAttribute("productsfavorite", iProduct.productfavoriteShow());
-		model.addAttribute("productsnewdate", iProduct.newproductShow());
+		// 人気順の商品リスト
+		model.addAttribute("productsFavorite", iProduct.productfavoriteShow());
+		System.out.println("人気リスト");
+		// 新着順の商品リスト
+		model.addAttribute("productsNewdate", iProduct.newproductShow());
+		System.out.println("新着リスト");
 
 		// もどるHTMｌ
-		return "";
+		return "home.html";
 
 	}
 
