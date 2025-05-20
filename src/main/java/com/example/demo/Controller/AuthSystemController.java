@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.Model.DTO.UserDTO;
 import com.example.demo.Model.Dao.AuthSystemDao;
 import com.example.demo.Model.intarface.IAuthSystem;
 
@@ -44,6 +43,8 @@ public class AuthSystemController {
 		return "login";
 	}
 
+	//ここから下が背戸田プラクティスなので消してもOK（起動用getmapping）
+
 	@GetMapping("/account")
 	public String bb(Model model) {
 		model.addAttribute("user.name", " ゆうと");
@@ -68,22 +69,4 @@ public class AuthSystemController {
 	//
 	//	}
 
-	@GetMapping("/account_touroku")
-	public String showRegistrationForm() {
-		return "account_touroku"; // templates/account_touroku.html
-	}
-
-	@GetMapping("/humanfile")
-	public String showUserInfo(Model model) {
-		UserDTO user = new UserDTO();
-		user.setName("テスト太郎");
-		user.setMail("test@example.com");
-		user.setAge(25);
-		user.setPhoneNumber(1234567890);
-		user.setAddress("東京都渋谷区");
-		user.setPoint(100);
-
-		model.addAttribute("user", user);
-		return "humanfile"; // → user_info.html など
-	}
 }
