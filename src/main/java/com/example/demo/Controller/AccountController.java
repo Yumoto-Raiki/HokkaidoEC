@@ -3,6 +3,8 @@ package com.example.demo.Controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.example.demo.Model.DTO.UserDTO;
+
 @Controller
 public class AccountController {
 
@@ -42,9 +44,9 @@ public class AccountController {
 	 * @return
 	 */
 	@GetMapping("/AccountShow")
-	public String AccountShow() {
-
-		return "";
+	public UserDTO AccountShow() {
+		//TODO:エラーが出ないように暫定的に値なしのインスタンスを返している
+		return new UserDTO();
 	}
 
 }

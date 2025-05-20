@@ -268,14 +268,17 @@
 
 		<div class="results-container">
 			<!-- 商品カードたちをここに並べる -->
-			<a th:each="product : products" href="item1.html" class="item-link">
+			<a th:each="product : ${products}" href="item1.html" class="item-link">
 				<div class="item-card" onmouseover="this.classList.add('hovered')"
 					onmouseout="this.classList.remove('hovered')">
 					<div class="item-image">
-						<img src="images/user_icon.png" alt="[[${product.name}]]">
+						<img src="images/user_icon.png" alt="商品名">
+					</div>
+					<div class="item-title">
+						[[${product.name}]]
 					</div>
 					<div class="item-price">
-						<span"[[${product.price}]]" /span><span>（税込）</span>
+						<span>[[${product.price}]]（税込）</span>
 					</div>
 				</div>
 			</a>

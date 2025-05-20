@@ -127,7 +127,7 @@ public class ProductDao extends DBConectDao implements IProduct {
 		// 商品を取得するSQL
 		String sql = null;
 
-		sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE category = ? ORDER BY"
+		sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE category = ? ORDER BY "
 				+ sort.getSqlOrder();
 
 		/*switch (sort) {
@@ -151,7 +151,7 @@ public class ProductDao extends DBConectDao implements IProduct {
 
 		// try-with-resources で自動的にリソースをクローズ
 		try (PreparedStatement ps = con.prepareStatement(sql)) {
-			String categoryText = String.valueOf(category);
+			String categoryText = category.getLabel();
 			ps.setString(1, categoryText);
 
 			// SQLを実行し、結果をResultSetに格納

@@ -303,12 +303,21 @@
 			</span>
 			<div
 				style="display: none; position: absolute; top: 100%; left: 0; background: white; border: 1px solid #ccc; padding: 5px;">
-				<div><a href="seafood.html" style="text-decoration: none; color: black;"
-						onmouseover="this.style.color='#29ab08';" onmouseout="this.style.color='black';">魚介</a></div>
-				<div><a href="vegetables.html" style="text-decoration: none; color: black;"
-						onmouseover="this.style.color='#29ab08';" onmouseout="this.style.color='black';">野菜</a></div>
-				<div><a href="meat.html" style="text-decoration: none; color: black;"
-						onmouseover="this.style.color='#29ab08';" onmouseout="this.style.color='black';">お肉</a></div>
+				<div>
+					<a href="/searchProduct?category=FISH"
+						style="text-decoration: none; color: black;" onmouseover="this.style.color='#29ab08';"
+						onmouseout="this.style.color='black';">魚</a>
+				</div>
+				<div>
+					<a href="/searchProduct?category=VEGETABLE"
+						style="text-decoration: none; color: black;" onmouseover="this.style.color='#29ab08';"
+						onmouseout="this.style.color='black';">野菜</a>
+				</div>
+				<div>
+					<a href="/searchProduct?category=MEAT"
+						style="text-decoration: none; color: black;" onmouseover="this.style.color='#29ab08';"
+						onmouseout="this.style.color='black';">肉</a>
+				</div>
 			</div>
 		</div>
 
@@ -572,7 +581,7 @@
 			<div id="scroll-container-new" class="scroll-container">
 
 
-							<li th:each="product, stat : ${productsNewdate}">
+				<li th:each="product, stat : ${productsNewdate}">
 					<a href="item1.html" class="item-link">
 						<div th:switch="${stat.index}">
 

@@ -60,6 +60,7 @@ public class FavoriteController {
 
 	}
 
+	@GetMapping("/showFavorite")
 	public String showFavorite(HttpSession session, Model model) {
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
