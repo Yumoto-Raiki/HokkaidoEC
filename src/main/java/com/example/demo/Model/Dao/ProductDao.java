@@ -223,7 +223,7 @@ public class ProductDao extends DBConectDao implements IProduct {
 		// 商品を取得するSQL
 		String sql = null;
 
-		sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE item_name like  ?  ORDER BY"
+		sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE items.item_name like  ?  ORDER BY"
 				+ sort.getSqlOrder();
 
 		/*switch (sort) {

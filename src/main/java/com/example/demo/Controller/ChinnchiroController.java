@@ -13,9 +13,10 @@ import jakarta.servlet.http.HttpSession;
 public class ChinnchiroController {
 
 	//最初に呼ばれるチンチロ
-	@GetMapping("/a")
+	@GetMapping("/chinnchiroStrat")
 	public String chinnchiroStrat(Model model, HttpSession session) {
 		Boolean rolled = (Boolean) session.getAttribute("rolled");
+		//振ったことがあるか判定
 		if (rolled != null && rolled) {
 			model.addAttribute("canRoll", false);
 		} else {
@@ -26,9 +27,10 @@ public class ChinnchiroController {
 
 	//サイコロを振ったときに呼ばれる
 	@PostMapping("/roll")
-	public String chinnchiroShow(Model model, HttpSession session) {
+	public String chinnchiroRoll(Model model, HttpSession session) {
 
 		Boolean rolled = (Boolean) session.getAttribute("rolled");
+		//振ったことがあるか判定
 		if (rolled != null && rolled) {
 			model.addAttribute("error", "すでにサイコロを振っています。");
 			model.addAttribute("canRoll", false);
@@ -38,14 +40,14 @@ public class ChinnchiroController {
 		ChinnchiroDao chinnchiro = new ChinnchiroDao();
 		int[] dice = chinnchiro.ChinchiroGame();
 		session.setAttribute("rolled", true); // フラグをセッションに保存
-		model.addAttribute("dice", dice);
-		model.addAttribute("canRoll", false);
+		model.addAttribute("dice", dice);//出目を取得
+		model.addAttribute("canRoll", false);//もう触れないことをHTMLに教える
 		model.addAttribute("disount", chinnchiro.settlement_change() * chinnchiro.judgeDice(dice));
 
 		return "chinnchiro";
 	}
 
-	//もう一度触れるようにする
+	//もう一度触れるようにする テスト用
 	@PostMapping("/gg")
 	public String invalidate(Model model, HttpSession session) {
 		session.setAttribute("rolled", false);
