@@ -1,17 +1,10 @@
 package com.example.demo.Model.Dao;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import com.example.demo.Model.DTO.ProductDTO;
 import com.example.demo.Model.Enum.Category;
@@ -19,6 +12,8 @@ import com.example.demo.Model.Enum.Sort;
 import com.example.demo.Model.intarface.IProduct;
 
 public class ProductDao extends DBConectDao implements IProduct {
+
+	private final int showCount = 7;
 
 	public List<ProductDTO> productfavoriteShow() {
 		List<ProductDTO> dtos = new ArrayList<>();
@@ -36,7 +31,14 @@ public class ProductDao extends DBConectDao implements IProduct {
 			ResultSet rs = ps.executeQuery();
 
 			// 次がなくなるまでループ
-			while (rs.next()) {
+			for (int i = 0; i < showCount; i++) {
+
+				if (!rs.next()) {
+
+					System.out.println("中身がもうないため戻る");
+					break;
+
+				}
 
 				ProductDTO dao = new ProductDTO();
 				// 結果を取得
@@ -47,43 +49,18 @@ public class ProductDao extends DBConectDao implements IProduct {
 				dao.setProductionarea(rs.getString("production_area"));
 				dao.setText(rs.getString("explanatory_text"));
 				dao.setCategory(rs.getString("category"));
-
-				//DBのURL取得
-				URL url = null;
-				try {
-					url = new URL(rs.getString("item_photo_url"));
-				} catch (MalformedURLException e1) {
-					// TODO 自動生成された catch ブロック
-					e1.printStackTrace();
-				}
-				//URLの中身を確認している
-				InputStream input = null;
-				try {
-					input = url.openStream();
-				} catch (IOException e) {
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
-				}
-				//取得したURLを画像に変換
-				BufferedImage image = null;
-				try {
-					image = ImageIO.read(input);
-				} catch (IOException e) {
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
-				}
-				dao.setImage(image);
-
+				dao.setImageURL("/images/products/" + "melon.jpg");//rs.getString("item_photo_url")
 				dao.setVolume(rs.getString("volume"));
 				dao.setAddeddate(rs.getString("added_date"));
 				dao.setSeller(rs.getString("seller"));
 				dao.setOrderamount(rs.getInt("order_amount"));
+				System.out.println(dao);
 				// リストに詰める
 				dtos.add(dao);
 			}
 		} catch (SQLException e) {
-			// SQL例外が発生したらエラー内容を出力
-			System.err.println("エラーが発生しました" + e);
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
 		}
 
 		// DB切断
@@ -199,6 +176,7 @@ public class ProductDao extends DBConectDao implements IProduct {
 				dao.setOrderamount(rs.getInt("order_amount"));
 				// リストに詰める
 				dtos.add(dao);
+				System.out.println("DTO生成");
 			}
 		} catch (SQLException e) {
 			// SQL例外が発生したらエラー内容を出力
@@ -208,6 +186,7 @@ public class ProductDao extends DBConectDao implements IProduct {
 		// DB切断
 		close();
 
+		System.out.println(dtos);
 		// 詰め終わったリストを帰す
 		return dtos;
 
@@ -306,32 +285,35 @@ public class ProductDao extends DBConectDao implements IProduct {
 				dao.setText(rs.getString("explanatory_text"));
 				dao.setCategory(rs.getString("category"));
 
-				//DBのURL取得
-				URL url = null;
-				try {
-					url = new URL(rs.getString("item_photo_url"));
-				} catch (MalformedURLException e1) {
-					// TODO 自動生成された catch ブロック
-					e1.printStackTrace();
-				}
-				//URLの中身を確認している
-				InputStream input = null;
-				try {
-					input = url.openStream();
-				} catch (IOException e) {
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
-				}
-				//取得したURLを画像に変換
-				BufferedImage image = null;
-				try {
-					image = ImageIO.read(input);
-				} catch (IOException e) {
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
-				}
-				dao.setImage(image);
+				// DBから取得したURLをGoogle Driveのダウンロード形式に変換
+				String rawUrl = rs.getString("item_photo_url");
+				String fileId = "";
+				if (rawUrl.contains("/d/")) {
 
+					// ファイルIDを抽出
+					int start = rawUrl.indexOf("/d/") + 3;
+					int end = rawUrl.indexOf("/", start);
+					if (end == -1)
+						end = rawUrl.indexOf("?", start); // /view? のケース
+					if (end == -1)
+						end = rawUrl.length();
+					fileId = rawUrl.substring(start, end);
+
+				} else if (rawUrl.contains("id=")) {
+					int start = rawUrl.indexOf("id=") + 3;
+					int end = rawUrl.indexOf("&", start);
+					if (end == -1)
+						end = rawUrl.length();
+					fileId = rawUrl.substring(start, end);
+				}
+				// ダウンロード用URLに変換
+				String directUrl = "https://drive.google.com/uc?export=view&id=" + fileId;
+				// 以下、あなたのコードのまま続けてOK
+				//URL url = new URL(directUrl);
+				//InputStream input = url.openStream();
+				//BufferedImage image = ImageIO.read(input);
+
+				dao.setImageURL(directUrl);
 				dao.setVolume(rs.getString("volume"));
 				dao.setAddeddate(rs.getString("added_date"));
 				dao.setSeller(rs.getString("seller"));
@@ -349,10 +331,10 @@ public class ProductDao extends DBConectDao implements IProduct {
 
 	public static void main(String[] args) {
 		ProductDao productDao = new ProductDao();
-		//		System.out.println(productDao.productfavoriteShow());
+		productDao.productfavoriteShow();
 		//		System.out.println(productDao.newproductShow());
 		//		System.out.println(productDao.searchProduct(Category.肉, Sort.PRICE_ASC));
-		System.out.println(productDao.searchProduct("昆布", Sort.PRICE_ASC));
+		//System.out.println(productDao.searchProduct("昆布", Sort.PRICE_ASC));
 		//		System.out.println(productDao.productDetails(112));
 	}
 
