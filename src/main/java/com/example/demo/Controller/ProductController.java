@@ -45,7 +45,7 @@ public class ProductController {
 		model.addAttribute("productsnewdate", iProduct.newproductShow());
 
 		// もどるHTMｌ
-		return "";
+		return "home";
 
 	}
 

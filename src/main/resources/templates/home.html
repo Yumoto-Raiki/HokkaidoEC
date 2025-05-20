@@ -395,86 +395,71 @@
 						scrollbar-width: none;
 					}
 				</style>
+					<!-- 商品カードここから、表示させたい商品の数分コピペします。 -->
+					<li th:each="product, stat : ${productsfavorite}">
+						<a href="item1.html" class="item-link">
+							<div th:switch="${stat.index}">
 
-				<!-- 商品カードここから、表示させたい商品の数分コピペします。-->
-				<li th:each="product, stat : ${productsFavorite}">
-					<a href="item1.html" class="item-link">
-						<div th:switch="${stat.index}">
+								<div th:case="0" class="item-card gold-border"
+									onmouseover="this.classList.add('hovered')"
+									onmouseout="this.classList.remove('hovered')">
+									<div class="rank-badge gold" th:text="${stat.index + 1}+'位'"></div>
+									<div th:text ="${product.imageURL}"></div>
+									<div class="item-image">
+										<img th:src="@{${product.imageURL}}" alt="商品名">
+									</div>
+									<div class="item-title" th:text="${product.name}"></div>
+									<div class="item-price">
+										<span th:text="${product.price}"></span><span>（税込）</span>
+									</div>
+								</div>
 
-							<div th:case="0" class="item-card gold-border" onmouseover="this.classList.add('hovered')"
-								onmouseout="this.classList.remove('hovered')">
-								<div class="rank-badge gold" th:text="${stat.index + 1}+'位'"></div>
-								<div class="item-image">
-									<img src="/images/products/melon.jpg" alt="商品名">
+								<div th:case="1" class="item-card silver-border"
+									onmouseover="this.classList.add('hovered')"
+									onmouseout="this.classList.remove('hovered')">
+									<div class="rank-badge silver" th:text="${stat.index + 1}+'位'"></div>
+									<div th:text ="${product.imageURL}"></div>
+									<div class="item-image">
+										<img th:src="@{${product.imageURL}}" alt="商品名">
+									</div>
+									<div class="item-title" th:text="${product.name}"></div>
+									<div class="item-price">
+										<span th:text="${product.price}"></span><span>（税込）</span>
+									</div>
 								</div>
-								<div class="item-title" th:text="${product.name}"></div>
-								<div class="item-price">
-									<span th:text="${product.price}"></span><span>（税込）</span>
+
+								<div th:case="2" class="item-card bronze-border"
+									onmouseover="this.classList.add('hovered')"
+									onmouseout="this.classList.remove('hovered')">
+									<div class="rank-badge bronze" th:text="${stat.index + 1}+'位'"></div>
+									<div th:text ="${product.imageURL}"></div>
+									<div class="item-image">
+										<img th:src="@{${product.imageURL}}" alt="商品名">
+									</div>
+									<div class="item-title" th:text="${product.name}"></div>
+									<div class="item-price">
+										<span th:text="${product.price}"></span><span>（税込）</span>
+									</div>
 								</div>
+
+								<div th:case="*" class="item-card" onmouseover="this.classList.add('hovered')"
+									onmouseout="this.classList.remove('hovered')">
+									<div class="rank-badge" th:text="${stat.index + 1}+'位'"></div>
+									<div th:text ="${product.imageURL}"></div>
+									<div class="item-image">
+										<img th:src="@{${product.imageURL}}" alt="商品名">
+									</div>
+									<div class="item-title" th:text="${product.name}"></div>
+									<div class="item-price">
+										<span th:text="${product.price}"></span><span>（税込）</span>
+									</div>
+								</div>
+
 							</div>
 
-							<div th:case="1" class="item-card silver-border" onmouseover="this.classList.add('hovered')"
-								onmouseout="this.classList.remove('hovered')">
-								<div class="rank-badge silver" th:text="${stat.index + 1}+'位'"></div>
-								<div class="item-image">
-									<img src="/images/products/melon.jpg" alt="商品名">
-								</div>
-								<div class="item-title" th:text="${product.name}"></div>
-								<div class="item-price">
-									<span th:text="${product.price}"></span><span>（税込）</span>
-								</div>
-							</div>
+						</a>
+					</li>
 
-							<div th:case="2" class="item-card bronze-border" onmouseover="this.classList.add('hovered')"
-								onmouseout="this.classList.remove('hovered')">
-								<div class="rank-badge bronze" th:text="${stat.index + 1}+'位'"></div>
-								<div class="item-image">
-									<img src="/images/products/melon.jpg" alt="商品名">
-								</div>
-								<div class="item-title" th:text="${product.name}"></div>
-								<div class="item-price">
-									<span th:text="${product.price}"></span><span>（税込）</span>
-								</div>
-							</div>
-
-							<div th:case="*" class="item-card" onmouseover="this.classList.add('hovered')"
-								onmouseout="this.classList.remove('hovered')">
-								<div class="rank-badge" th:text="${stat.index + 1}+'位'"></div>
-								<div class="item-image">
-									<img src="/images/products/melon.jpg" alt="商品名">
-								</div>
-								<div class="item-title" th:text="${product.name}"></div>
-								<div class="item-price">
-									<span th:text="${product.price}"></span><span>（税込）</span>
-								</div>
-							</div>
-
-						</div>
-
-					</a>
-				</li>
-
-
-
-
-
-
-
-				<!--				 商品カードここから、表示させたい商品の数分コピペします。-->
-				<!--				３つ目　銅-->
-				<!--				<a href="item3.html" class="item-link">-->
-				<!--					<div class="item-card bronze-border" onmouseover="this.classList.add('hovered')"-->
-				<!--						onmouseout="this.classList.remove('hovered')">-->
-				<!--						<div class="rank-badge bronze">3位</div>-->
-				<!--						<div class="item-image">-->
-				<!--							<img src="images/user_icon.png" alt="商品名">-->
-				<!--						</div>-->
-				<!--						<div class="item-title">高級いちごジャムギフトセット</div>-->
-				<!--						<div class="item-price"><span>¥3,200</span><span>（税込）</span></div>-->
-				<!--					</div>-->
-				<!--				</a>-->
-
-				<!-- ▶ 右スクロールボタン -->
 				<button id="scroll-right-btn-ranking"
 					onclick="document.getElementById('scroll-container-ranking').scrollLeft += 500" style="
         position: absolute;
@@ -572,7 +557,7 @@
 			<div id="scroll-container-new" class="scroll-container">
 
 
-							<li th:each="product, stat : ${productsNewdate}">
+				<li th:each="product, stat : ${productsNewdate}">
 					<a href="item1.html" class="item-link">
 						<div th:switch="${stat.index}">
 
@@ -580,7 +565,7 @@
 								onmouseout="this.classList.remove('hovered')">
 								<div class="rank-badge gold" th:text="${stat.index + 1}+'位'"></div>
 								<div class="item-image">
-									<img src="/images/products/melon.jpg" alt="商品名">
+									<img th:src="@{${product.imageURL}}" alt="商品名">
 								</div>
 								<div class="item-title" th:text="${product.name}"></div>
 								<div class="item-price">
@@ -592,7 +577,7 @@
 								onmouseout="this.classList.remove('hovered')">
 								<div class="rank-badge silver" th:text="${stat.index + 1}+'位'"></div>
 								<div class="item-image">
-									<img src="/images/products/melon.jpg" alt="商品名">
+									<img th:src="@{${product.imageURL}}" alt="商品名">
 								</div>
 								<div class="item-title" th:text="${product.name}"></div>
 								<div class="item-price">
@@ -604,7 +589,7 @@
 								onmouseout="this.classList.remove('hovered')">
 								<div class="rank-badge bronze" th:text="${stat.index + 1}+'位'"></div>
 								<div class="item-image">
-									<img src="/images/products/melon.jpg" alt="商品名">
+									<img th:src="@{${product.imageURL}}" alt="商品名">
 								</div>
 								<div class="item-title" th:text="${product.name}"></div>
 								<div class="item-price">
@@ -616,7 +601,7 @@
 								onmouseout="this.classList.remove('hovered')">
 								<div class="rank-badge" th:text="${stat.index + 1}+'位'"></div>
 								<div class="item-image">
-									<img src="/images/products/melon.jpg" alt="商品名">
+									<img th:src="@{${product.imageURL}}" alt="商品名">
 								</div>
 								<div class="item-title" th:text="${product.name}"></div>
 								<div class="item-price">
