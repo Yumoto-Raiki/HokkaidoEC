@@ -207,7 +207,7 @@
 							<div class="mb-3">
 								<label class="form-label">メールアドレス</label>
 								<div class="input-group">
-									<input type="email" class="form-control" th:value="${user.mail}" readonly>
+									<input type="email" class="form-control" th:value="${user.mailaddress}" readonly>
 									<a th:href="@{/edit-email}" class="btn btn-outline-secondary">編集</a>
 								</div>
 							</div>
@@ -243,7 +243,7 @@
 							<div class="mb-3">
 								<label class="form-label">電話番号</label>
 								<div class="input-group">
-									<input type="text" class="form-control" th:value="${user.phoneNumber}" readonly>
+									<input type="text" class="form-control" th:value="${user.telephoneNumber}" readonly>
 									<a th:href="@{/edit-tel}" class="btn btn-outline-secondary">編集</a>
 								</div>
 							</div>
