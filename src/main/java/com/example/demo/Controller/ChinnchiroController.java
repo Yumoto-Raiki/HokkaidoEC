@@ -51,6 +51,13 @@ public class ChinnchiroController {
 	@PostMapping("/gg")
 	public String invalidate(Model model, HttpSession session) {
 		session.setAttribute("rolled", false);
+		Boolean rolled = (Boolean) session.getAttribute("rolled");
+		//振ったことがあるか判定
+		if (rolled != null && rolled) {
+			model.addAttribute("canRoll", false);
+		} else {
+			model.addAttribute("canRoll", true);
+		}
 		return "chinnchiro";
 	}
 
