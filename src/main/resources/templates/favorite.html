@@ -206,6 +206,10 @@
 		</div>
 
 	</div>
+	
+	<li th:each="fav : products">
+		[[${fav.productDTO.name}]]
+	</li>
 
 	<div class="fav-container">
 		<h2 class="mb-4">お気に入り一覧</h2>
