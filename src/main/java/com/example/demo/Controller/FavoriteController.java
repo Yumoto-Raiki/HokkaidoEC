@@ -18,7 +18,7 @@ public class FavoriteController {
 		this.iFavorite = new FavoriteDao();
 	}
 
-	@GetMapping("/FavoriteController")
+	@GetMapping("/addProductToFavorite")
 	public String addProductToFavorite(Model model, @RequestParam("") int productId, HttpSession session) {
 		int userId = (int) session.getAttribute("userId");
 
@@ -37,17 +37,19 @@ public class FavoriteController {
 		return "/favorite";
 	}
 
+	@GetMapping("/removeProductToFavorite")
 	public String removeProductToFavorite(@RequestParam("") int facvoriteId, HttpSession session, Model model) {
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
-			return "";
+			return "favorite";
 		}
 		iFavorite.removeProductToFavorite(facvoriteId);
 		model.addAttribute("isComplete", true);
 		return "/favorite";
 	}
 
+	@GetMapping("/clearFavorite")
 	public String clearFavorite(Model model, HttpSession session) {
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
@@ -60,14 +62,17 @@ public class FavoriteController {
 
 	}
 
+	@GetMapping("/showFavorite")
 	public String showFavorite(HttpSession session, Model model) {
-		int userId = (int) session.getAttribute("userId");
+		Object userIdObj = session.getAttribute("userId");
+		int userId = userIdObj == null ? 0 : (int) userIdObj;
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
-			return "";
+			return "favorite";
 		}
 		model.addAttribute("products", iFavorite.getFavorite(userId));
 		model.addAttribute("isComplete", true);
-		return "";
+		return "favorite";
 	}
+
 }
