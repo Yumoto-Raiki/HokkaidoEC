@@ -3,12 +3,14 @@ package com.example.demo.Model.Dao;
 
 // データベース関連で使うクラス
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 // カートのデータ構造（DTO）を使うためのインポート
 import com.example.demo.Model.DTO.CartDTO;
+import com.example.demo.Model.DTO.ProductDTO;
 // カート関連のインターフェース（仕様）を使う
 import com.example.demo.Model.intarface.ICart;
 
@@ -87,6 +89,31 @@ public class CartDao extends DBConectDao implements ICart {
 		// カートの中身を格納するリスト（今は空のまま）
 		List<CartDTO> dtos = new ArrayList<>();
 
+		connect();
+		//TODO: cartsテーブルとitemsテーブルをjoin。whereでuser_idで検索
+		String sql = "SELECT * FROM carts JOIN items ON carts.item_id = items.item_id WHERE carts.user_id =?;";
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, userId);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				CartDTO dto = new CartDTO();
+				//カート情報(個数など)をcartDtoにセット
+				dto.setCount(rs.getInt("item_count"));
+				ProductDTO product = new ProductDTO();
+				//商品情報をproductにセット
+				product.setName(rs.getString("item_name"));
+				product.setPrice(rs.getInt("price"));
+
+				dto.setProductDTO(product);
+				dtos.add(dto);
+
+			}
+		} catch (SQLException e) {
+			// エラーが起きたときに、内容を表示する
+			System.out.println(e);
+		}
+
 		// 本来ここでデータベースから情報を取り出してdtosに追加する処理を書く
 
 		return dtos; // 現時点では空のリストを返すだけ
@@ -96,6 +123,7 @@ public class CartDao extends DBConectDao implements ICart {
 	public static void main(String[] args) {
 		// CartDaoのインスタンスを作成
 		CartDao test = new CartDao();
+		test.getCart(1);
 
 	}
 }

@@ -59,4 +59,15 @@ public class FavoriteController {
 		return "";
 
 	}
+
+	public String showFavorite(HttpSession session, Model model) {
+		int userId = (int) session.getAttribute("userId");
+		if (userId == 0) {
+			model.addAttribute("isComplete", false);
+			return "";
+		}
+		model.addAttribute("products", iFavorite.getFavorite(userId));
+		model.addAttribute("isComplete", true);
+		return "";
+	}
 }
