@@ -49,7 +49,7 @@ public class ProductDao extends DBConectDao implements IProduct {
 				dao.setProductionarea(rs.getString("production_area"));
 				dao.setText(rs.getString("explanatory_text"));
 				dao.setCategory(rs.getString("category"));
-				dao.setImageURL("/images/products/" + "melon.jpg");//rs.getString("item_photo_url")
+				dao.setImageURL("/images/products/" + rs.getString("item_photo_url"));
 				dao.setVolume(rs.getString("volume"));
 				dao.setAddeddate(rs.getString("added_date"));
 				dao.setSeller(rs.getString("seller"));
@@ -97,7 +97,7 @@ public class ProductDao extends DBConectDao implements IProduct {
 				dao.setProductionarea(rs.getString("production_area"));
 				dao.setText(rs.getString("explanatory_text"));
 				dao.setCategory(rs.getString("category"));
-
+				dao.setImageURL("/images/products/" + rs.getString("item_photo_url"));
 				dao.setVolume(rs.getString("volume"));
 				dao.setAddeddate(rs.getString("added_date"));
 				dao.setSeller(rs.getString("seller"));
