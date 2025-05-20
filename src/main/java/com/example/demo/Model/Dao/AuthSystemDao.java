@@ -8,12 +8,9 @@ import com.example.demo.Model.intarface.IAuthSystem;
 
 /**
  * 認証処理
- * @author CS
- *
  */
 public class AuthSystemDao extends DBConectDao implements IAuthSystem {
 
-	@Override
 	public int login(String userName, String pass) {
 
 		int userId = 0;
