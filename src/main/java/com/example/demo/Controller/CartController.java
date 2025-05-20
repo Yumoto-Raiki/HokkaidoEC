@@ -84,15 +84,18 @@ public class CartController {
 		return "";
 	}
 
+	@GetMapping("/showCart")
 	public String showCart(Model model, HttpSession session) {
+		session.setAttribute("userId", 1);
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
-			return "";
+			return "buypage";
 		}
 		model.addAttribute("products", iCart.getCart(userId));
+		model.addAttribute("sumprice", iCart.sumPrice());
 		model.addAttribute("isComplete", true);
-		return "";
+		return "buypage";
 
 	}
 

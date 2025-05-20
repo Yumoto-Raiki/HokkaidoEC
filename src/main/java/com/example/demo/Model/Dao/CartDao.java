@@ -40,6 +40,9 @@ public class CartDao extends DBConectDao implements ICart {
 			// エラーが起きたときに、内容を表示する
 			System.out.println(e);
 		}
+
+		// DB切断
+		close();
 	}
 
 	// カートから商品を1つ削除するメソッド
@@ -55,6 +58,9 @@ public class CartDao extends DBConectDao implements ICart {
 		} catch (SQLException e) {
 			System.out.println(e); // エラー表示
 		}
+
+		// DB切断
+		close();
 	}
 
 	public void updateCartInCount(int cartId, int count) {
@@ -67,6 +73,9 @@ public class CartDao extends DBConectDao implements ICart {
 		} catch (SQLException e) {
 			System.out.println(e); // エラー表示
 		}
+
+		// DB切断
+		close();
 	}
 
 	// カートをすべて空にする（指定ユーザーのカートを全削除）
@@ -82,6 +91,9 @@ public class CartDao extends DBConectDao implements ICart {
 		} catch (SQLException e) {
 			System.out.println(e); // エラー表示
 		}
+
+		// DB切断
+		close();
 	}
 
 	// カートの中身を取得するメソッド（未完成）
@@ -114,16 +126,47 @@ public class CartDao extends DBConectDao implements ICart {
 			System.out.println(e);
 		}
 
+		// DB切断
+		close();
 		// 本来ここでデータベースから情報を取り出してdtosに追加する処理を書く
 
 		return dtos; // 現時点では空のリストを返すだけ
+	}
+
+	public int sumPrice() {
+		int sum = 0;
+
+		// DB接続を開始
+		connect();
+
+		String sql = "SELECT SUM(items.price * carts.item_count) FROM carts JOIN items ON carts.item_id = items.item_id ";
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+
+			// SQLを実行し、結果をResultSetに格納
+			ResultSet rs = ps.executeQuery();
+
+			// カーソルを1レコード目に移動
+			rs.next();
+
+			// 金額の合計の結果を取得
+			sum = rs.getInt("SUM(items.price * carts.item_count)");
+
+		} catch (SQLException e) {
+			// SQL例外が発生したらエラー内容を出力
+			System.err.println(e);
+		}
+
+		// DB切断
+		close();
+		return sum;
 	}
 
 	// 動作確認用のメインメソッド（プログラムの入り口）
 	public static void main(String[] args) {
 		// CartDaoのインスタンスを作成
 		CartDao test = new CartDao();
-		test.getCart(1);
+		System.out.println(test.getCart(1));
 
+		//		System.out.println(test.sumPrice());
 	}
 }

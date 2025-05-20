@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -130,22 +130,23 @@
     <div id="cartItemsContainer">
       <!-- 商品リストここに表示 -->
     </div>
+    <p th:if="${!isComplete}">カートに商品がありません。</p>
 
     <div class="summary-box">
-      <div class="summary-row">商品合計金額 <span id="subtotalPrice">0</span>円</div>
+      <div class="summary-row">商品合計金額 <span id="subtotalPrice" th:text="${sumprice}">0</span>円</div>
       <div class="summary-row">配送料 <span id="shippingFee">500</span>円</div>
-      <div class="total-box">お支払い合計金額 <span id="totalPrice">0</span>円</div>
+      <div class="total-box">お支払い合計金額 <span id="totalPrice" th:text="${sumprice} + 500">0</span>円</div>
     </div>
 
     <div class="btn-group">
       <a href="#" class="btn-back" onclick="window.history.back()">ショッピングに戻る</a>
-      <a href="order.html" class="btn-proceed">ご注文手続きへ</a>
+      <a href="/showPurhase" class="btn-proceed" form method="get" action="/showPurhase">ご注文手続きへ</a>
     </div>
   </div>
 
   <button id="updateCartBtn" aria-label="カート更新">更新</button>
 
-  <script>
+  <!--<script>
     let cartItems = JSON.parse(localStorage.getItem('cart')) || [];
     const shippingFee = 500;
 
@@ -233,6 +234,6 @@
     });
 
     renderCart();
-  </script>
+  </script>-->
 </body>
 </html>
