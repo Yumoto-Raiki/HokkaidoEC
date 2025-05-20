@@ -57,29 +57,24 @@ public class ProductController {
 
 	//指定したカテゴリーの一覧を取得してHTMLに渡す
 	@GetMapping("/searchProduct")
-	public String serchProductListShow(@RequestParam("category") Category category, Model model) {
-		List<ProductDTO> products = iProduct.searchProduct(category, Sort.PRICE_DESC);
+	public String serchProductListShow(@RequestParam("category") Category category, @RequestParam("sort") Sort sort,
+			Model model) {
+		List<ProductDTO> products = iProduct.searchProduct(category, sort);
 		model.addAttribute("products", products);
+		model.addAttribute("category", category);
 		return "search";
 	}
 
-	//商品の並び替えをしてHTMLに渡す
-	//カテゴリー別も検索もSortがあるからいらないかも？
-	@GetMapping("/changeSort")
-	public String changeSort(String sort, Model model) {
-
-		try {
-			// Enumのなかみと一致するときEnumに変換
-			Sort day = Sort.valueOf(sort);
-
-		} catch (IllegalArgumentException e) {
-			System.out.println("指定された文字列は有効なDayではありません: " + sort);
-			return "";
-		}
-		// 取得したEnumで検索
-
-		return "";
-	}
+	//	//商品の並び替えをしてHTMLに渡す
+	//	//カテゴリー別も検索もSortがあるからいらないかも？
+	//	@GetMapping("/changeSort")
+	//	public String changeSort(@RequestParam("productDTO") List<ProductDTO> productDTO, @RequestParam("sort") Sort sort,
+	//			Model model) {
+	//
+	//		// 取得したEnumで検索
+	//
+	//		return "";
+	//	}
 
 	//商品を検索して取得したデータをHTMLに渡す
 	@GetMapping("/serchProductText")
@@ -90,7 +85,7 @@ public class ProductController {
 
 	//商品詳細を一件取得してHTMLに渡す
 	@GetMapping("/productShow")
-	public String productShow(int productId, Model model) {
+	public String productShow(@RequestParam("productId") int productId, Model model) {
 		model.addAttribute("puroduct", iProduct.productDetails(productId));
 		return "";
 	}

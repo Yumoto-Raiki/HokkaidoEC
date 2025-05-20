@@ -40,23 +40,22 @@ public class ProductDao extends DBConectDao implements IProduct {
 
 				}
 
-				ProductDTO dao = new ProductDTO();
+				ProductDTO dto = new ProductDTO();
 				// 結果を取得
-				dao.setProductId(rs.getInt("item_id"));
-				dao.setName(rs.getString("item_name"));
-				dao.setPrice(rs.getInt("price"));
-				dao.setStock(rs.getInt("stock"));
-				dao.setProductionarea(rs.getString("production_area"));
-				dao.setText(rs.getString("explanatory_text"));
-				dao.setCategory(rs.getString("category"));
-				dao.setImageURL("/images/products/" + rs.getString("item_photo_url"));
-				dao.setVolume(rs.getString("volume"));
-				dao.setAddeddate(rs.getString("added_date"));
-				dao.setSeller(rs.getString("seller"));
-				dao.setOrderamount(rs.getInt("order_amount"));
-				System.out.println(dao);
+				dto.setProductId(rs.getInt("item_id"));
+				dto.setName(rs.getString("item_name"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setStock(rs.getInt("stock"));
+				dto.setProductionarea(rs.getString("production_area"));
+				dto.setText(rs.getString("explanatory_text"));
+				dto.setCategory(rs.getString("category"));
+				dto.setImageURL("/images/products/" + rs.getString("item_photo_url"));
+				dto.setVolume(rs.getString("volume"));
+				dto.setAddeddate(rs.getString("added_date"));
+				dto.setSeller(rs.getString("seller"));
+				dto.setOrderamount(rs.getInt("order_amount"));
 				// リストに詰める
-				dtos.add(dao);
+				dtos.add(dto);
 			}
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
@@ -88,22 +87,22 @@ public class ProductDao extends DBConectDao implements IProduct {
 			// 次がなくなるまでループ
 			while (rs.next()) {
 
-				ProductDTO dao = new ProductDTO();
+				ProductDTO dto = new ProductDTO();
 				// 結果を取得
-				dao.setProductId(rs.getInt("item_id"));
-				dao.setName(rs.getString("item_name"));
-				dao.setPrice(rs.getInt("price"));
-				dao.setStock(rs.getInt("stock"));
-				dao.setProductionarea(rs.getString("production_area"));
-				dao.setText(rs.getString("explanatory_text"));
-				dao.setCategory(rs.getString("category"));
-				dao.setImageURL("/images/products/" + rs.getString("item_photo_url"));
-				dao.setVolume(rs.getString("volume"));
-				dao.setAddeddate(rs.getString("added_date"));
-				dao.setSeller(rs.getString("seller"));
-				dao.setOrderamount(rs.getInt("order_amount"));
+				dto.setProductId(rs.getInt("item_id"));
+				dto.setName(rs.getString("item_name"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setStock(rs.getInt("stock"));
+				dto.setProductionarea(rs.getString("production_area"));
+				dto.setText(rs.getString("explanatory_text"));
+				dto.setCategory(rs.getString("category"));
+				dto.setImageURL("/images/products/" + rs.getString("item_photo_url"));
+				dto.setVolume(rs.getString("volume"));
+				dto.setAddeddate(rs.getString("added_date"));
+				dto.setSeller(rs.getString("seller"));
+				dto.setOrderamount(rs.getInt("order_amount"));
 				// リストに詰める
-				dtos.add(dao);
+				dtos.add(dto);
 			}
 		} catch (SQLException e) {
 			// SQL例外が発生したらエラー内容を出力
@@ -130,25 +129,6 @@ public class ProductDao extends DBConectDao implements IProduct {
 		sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE category = ? ORDER BY "
 				+ sort.getSqlOrder();
 
-		/*switch (sort) {
-		case PRICE_ASC:
-			sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE category = ? ORDER BY price ASC";
-			break;
-		case PRICE_DESC:
-			sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE category = ? ORDER BY price DESC";
-			break;
-		case FAVORITE_DESC:
-			sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE category = ? ORDER BY order_amount ASC";
-			break;
-		case DATE_ASC:
-			sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE category = ? ORDER BY added_date ASC";
-			break;
-		case DATE_DESC:
-			sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE category = ? ORDER BY added_date DESC";
-			break;
-		
-		}*/
-
 		// try-with-resources で自動的にリソースをクローズ
 		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			String categoryText = category.getLabel();
@@ -160,24 +140,26 @@ public class ProductDao extends DBConectDao implements IProduct {
 			// 次がなくなるまでループ
 			while (rs.next()) {
 
-				ProductDTO dao = new ProductDTO();
+				ProductDTO dto = new ProductDTO();
 				// 結果を取得
-				dao.setProductId(rs.getInt("item_id"));
-				dao.setName(rs.getString("item_name"));
-				dao.setPrice(rs.getInt("price"));
-				dao.setStock(rs.getInt("stock"));
-				dao.setProductionarea(rs.getString("production_area"));
-				dao.setText(rs.getString("explanatory_text"));
-				dao.setCategory(rs.getString("category"));
-
-				dao.setVolume(rs.getString("volume"));
-				dao.setAddeddate(rs.getString("added_date"));
-				dao.setSeller(rs.getString("seller"));
-				dao.setOrderamount(rs.getInt("order_amount"));
+				dto.setProductId(rs.getInt("item_id"));
+				dto.setName(rs.getString("item_name"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setStock(rs.getInt("stock"));
+				dto.setProductionarea(rs.getString("production_area"));
+				dto.setText(rs.getString("explanatory_text"));
+				dto.setCategory(rs.getString("category"));
+				dto.setImageURL("/images/products/" + rs.getString("item_photo_url"));
+				System.out.println("URLセット" + "/images/products/" + rs.getString("item_photo_url"));
+				System.out.println("URLセット2" + dto.getImageURL());
+				dto.setVolume(rs.getString("volume"));
+				dto.setAddeddate(rs.getString("added_date"));
+				dto.setSeller(rs.getString("seller"));
+				dto.setOrderamount(rs.getInt("order_amount"));
 				// リストに詰める
-				dtos.add(dao);
-				System.out.println("DTO生成");
+				dtos.add(dto);
 			}
+
 		} catch (SQLException e) {
 			// SQL例外が発生したらエラー内容を出力
 			System.err.println("エラーが発生しました" + e);
@@ -205,24 +187,6 @@ public class ProductDao extends DBConectDao implements IProduct {
 		sql = "SELECT * FROM items JOIN item_photos ON items.item_id = item_photos.item_id WHERE items.item_name like  ?  ORDER BY"
 				+ sort.getSqlOrder();
 
-		/*switch (sort) {
-		case PRICE_ASC:
-			sql = "SELECT * FROM items WHERE item_name like  ?  ORDER BY price ASC";
-			break;
-		case PRICE_DESC:
-			sql = "SELECT * FROM items WHERE item_name like  ?  ORDER BY price DESC";
-			break;
-		case FAVORITE_DESC:
-			sql = "SELECT * FROM items WHERE item_name like  ?  ORDER BY order_amount ASC";
-			break;
-		case DATE_ASC:
-			sql = "SELECT * FROM items WHERE item_name like  ?  ORDER BY added_date ASC";
-			break;
-		case DATE_DESC:
-			sql = "SELECT * FROM items WHERE item_name like  ?  ORDER BY added_date DESC";
-			break;
-		
-		}*/
 		// try-with-resources で自動的にリソースをクローズ
 		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setString(1, "%" + text + "%");
@@ -233,22 +197,22 @@ public class ProductDao extends DBConectDao implements IProduct {
 			// 次がなくなるまでループ
 			while (rs.next()) {
 
-				ProductDTO dao = new ProductDTO();
+				ProductDTO dto = new ProductDTO();
 				// 結果を取得
-				dao.setProductId(rs.getInt("item_id"));
-				dao.setName(rs.getString("item_name"));
-				dao.setPrice(rs.getInt("price"));
-				dao.setStock(rs.getInt("stock"));
-				dao.setProductionarea(rs.getString("production_area"));
-				dao.setText(rs.getString("explanatory_text"));
-				dao.setCategory(rs.getString("category"));
-
-				dao.setVolume(rs.getString("volume"));
-				dao.setAddeddate(rs.getString("added_date"));
-				dao.setSeller(rs.getString("seller"));
-				dao.setOrderamount(rs.getInt("order_amount"));
+				dto.setProductId(rs.getInt("item_id"));
+				dto.setName(rs.getString("item_name"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setStock(rs.getInt("stock"));
+				dto.setProductionarea(rs.getString("production_area"));
+				dto.setText(rs.getString("explanatory_text"));
+				dto.setCategory(rs.getString("category"));
+				dto.setImageURL("/images/products/" + rs.getString("item_photo_url"));
+				dto.setVolume(rs.getString("volume"));
+				dto.setAddeddate(rs.getString("added_date"));
+				dto.setSeller(rs.getString("seller"));
+				dto.setOrderamount(rs.getInt("order_amount"));
 				// リストに詰める
-				dtos.add(dao);
+				dtos.add(dto);
 			}
 		} catch (SQLException e) {
 			// SQL例外が発生したらエラー内容を出力
@@ -265,7 +229,7 @@ public class ProductDao extends DBConectDao implements IProduct {
 	@Override
 	public ProductDTO productDetails(int productid) {
 		// TODO 自動生成されたメソッド・スタブ
-		ProductDTO dao = new ProductDTO();
+		ProductDTO dto = new ProductDTO();
 
 		// DB接続
 		connect();
@@ -277,47 +241,18 @@ public class ProductDao extends DBConectDao implements IProduct {
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
-				dao.setProductId(rs.getInt("item_id"));
-				dao.setName(rs.getString("item_name"));
-				dao.setPrice(rs.getInt("price"));
-				dao.setStock(rs.getInt("stock"));
-				dao.setProductionarea(rs.getString("production_area"));
-				dao.setText(rs.getString("explanatory_text"));
-				dao.setCategory(rs.getString("category"));
-
-				// DBから取得したURLをGoogle Driveのダウンロード形式に変換
-				String rawUrl = rs.getString("item_photo_url");
-				String fileId = "";
-				if (rawUrl.contains("/d/")) {
-
-					// ファイルIDを抽出
-					int start = rawUrl.indexOf("/d/") + 3;
-					int end = rawUrl.indexOf("/", start);
-					if (end == -1)
-						end = rawUrl.indexOf("?", start); // /view? のケース
-					if (end == -1)
-						end = rawUrl.length();
-					fileId = rawUrl.substring(start, end);
-
-				} else if (rawUrl.contains("id=")) {
-					int start = rawUrl.indexOf("id=") + 3;
-					int end = rawUrl.indexOf("&", start);
-					if (end == -1)
-						end = rawUrl.length();
-					fileId = rawUrl.substring(start, end);
-				}
-				// ダウンロード用URLに変換
-				String directUrl = "https://drive.google.com/uc?export=view&id=" + fileId;
-				// 以下、あなたのコードのまま続けてOK
-				//URL url = new URL(directUrl);
-				//InputStream input = url.openStream();
-				//BufferedImage image = ImageIO.read(input);
-
-				dao.setImageURL(directUrl);
-				dao.setVolume(rs.getString("volume"));
-				dao.setAddeddate(rs.getString("added_date"));
-				dao.setSeller(rs.getString("seller"));
-				dao.setOrderamount(rs.getInt("order_amount"));
+				dto.setProductId(rs.getInt("item_id"));
+				dto.setName(rs.getString("item_name"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setStock(rs.getInt("stock"));
+				dto.setProductionarea(rs.getString("production_area"));
+				dto.setText(rs.getString("explanatory_text"));
+				dto.setCategory(rs.getString("category"));
+				dto.setImageURL("/images/products/" + rs.getString("item_photo_url"));
+				dto.setVolume(rs.getString("volume"));
+				dto.setAddeddate(rs.getString("added_date"));
+				dto.setSeller(rs.getString("seller"));
+				dto.setOrderamount(rs.getInt("order_amount"));
 			}
 		} catch (SQLException e) {
 			// SQL例外が発生したらエラー内容を出力
@@ -326,12 +261,12 @@ public class ProductDao extends DBConectDao implements IProduct {
 		// DB切断
 		close();
 
-		return dao;
+		return dto;
 	}
 
 	public static void main(String[] args) {
 		ProductDao productDao = new ProductDao();
-		productDao.productfavoriteShow();
+		System.out.println(productDao.searchProduct(Category.MEAT, Sort.DATE_DESC));
 		//		System.out.println(productDao.newproductShow());
 		//		System.out.println(productDao.searchProduct(Category.肉, Sort.PRICE_ASC));
 		//System.out.println(productDao.searchProduct("昆布", Sort.PRICE_ASC));
