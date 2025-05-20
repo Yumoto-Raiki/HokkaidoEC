@@ -1,11 +1,13 @@
 package com.example.demo.Model.Dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.Model.DTO.FavoriteDTO;
+import com.example.demo.Model.DTO.ProductDTO;
 import com.example.demo.Model.intarface.IFavorite;
 
 public class FavoriteDao extends DBConectDao implements IFavorite {
@@ -64,8 +66,30 @@ public class FavoriteDao extends DBConectDao implements IFavorite {
 	public List<FavoriteDTO> getFavorite(int userId) {
 		// カートの中身を格納するリスト（今は空のまま）
 		List<FavoriteDTO> dtos = new ArrayList<>();
+		connect();
+		//TODO: cartsテーブルとitemsテーブルをjoin。whereでuser_idで検索
+		String sql = "SELECT * FROM favorites JOIN items ON favorites.item_id = items.item_id WHERE favorites.user_id =?;";
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setInt(1, userId);
+			ResultSet rs = ps.executeQuery();
 
-		// 本来ここでデータベースから情報を取り出してdtosに追加する処理を書く
+			while (rs.next()) {
+				FavoriteDTO dto = new FavoriteDTO();
+				//カート情報(個数など)をcartDtoにセット
+				dto.setFavoriteId(rs.getInt("id"));
+				ProductDTO product = new ProductDTO();
+				//商品情報をproductにセット
+				product.setName(rs.getString("item_name"));
+				product.setPrice(rs.getInt("price"));
+
+				dto.setProductDTO(product);
+				dtos.add(dto);
+
+			}
+		} catch (SQLException e) {
+			// エラーが起きたときに、内容を表示する
+			System.out.println(e);
+		}
 
 		return dtos; // 現時点では空のリストを返すだけ
 	}
