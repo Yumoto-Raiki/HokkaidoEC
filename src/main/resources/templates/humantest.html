@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>ログイン画面</title>
+	<title>アカウント画面</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
 	<style>
@@ -33,14 +33,13 @@
 			border-radius: 0.5rem;
 		}
 
-		.btn-outline-secondary {
-			border-color: #29ab08;
-			color: #29ab08;
+		.btn-primary {
+			background-color: #29ab08;
+			border: none;
 		}
 
-		.btn-outline-secondary:hover {
-			background-color: #29ab08;
-			color: #fff;
+		.btn-primary:hover {
+			background-color: #208a06;
 		}
 
 		h3 {
@@ -67,56 +66,47 @@
     right: 0;
     z-index: 999;
   ">
+
+		<!-- ロゴと検索 -->
 		<div style="display: flex; align-items: center;">
-			<h1 style="
-        margin: 0 20px 0 0;
-        font-size: 32px;
-        color: #333;
-        font-weight: normal;
-        font-family: 'Allura', cursive;
-      ">
+			<h1
+				style="margin: 0 20px 0 0; font-size: 32px; color: #333; font-weight: normal; font-family: 'Allura', cursive;">
 				Maochans.
 			</h1>
+
 			<div style="
         display: flex;
         align-items: center;
         background-color: #fff;
         border: 1px solid #ccc;
         padding: 5px 10px;
-        border-radius: 30px;
-      ">
+        border-radius: 30px;">
 				<img src="images/search_icon.png" alt="検索" width="18" height="18" style="margin-right: 8px;">
 				<input type="text" placeholder="キーワードを入力"
 					style="width: 180px; padding: 5px; border: none; outline: none; font-size: 14px;">
 			</div>
 		</div>
 
+		<!-- メニュー -->
 		<div style="display: flex; align-items: center; font-size: 16px; gap: 20px;">
-			<a href="mypage.html"
-				style="display: flex; align-items: center; color: #000000; text-decoration: none; transition: color 0.3s;"
+			<a href="mypage.html" style="display: flex; align-items: center; color: #000000; text-decoration: none;"
 				onmouseover="this.style.color='#29ab08';" onmouseout="this.style.color='#000000';">
-				<img src="images/mypage_icon.png" alt="マイページ" width="20" height="20" style="margin-right: 8px;">
-				マイページ
+				<img src="images/mypage_icon.png" alt="マイページ" width="20" height="20" style="margin-right: 8px;">マイページ
 			</a>
-
-			<a href="favorite.html"
-				style="display: flex; align-items: center; color: #000000; text-decoration: none; transition: color 0.3s;"
+			<a href="favorite.html" style="display: flex; align-items: center; color: #000000; text-decoration: none;"
 				onmouseover="this.style.color='#29ab08';" onmouseout="this.style.color='#000000';">
-				<img src="images/fav_icon.png" alt="お気に入り" width="20" height="20" style="margin-right: 8px;">
-				お気に入り
+				<img src="images/fav_icon.png" alt="お気に入り" width="20" height="20" style="margin-right: 8px;">お気に入り
 			</a>
-
-			<a href="cart.html"
-				style="display: flex; align-items: center; color: #000000; text-decoration: none; transition: color 0.3s;"
+			<a href="cart.html" style="display: flex; align-items: center; color: #000000; text-decoration: none;"
 				onmouseover="this.style.color='#29ab08';" onmouseout="this.style.color='#000000';">
-				<img src="images/cart_icon.png" alt="カート" width="20" height="20" style="margin-right: 8px;">
-				カート
+				<img src="images/cart_icon.png" alt="カート" width="20" height="20" style="margin-right: 8px;">カート
 			</a>
 		</div>
 	</div>
 
-	<!-- メニュー -->
-	<div style="display:flex; gap:20px; font-size:14px; border-bottom:2px solid #29ab08; padding:10px;">
+	<!-- サブメニュー -->
+	<div
+		style="display:flex; gap:20px; font-size:14px; border-bottom:2px solid #29ab08; padding:10px; margin-top:80px;">
 		<div style="position: relative;" onmouseover="this.children[1].style.display='block'"
 			onmouseout="this.children[1].style.display='none'">
 			<span style="cursor: pointer; color: black;" onmouseover="this.style.color='#29ab08';"
@@ -133,6 +123,7 @@
 						onmouseover="this.style.color='#29ab08';" onmouseout="this.style.color='black';">お肉</a></div>
 			</div>
 		</div>
+
 		<a href="new.html" style="text-decoration: none; color: black;" onmouseover="this.style.color='#29ab08';"
 			onmouseout="this.style.color='black';">新着</a>
 		<a href="ranking.html" style="text-decoration: none; color: black;" onmouseover="this.style.color='#29ab08';"
@@ -141,34 +132,43 @@
 			onmouseout="this.style.color='black';">キャンペーン</a>
 	</div>
 
-	<!-- 個人情報フォーム -->
+	<!-- メイン -->
 	<div class="container mt-5">
 		<div class="row justify-content-center">
 			<div class="col-md-6">
 				<div class="card shadow-lg p-4">
 					<div class="card-body">
-						<h3 class="card-title text-center mb-4">ログイン</h3>
-						<form th:action="@{/login}" method="post">
+						<h3 class="card-title text-center mb-4">新規アカウント登録</h3>
+						<form th:action="@{/addAAccount}" th:object="${accountDTO}" method="post">
 							<div class="mb-3">
-								<label for="username" class="form-label">名前</label>
-								<input type="text" class="form-control" id="userName" name="userName" required
-									placeholder="名前を入力">
+								<label for="name" class="form-label">ニックネーム</label>
+								<input type="text" class="form-control" th:field="*{name}" required>
+							</div>
+							<div class="mb-3">
+								<label for="email" class="form-label">メールアドレス</label>
+								<input type="email" class="form-control" th:field="*{email}" required>
+							</div>
+							<div class="mb-3">
+								<label for="password" class="form-label">パスワード</label>
+								<input type="password" class="form-control" th:field="*{password}" required>
+							</div>
+							<div class="mb-3">
+								<label for="address" class="form-label">住所</label>
+								<input type="text" class="form-control" th:field="*{address}" required>
+							</div>
+							<div class="mb-3">
+								<label for="age" class="form-label">年齢</label>
+								<input type="number" class="form-control" th:field="*{age}" required>
 							</div>
 							<div class="mb-4">
-								<label for="password" class="form-label">パスワード</label>
-								<input type="password" class="form-control" id="password" name="pass" required
-									placeholder="パスワードを入力">
+								<label for="tel" class="form-label">電話番号</label>
+								<input type="tel" class="form-control" th:field="*{tel}" required>
 							</div>
-							<div class="d-grid mb-4">
-								<button type="submit" class="btn btn-lg"
-									style="background-color: #ffffff; border: 2px solid #29ab08; color: #29ab08;">
-									ログイン
-								</button>
+							<div class="d-grid">
+								<button type="submit" class="btn btn-primary btn-lg">登録する</button>
 							</div>
 						</form>
-						<div class="d-grid">
-							<a th:href="@{/addAccountShow}" class="btn btn-outline-secondary btn-lg">新規登録はこちらから</a>
-						</div>
+
 					</div>
 				</div>
 			</div>
@@ -176,15 +176,8 @@
 	</div>
 
 	<!-- フッター -->
-	<footer style="
-    background-color: #f8f8f8;
-    padding: 30px 20px;
-    text-align: center;
-    border-top: 1px solid #ddd;
-    font-family: 'Helvetica Neue', sans-serif;
-    color: #555;
-    margin-top: 60px;
-  ">
+	<footer
+		style="background-color: #f8f8f8; padding: 30px 20px; text-align: center; border-top: 1px solid #ddd; font-family: 'Helvetica Neue', sans-serif; color: #555; margin-top: 60px;">
 		<div style="margin-bottom: 10px;">
 			<a href="about.html" style="margin: 0 15px; color: #555; text-decoration: none;"
 				onmouseover="this.style.color='#29ab08';" onmouseout="this.style.color='#555';">このサイトについて</a>

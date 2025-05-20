@@ -196,7 +196,8 @@
 				<!-- ユーザー情報 -->
 				<div class="col">
 					<!-- 以下のコードはタイムリーフで使う時用のコードです  -->
-					<a th:href="@{/humanfile.html}" class="text-decoration-none text-dark"> 
+<!--					<a th:href="@{/humanfile.html}" class="text-decoration-none text-dark"> -->
+					<a th:href="@{addAccountShow}" class="text-decoration-none text-dark"> 
 						<div class="card account-card text-center p-4">
 							<img src="images/icon-user.png" alt="ユーザー情報" width="48" height="48"
 								class="d-block mx-auto mb-3">
@@ -247,7 +248,7 @@
 
 				<!-- アカウント削除・退会 -->
 				<div class="col">
-					<!-- <a th:href="@{/account/delete}" class="text-decoration-none text-dark">--> 
+					<a th:href="@{/account/delete}" class="text-decoration-none text-dark">
 						<!-- <form th:href="@{/account/delete}" method="get"> -->
 					<!-- <a href="/account/delete.html" class="text-decoration-none text-dark">-->
 						<div class="card account-card text-center p-4">
@@ -261,7 +262,7 @@
 
 				<!-- ログアウト -->
 				<div class="col">
-					<form th:action="@{/home}" method="post">
+					<form th:action="@{/logout}" method="get">
 						<button type="submit" class="btn w-100 h-100 text-start p-0 border-0 bg-transparent">
 							<div class="card account-card text-center p-4">
 								<img src="images/icon-logout.png" alt="アカウント削除・退会" width="48" height="48"

@@ -1,8 +1,10 @@
 package com.example.demo.Controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.Model.DTO.AccountDTO;
 import com.example.demo.Model.Dao.AccountDao;
@@ -10,19 +12,24 @@ import com.example.demo.Model.intarface.IAccount;
 
 import jakarta.servlet.http.HttpSession;
 
-import com.example.demo.Model.DTO.UserDTO;
-
 @Controller
 public class AccountController {
 
 	IAccount iAccount = new AccountDao();
 
+	@GetMapping("/addAccountShow")
+	public String addAccountShow(Model model) {
+		model.addAttribute("accountDTO", new AccountDTO());
+		return "account_touroku";
+
+	}
+
 	/**
 	 * アカウントを追加する
 	 * @return
 	 */
-	@GetMapping("/addAAccount")
-	public String addAAccount(HttpSession httpSession, @RequestParam("accountDTO") AccountDTO accountDTO) {
+	@PostMapping("/addAAccount")
+	public String addAAccount(HttpSession httpSession, @ModelAttribute AccountDTO accountDTO) {
 
 		int myId = iAccount.addAAccount(accountDTO);
 
@@ -36,9 +43,9 @@ public class AccountController {
 	 * アカウントを削除する
 	 * @return
 	 */
-	@GetMapping("/removeAAccount")
-	public String removeAAccount(HttpSession httpSession, @RequestParam("userId") int userId) {
-
+	@PostMapping("/removeAAccount")
+	public String removeAAccount(HttpSession httpSession) {
+		int userId = (int) httpSession.getAttribute("userId");
 		iAccount.removeAAccount(userId);
 		httpSession.removeAttribute("userId");
 		return "home";
@@ -60,9 +67,9 @@ public class AccountController {
 	 * @return
 	 */
 	@GetMapping("/AccountShow")
-	public UserDTO AccountShow() {
+	public AccountDTO AccountShow() {
 		//TODO:エラーが出ないように暫定的に値なしのインスタンスを返している
-		return new UserDTO();
+		return new AccountDTO();
 	}
 
 }
