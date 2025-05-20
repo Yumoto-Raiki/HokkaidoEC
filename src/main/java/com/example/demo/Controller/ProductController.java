@@ -1,9 +1,13 @@
 package com.example.demo.Controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.Model.DTO.ProductDTO;
 import com.example.demo.Model.Dao.ProductDao;
 import com.example.demo.Model.Enum.Category;
 import com.example.demo.Model.Enum.Sort;
@@ -25,7 +29,7 @@ public class ProductController {
 
 	public ProductController() {
 
-		this.defaultShowCategory = Category.魚介;
+		this.defaultShowCategory = Category.FISH;
 		this.defaultSort = Sort.PRICE_ASC;
 		iProduct = new ProductDao();
 
@@ -43,17 +47,20 @@ public class ProductController {
 
 		model.addAttribute("productsfavorite", iProduct.productfavoriteShow());
 		model.addAttribute("productsnewdate", iProduct.newproductShow());
+		//FIXME: なぜかビューでcategory.labelでエラーになってしまう
+		// model.addAttribute("categories", Category.values());
 
 		// もどるHTMｌ
-		return "";
+		return "home";
 
 	}
 
 	//指定したカテゴリーの一覧を取得してHTMLに渡す
-	@GetMapping("/serchProduct")
-	public String serchProductListShow(Category category, Sort sort, Model model) {
-		model.addAttribute("products", iProduct.searchProduct(category, sort));
-		return "";
+	@GetMapping("/searchProduct")
+	public String serchProductListShow(@RequestParam("category") Category category, Model model) {
+		List<ProductDTO> products = iProduct.searchProduct(category, Sort.PRICE_DESC);
+		model.addAttribute("products", products);
+		return "search";
 	}
 
 	//商品の並び替えをしてHTMLに渡す

@@ -2,17 +2,17 @@ package com.example.demo.Model.Enum;
 
 public enum Category {
 
-	魚介, 肉, 野菜;
+	FISH("魚介"), MEAT("肉"), VEGETABLE("野菜");
 
-	/*private final String label;
-	
-	Category(Strring label) {
+	private final String label;
+
+	Category(String label) {
 		this.label = label;
 		// TODO 自動生成されたコンストラクター・スタブ
 	}
-	
-	public String getlabel() {
+
+	public String getLabel() {
 		return label;
-	}*/
+	}
 
 }
