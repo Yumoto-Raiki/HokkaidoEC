@@ -14,4 +14,6 @@ public interface ICart {
 	public void clearCart(int userId);
 
 	public List<CartDTO> getCart(int userId);
+
+	public int sumPrice();
 }

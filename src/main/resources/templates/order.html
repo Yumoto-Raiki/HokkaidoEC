@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>ご注文手続き</title>
@@ -126,7 +126,9 @@
 
     <div class="d-flex justify-content-between">
       <button class="btn btn-outline-dark btn-custom">戻る</button>
+      <form method="get" action="/settlement">
       <button class="btn btn-gray btn-custom">ご注文内容の確認</button>
+      </form>
     </div>
   </div>
 
