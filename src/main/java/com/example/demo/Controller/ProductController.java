@@ -12,6 +12,8 @@ import com.example.demo.Model.intarface.IProduct;
 @Controller
 public class ProductController {
 
+	IProduct iProduct;
+
 	/**
 	 * defaultのCategory
 	 */
@@ -23,10 +25,15 @@ public class ProductController {
 
 	public ProductController() {
 
-		this.defaultShowCategory = Category.Fish;
+		this.defaultShowCategory = Category.魚介;
 		this.defaultSort = Sort.PRICE_ASC;
+		iProduct = new ProductDao();
 
 	}
+
+	/*private bool enumChange() {
+		
+	}*/
 
 	/**
 	 * 条件なく商品一覧を取得しHTMLへ渡す
@@ -34,20 +41,30 @@ public class ProductController {
 	@GetMapping("/productListShow")
 	public String productListShow(Model model) {
 
-		IProduct iProduct = new ProductDao();
-		model.addAttribute("products", iProduct.searchProduct(
-				defaultShowCategory, defaultSort));
+		model.addAttribute("productsfavorite", iProduct.productfavoriteShow());
+		model.addAttribute("productsnewdate", iProduct.newproductShow());
 
 		// もどるHTMｌ
 		return "";
 
 	}
 
-	public String changeSort(String sort) {
+	//指定したカテゴリーの一覧を取得してHTMLに渡す
+	@GetMapping("/serchProduct")
+	public String serchProductListShow(Category category, Sort sort, Model model) {
+		model.addAttribute("products", iProduct.searchProduct(category, sort));
+		return "";
+	}
+
+	//商品の並び替えをしてHTMLに渡す
+	//カテゴリー別も検索もSortがあるからいらないかも？
+	@GetMapping("/changeSort")
+	public String changeSort(String sort, Model model) {
 
 		try {
 			// Enumのなかみと一致するときEnumに変換
 			Sort day = Sort.valueOf(sort);
+
 		} catch (IllegalArgumentException e) {
 			System.out.println("指定された文字列は有効なDayではありません: " + sort);
 			return "";
@@ -57,8 +74,17 @@ public class ProductController {
 		return "";
 	}
 
-	public String productShow(int productId) {
+	//商品を検索して取得したデータをHTMLに渡す
+	@GetMapping("/serchProductText")
+	public String serchProduxtText(String text, Sort sort, Model model) {
+		model.addAttribute("productstext", iProduct.searchProduct(text, sort));
+		return "";
+	}
 
+	//商品詳細を一件取得してHTMLに渡す
+	@GetMapping("/productShow")
+	public String productShow(int productId, Model model) {
+		model.addAttribute("puroduct", iProduct.productDetails(productId));
 		return "";
 	}
 

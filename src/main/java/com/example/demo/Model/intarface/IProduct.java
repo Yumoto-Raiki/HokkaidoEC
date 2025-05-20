@@ -14,9 +14,13 @@ public interface IProduct {
 	 * @param sort
 	 * @return
 	 */
+	public List<ProductDTO> productfavoriteShow();
+	
+	public List<ProductDTO> newproductShow();
+	
 	public List<ProductDTO> searchProduct(Category category, Sort sort);
 
-	public List<ProductDTO> searchProduct(String text, Category category);
+	public List<ProductDTO> searchProduct(String text, Sort sort);
 
 	public ProductDTO productDetails(int productid);
 
