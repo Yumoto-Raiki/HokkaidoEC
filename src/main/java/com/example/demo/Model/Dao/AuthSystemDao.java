@@ -46,4 +46,9 @@ public class AuthSystemDao extends DBConectDao implements IAuthSystem {
 
 	}
 
+	public static void main(String[] args) {
+		AuthSystemDao auth = new AuthSystemDao();
+		System.out.println(auth.login("ゆうと", "yuto5"));
+	}
+
 }
