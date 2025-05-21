@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.Model.DTO.AccountAddDTO;
 import com.example.demo.Model.DTO.AccountShowDTO;
+import com.example.demo.Model.DTO.AccountUpdateDTO;
 import com.example.demo.Model.Dao.AccountDao;
 import com.example.demo.Model.intarface.IAccount;
 
@@ -20,7 +21,7 @@ public class AccountController {
 
 	@GetMapping("/addAccountShow")
 	public String addAccountShow(Model model) {
-		model.addAttribute("accountDTO", new AccountAddDTO());
+		model.addAttribute("accountAddDTO", new AccountAddDTO());
 		return "account_touroku";
 
 	}
@@ -30,9 +31,9 @@ public class AccountController {
 	 * @return
 	 */
 	@PostMapping("/addAAccount")
-	public String addAAccount(HttpSession httpSession, @ModelAttribute AccountAddDTO accountDTO) {
+	public String addAAccount(HttpSession httpSession, @ModelAttribute AccountAddDTO accountAddDTO) {
 
-		int myId = iAccount.addAAccount(accountDTO);
+		int myId = iAccount.addAAccount(accountAddDTO);
 
 		httpSession.setAttribute("userId", myId);
 
@@ -58,9 +59,13 @@ public class AccountController {
 	 * @return
 	 */
 	@GetMapping("/updateAAccount")
-	public String updateAAccount() {
+	public String updateAAccount(HttpSession httpSession, @ModelAttribute AccountUpdateDTO accountUpdateDTO) {
+
+		int userId = (int) httpSession.getAttribute("userId");
+		iAccount.updateAAccount(userId, accountUpdateDTO);
 
 		return "";
+
 	}
 
 	/**
@@ -68,9 +73,12 @@ public class AccountController {
 	 * @return
 	 */
 	@GetMapping("/AccountShow")
-	public AccountShowDTO AccountShow() {
+	public AccountShowDTO AccountShow(HttpSession httpSession) {
+
+		int userId = (int) httpSession.getAttribute("userId");
 		//TODO:エラーが出ないように暫定的に値なしのインスタンスを返している
-		return new AccountShowDTO();
+		return iAccount.getAccountInfo(userId);
+
 	}
 
 }
