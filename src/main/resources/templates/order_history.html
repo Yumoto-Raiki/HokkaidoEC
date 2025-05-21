@@ -125,10 +125,11 @@
 		<h2>購入履歴</h2>
 
 
-		<div class="purchase-item">
-			<img src="https://drive.google.com/uc?export=view&id=1TQ-2TcsT9IwFSv2fS_ND6ROMNwbiTNSc" alt="商品画像" />
-			<div class="item-details">
-				<div th:each="history : ${histories}">
+		<div th:each="history : ${histories}">
+			<div class="purchase-item">
+				<img th:src="@{${history.product.imageURL}}" alt="商品名">
+				<!--<img th:src="@{${history.product.imageURL}}" alt="商品名" class="product-image" />-->
+				<div class="item-details">
 					<p>
 						商品名：<span th:text="${history.product.name}"></span>
 					</p>
@@ -153,28 +154,16 @@
 						<textarea placeholder="この商品についてレビューを書いてください"></textarea>
 						<button class="btn-submit-review">レビューを送信</button>
 					</div>
+
+
+
 				</div>
+
+
+
 			</div>
 
-			<div class="purchase-item">
-				<img src="https://dummyimage.com/220x160/ccc/000&text=Salmon" alt="商品画像" />
-				<div class="item-details">
-					<h5>美味しいサーモン</h5>
-					<p>購入日: 2025年5月9日</p>
-					<p>価格: 1,500円 / 数量: 2</p>
-					<div class="review-box">
-						<div class="star-rating">
-							<input type="radio" name="rating2" id="2star5" value="5"><label for="2star5">★</label>
-							<input type="radio" name="rating2" id="2star4" value="4"><label for="2star4">★</label>
-							<input type="radio" name="rating2" id="2star3" value="3"><label for="2star3">★</label>
-							<input type="radio" name="rating2" id="2star2" value="2"><label for="2star2">★</label>
-							<input type="radio" name="rating2" id="2star1" value="1"><label for="2star1">★</label>
-						</div>
-						<textarea placeholder="この商品についてレビューを書いてください"></textarea>
-						<button class="btn-submit-review">レビューを送信</button>
-					</div>
-				</div>
-			</div>
+
 		</div>
 
 		<script>
