@@ -110,6 +110,7 @@ public class CartDao extends DBConectDao implements ICart {
 
 			while (rs.next()) {
 				CartDTO dto = new CartDTO();
+				dto.setCartId(rs.getInt("id") );
 				//カート情報(個数など)をcartDtoにセット
 				dto.setCount(rs.getInt("item_count"));
 				ProductDTO product = new ProductDTO();
