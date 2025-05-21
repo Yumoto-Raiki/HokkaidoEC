@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>購入履歴</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=M PLUS Rounded 1c&display=swap');
+
+		body {
+			background-color: #fdfaf6;
+			font-family: "M PLUS Rounded 1c", "Hiragino Kaku Gothic ProN", sans-serif;
+			color: #333;
+		}
+
+		.history-container {
+			max-width: 1000px;
+			margin: 2rem auto 3rem;
+			background: #fff;
+			padding: 2rem;
+			border-radius: 8px;
+			box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+		}
+
+		h2 {
+			font-weight: 700;
+			/* 太字 */
+			font-family: "M PLUS Rounded 1c", sans-serif;
+			margin-bottom: 2rem;
+		}
+
+		.purchase-item {
+			display: flex;
+			gap: 1rem;
+			border-bottom: 1px solid #ddd;
+			padding: 1.5rem 0;
+		}
+
+		.purchase-item img {
+			width: 220px;
+			height: 160px;
+			object-fit: cover;
+			border-radius: 6px;
+		}
+
+		.item-details {
+			flex: 1;
+		}
+
+		.item-details h5 {
+			margin-bottom: 0.5rem;
+		}
+
+		.item-details p {
+			margin-bottom: 0.3rem;
+		}
+
+		.review-box {
+			margin-top: 1rem;
+		}
+
+		.review-box textarea {
+			width: 100%;
+			height: 100px;
+			margin-top: 0.5rem;
+			resize: vertical;
+			border-radius: 6px;
+			border: 1px solid #ccc;
+			padding: 0.5rem;
+			font-family: "M PLUS Rounded 1c", sans-serif;
+		}
+
+		.star-rating {
+			direction: rtl;
+			unicode-bidi: bidi-override;
+			display: inline-flex;
+		}
+
+		.star-rating input[type="radio"] {
+			display: none;
+		}
+
+		.star-rating label {
+			font-size: 1.4rem;
+			color: #ccc;
+			cursor: pointer;
+			user-select: none;
+			transition: color 0.3s;
+		}
+
+		.star-rating input[type="radio"]:checked~label,
+		.star-rating label:hover,
+		.star-rating label:hover~label {
+			color: #f5a623;
+		}
+
+		.btn-submit-review {
+			background-color: #29ab08;
+			border: none;
+			color: white;
+			padding: 0.5rem 1.5rem;
+			border-radius: 20px;
+			font-weight: 600;
+			transition: background-color 0.3s;
+			margin-top: 0.5rem;
+			cursor: pointer;
+		}
+
+		.btn-submit-review:hover:not(:disabled) {
+			background-color: #218f06;
+		}
+
+		.btn-submit-review:disabled {
+			background-color: #94c47a;
+			cursor: default;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="history-container">
+		<h2>購入履歴</h2>
+
+
+		<div class="purchase-item">
+			<img src="https://drive.google.com/uc?export=view&id=1TQ-2TcsT9IwFSv2fS_ND6ROMNwbiTNSc" alt="商品画像" />
+			<div class="item-details">
+				<div th:each="c : ${products}">
+					<p>
+						商品名：<span th:text="${c.productDTO.name}"></span>
+					</p>
+					<p>
+						価格：<span th:text="${c.productDTO.price}"></span>円
+					</p>
+					<p>
+						個数：<span th:text="${c.count}"></span>
+					</p>
+					<p>
+						購入日：<span th:text="${c.buydate}"></span>
+					</p>
+
+					<div class="review-box">
+						<div class="star-rating">
+							<input type="radio" name="rating1" id="1star5" value="5"><label for="1star5">★</label>
+							<input type="radio" name="rating1" id="1star4" value="4"><label for="1star4">★</label>
+							<input type="radio" name="rating1" id="1star3" value="3"><label for="1star3">★</label>
+							<input type="radio" name="rating1" id="1star2" value="2"><label for="1star2">★</label>
+							<input type="radio" name="rating1" id="1star1" value="1"><label for="1star1">★</label>
+						</div>
+						<textarea placeholder="この商品についてレビューを書いてください"></textarea>
+						<button class="btn-submit-review">レビューを送信</button>
+					</div>
+				</div>
+			</div>
+
+			<div class="purchase-item">
+				<img src="https://dummyimage.com/220x160/ccc/000&text=Salmon" alt="商品画像" />
+				<div class="item-details">
+					<h5>美味しいサーモン</h5>
+					<p>購入日: 2025年5月9日</p>
+					<p>価格: 1,500円 / 数量: 2</p>
+					<div class="review-box">
+						<div class="star-rating">
+							<input type="radio" name="rating2" id="2star5" value="5"><label for="2star5">★</label>
+							<input type="radio" name="rating2" id="2star4" value="4"><label for="2star4">★</label>
+							<input type="radio" name="rating2" id="2star3" value="3"><label for="2star3">★</label>
+							<input type="radio" name="rating2" id="2star2" value="2"><label for="2star2">★</label>
+							<input type="radio" name="rating2" id="2star1" value="1"><label for="2star1">★</label>
+						</div>
+						<textarea placeholder="この商品についてレビューを書いてください"></textarea>
+						<button class="btn-submit-review">レビューを送信</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			document.querySelectorAll('.btn-submit-review').forEach((btn) => {
+				btn.addEventListener('click', () => {
+					const container = btn.closest('.purchase-item');
+					const textarea = container.querySelector('textarea');
+					const stars = container.querySelectorAll('.star-rating input[type="radio"]');
+					let rating = null;
+					stars.forEach(star => {
+						if (star.checked) rating = star.value;
+					});
+
+					if (!rating) {
+						alert("星評価を選んでください");
+						return;
+					}
+					if (textarea.value.trim() === "") {
+						alert("レビュー内容を入力してください");
+						return;
+					}
+
+					alert(`レビュー送信完了！\n評価: ${rating} 星\n内容: ${textarea.value.trim()}`);
+
+					// ボタンと入力欄を無効化（送信済み状態）
+					btn.disabled = true;
+					btn.textContent = "送信済み";
+					textarea.disabled = true;
+					stars.forEach(star => star.disabled = true);
+				});
+			});
+		</script>
+</body>
+
+</html>
