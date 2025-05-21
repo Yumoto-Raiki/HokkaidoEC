@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.Model.DTO.AccountDTO;
+import com.example.demo.Model.DTO.AccountAddDTO;
+import com.example.demo.Model.DTO.AccountShowDTO;
 import com.example.demo.Model.Dao.AccountDao;
 import com.example.demo.Model.intarface.IAccount;
 
@@ -19,7 +20,7 @@ public class AccountController {
 
 	@GetMapping("/addAccountShow")
 	public String addAccountShow(Model model) {
-		model.addAttribute("accountDTO", new AccountDTO());
+		model.addAttribute("accountDTO", new AccountAddDTO());
 		return "account_touroku";
 
 	}
@@ -29,7 +30,7 @@ public class AccountController {
 	 * @return
 	 */
 	@PostMapping("/addAAccount")
-	public String addAAccount(HttpSession httpSession, @ModelAttribute AccountDTO accountDTO) {
+	public String addAAccount(HttpSession httpSession, @ModelAttribute AccountAddDTO accountDTO) {
 
 		int myId = iAccount.addAAccount(accountDTO);
 
@@ -67,9 +68,9 @@ public class AccountController {
 	 * @return
 	 */
 	@GetMapping("/AccountShow")
-	public AccountDTO AccountShow() {
+	public AccountShowDTO AccountShow() {
 		//TODO:エラーが出ないように暫定的に値なしのインスタンスを返している
-		return new AccountDTO();
+		return new AccountShowDTO();
 	}
 
 }

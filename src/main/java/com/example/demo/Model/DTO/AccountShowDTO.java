@@ -1,13 +1,12 @@
 package com.example.demo.Model.DTO;
 
-public class AccountDTO {
+public class AccountShowDTO {
 
 	private String name;
 	private int age;
 	private String telephoneNumber;
 	private String address;
 	private String mailaddress;
-	private String pass;
 	private int point;
 
 	/**
@@ -67,31 +66,17 @@ public class AccountDTO {
 	}
 
 	/**
-	 * @return mailaddressString
+	 * @return mailaddress
 	 */
 	public String getMailaddress() {
 		return mailaddress;
 	}
 
 	/**
-	 * @param mailaddress セットする mailaddressString
+	 * @param mailaddress セットする mailaddress
 	 */
 	public void setMailaddress(String mailaddress) {
 		this.mailaddress = mailaddress;
-	}
-
-	/**
-	 * @return pass
-	 */
-	public String getPass() {
-		return pass;
-	}
-
-	/**
-	 * @param pass セットする pass
-	 */
-	public void setPass(String pass) {
-		this.pass = pass;
 	}
 
 	/**
@@ -103,18 +88,9 @@ public class AccountDTO {
 
 	/**
 	 * @param point セットする point
-	 * セットできたかをBooleanで返す
 	 */
-	public boolean setPoint(int point) {
-
-		if (this.point - point < 0) {
-
-			return false;
-
-		}
+	public void setPoint(int point) {
 		this.point = point;
-		return true;
-
 	}
 
 }

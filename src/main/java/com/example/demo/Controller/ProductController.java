@@ -18,19 +18,8 @@ public class ProductController {
 
 	IProduct iProduct;
 
-	/**
-	 * defaultのCategory
-	 */
-	private Category defaultShowCategory;
-	/**
-	 * defaultのSort
-	 */
-	private Sort defaultSort;
-
 	public ProductController() {
 
-		this.defaultShowCategory = Category.FISH;
-		this.defaultSort = Sort.PRICE_ASC;
 		iProduct = new ProductDao();
 
 	}
@@ -80,14 +69,15 @@ public class ProductController {
 	@GetMapping("/serchProductText")
 	public String serchProduxtText(String text, Sort sort, Model model) {
 		model.addAttribute("productstext", iProduct.searchProduct(text, sort));
-		return "";
+		return "product"
+				+ "";
 	}
 
 	//商品詳細を一件取得してHTMLに渡す
 	@GetMapping("/productShow")
-	public String productShow(@RequestParam("productId") int productId, Model model) {
-		model.addAttribute("puroduct", iProduct.productDetails(productId));
-		return "";
+	public String productShow(int productId, Model model) {
+		model.addAttribute("product", iProduct.productDetails(productId));
+		return "product";
 	}
 
 }

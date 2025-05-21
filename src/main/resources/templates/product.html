@@ -152,17 +152,16 @@
     <div class="product-section">
       <div class="row product-row align-items-center g-4">
         <div class="col-md-5">
-          <img
-            src="images/hotate.png"
-            alt="ホタテ"
-            class="product-image"
-          />
+         <img th:src="@{${product.image}}"
+     th:alt="${product.name}"
+     class="product-image" />
+
         </div>
         <div class="col-md-7">
-          <div class="product-title">激ウマ‼ホタホタテ</div>
+          <div class="product-title" th:text="${product.name}"></div>
           <div class="product-price">
-            価格：<span id="price">2,000</span>円（税込）
-          </div>
+  価格：<span th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')}"></span>円（税込）
+</div>
 
           <form
             onsubmit="event.preventDefault(); alert('カートに追加しました');"
@@ -207,28 +206,25 @@
 
       <div class="divider"></div>
 
-      <p class="product-desc">
-        大ぶりで肉厚。時間をかけて育てられた帆立は、歯ごたえある食感が特徴です。
-      </p>
+      <p class="product-desc" th:text="${product.text}"></p>
 
-      <table class="product-details">
-        <tr>
-          <th>内容量</th>
-          <td>1kg</td>
-        </tr>
-        <tr>
-          <th>原産地</th>
-          <td>猿払</td>
-        </tr>
-        <tr>
-          <th>保存方法</th>
-          <td>冷蔵</td>
-        </tr>
-        <tr>
-          <th>販売元</th>
-          <td>冨士池水産</td>
-        </tr>
-      </table>
+
+     <table class="product-details">
+  <tr>
+    <th>内容量</th>
+    <td th:text="${product.volume}"></td>
+  </tr>
+  <tr>
+    <th>原産地</th>
+    <td th:text="${product.productionarea}"></td>
+  </tr>
+  
+  <tr>
+    <th>販売元</th>
+    <td th:text="${product.seller}"></td>
+  </tr>
+</table>
+
 
       <div class="review-section">
         <div class="fw-bold mb-2">

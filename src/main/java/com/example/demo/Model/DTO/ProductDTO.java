@@ -17,23 +17,6 @@ public class ProductDTO {
 	private String seller;
 	private int orderamount;
 
-	/*private String imageUrl; // DBにあるURLだけ保持
-	<img th:src="@{${product.imageUrl}}" />*/
-
-	//一応でバック用にコンストラクタを作った
-	/*public ProductDTO(int productId, String name, int price, int stock, String productionarea, BufferedImage image, String text, Category category, String volume, String addeddate, String seller ,int orderamount) {
-		this.productId = productId;
-		this.name = name;
-		this.price = price;
-		this.stock = stock;
-		this.productionarea = productionarea;
-		this.image = image;
-		this.text = text;
-		this.category = category;
-		this.volume = volume;
-		this.addeddate = addeddate;
-		this.orderamount = orderamount;
-	}*/
 	/**
 	 * @return productId
 	 */
@@ -169,7 +152,7 @@ public class ProductDTO {
 		return "Product[id=" + productId + ",nama=" + name + ",price=" + price + ",stock=" + stock + ",area="
 				+ productionarea + ",text=" + text + ",category="
 				+ category + ",volume=" + volume + ",date=" + addeddate + ",seller=" + seller + ",amount="
-				+ orderamount + ",imageURL=" + imageURL + "]\n";
+				+ orderamount + "\n";
 	}
 
 	public int getPhoto_id() {

@@ -4,7 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.example.demo.Model.DTO.AccountDTO;
+import com.example.demo.Model.DTO.AccountAddDTO;
+import com.example.demo.Model.DTO.AccountShowDTO;
+import com.example.demo.Model.DTO.AccountUpdateDTO;
 import com.example.demo.Model.intarface.IAccount;
 
 public class AccountDao extends DBConectDao implements IAccount {
@@ -13,7 +15,7 @@ public class AccountDao extends DBConectDao implements IAccount {
 	 * アカウントを追加する
 	 * @return
 	 */
-	public int addAAccount(AccountDTO accountDTO) {
+	public int addAAccount(AccountAddDTO accountAddDTO) {
 		int id = 0;
 
 		// データベースに接続する（親クラスのメソッド）
@@ -26,12 +28,12 @@ public class AccountDao extends DBConectDao implements IAccount {
 		try (PreparedStatement ps = con.prepareStatement(sql)) {
 
 			// SQL文の「?」に値を代入する
-			ps.setString(1, accountDTO.getName()); // 名前
-			ps.setInt(2, accountDTO.getAge()); // 年齢
-			ps.setString(3, accountDTO.getTelephoneNumber()); // 電話番号
-			ps.setString(4, accountDTO.getAddress()); // 住所
-			ps.setString(5, accountDTO.getMailaddress()); // メアド
-			ps.setString(6, accountDTO.getPass()); // パスワード
+			ps.setString(1, accountAddDTO.getName()); // 名前
+			ps.setInt(2, accountAddDTO.getAge()); // 年齢
+			ps.setString(3, accountAddDTO.getTelephoneNumber()); // 電話番号
+			ps.setString(4, accountAddDTO.getAddress()); // 住所
+			ps.setString(5, accountAddDTO.getMailaddress()); // メアド
+			ps.setString(6, accountAddDTO.getPass()); // パスワード
 
 			// SQLを実行する（データ追加）
 			ps.executeUpdate();
@@ -69,8 +71,19 @@ public class AccountDao extends DBConectDao implements IAccount {
 	 * アカウント情報を更新する
 	 * @return
 	 */
-	public void updateAAccount() {
-
+	public void updateAAccount(int userId, AccountUpdateDTO accountUpdateDTO) {
+		//		connect();
+		//		String sql = "update hba2025_3.user set name=? age=? address=?  where id=?";
+		//		try (PreparedStatement ps = con.prepareStatement(sql)) {
+		//			ps.setInt(1, accountDTO.);// 削除するカートのIDを指定
+		//			ps.setInt(2, cartId);// 削除するカートのIDを指定
+		//			ps.executeUpdate(); // 実行（削除）
+		//		} catch (SQLException e) {
+		//			System.out.println(e); // エラー表示
+		//		}
+		//
+		//		// DB切断
+		//		close();
 	}
 
 	/**
@@ -81,8 +94,13 @@ public class AccountDao extends DBConectDao implements IAccount {
 
 	}
 
-	public AccountDTO getAccountInfo(int userId) {
-		AccountDTO user = new AccountDTO();
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public AccountShowDTO getAccountInfo(int userId) {
+		AccountShowDTO user = new AccountShowDTO();
 		connect();
 
 		String sql = "SELECT id, name, age, telephonenumber, address, poin FROM users WHERE id = ?;";
