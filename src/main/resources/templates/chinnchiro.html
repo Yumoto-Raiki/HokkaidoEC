@@ -208,7 +208,8 @@
 	</form>-->
 
 	<!-- 決済完了画面への遷移ボタン -->
-	<form method="post" action="/payment">
+	<form method="post" action="/payment" th:if="${dice != null}">
+		<input type="hidden" name="totalPrice" th:value="${dice.discount * dice.sum}" />
 		<button type="submit" th:if="${!canRoll}">決済完了画面へ</button>
 	</form>
 
