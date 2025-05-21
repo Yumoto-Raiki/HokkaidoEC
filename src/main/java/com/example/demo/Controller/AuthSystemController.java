@@ -46,11 +46,14 @@ public class AuthSystemController {
 	//ここから下が背戸田プラクティスなので消してもOK（起動用getmapping）
 
 	@GetMapping("/account")
-	public String bb(Model model) {
-		//		model.addAttribute("user.name", " ゆうと");
+	public String bb(Model model, HttpSession session) {
+		Integer userId = (Integer) session.getAttribute("userId");
+
+		if (userId == null || userId == 0) {
+			return "redirect:/login";
+		}
 
 		return "account";
-
 	}
 
 	@GetMapping("/home")

@@ -121,7 +121,7 @@
     <h2 class="mb-4">カート一覧</h2>
 
     <div id="favItemsContainer">
-<div th:each="c : ${cartList}">
+<div th:each="c : ${products}">
   <p>
     商品名：<span th:text="${c.productDTO.name}"></span>
   </p>
@@ -131,6 +131,11 @@
   <p>
     個数：<span th:text="${c.count}"></span>
   </p>
+  <form th:action = "@{/removeProductToCart}" method="get">
+  <input type hidden name="cartId" th:value = "${c.cartId}">
+   <button class="btn-buy">削除</button>
+  </form>
+  
 <HR>
 	
 </div>    </div>

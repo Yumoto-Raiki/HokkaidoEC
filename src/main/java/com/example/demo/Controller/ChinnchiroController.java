@@ -2,8 +2,8 @@ package com.example.demo.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Model.Dao.ChinnchiroDao;
 
@@ -13,9 +13,12 @@ import jakarta.servlet.http.HttpSession;
 public class ChinnchiroController {
 
 	//最初に呼ばれるチンチロ
-	@PostMapping("/chinnchiroStrat")
+	@GetMapping("/chinnchiroStrat")
 	public String chinnchiroStrat(Model model, HttpSession session) {
+		session.setAttribute("userId", 2);
+		//		session.setAttribute("rolled", false);
 		Boolean rolled = (Boolean) session.getAttribute("rolled");
+		System.out.println(rolled);
 		//振ったことがあるか判定
 		if (rolled != null && rolled) {
 			model.addAttribute("canRoll", false);
@@ -29,6 +32,10 @@ public class ChinnchiroController {
 	@PostMapping("/roll")
 	public String chinnchiroRoll(Model model, HttpSession session) {
 
+		int userid = (int) session.getAttribute("userId");
+		if (userid == 0) {
+			userid = 2;
+		}
 		Boolean rolled = (Boolean) session.getAttribute("rolled");
 		//振ったことがあるか判定
 		if (rolled != null && rolled) {
@@ -38,11 +45,9 @@ public class ChinnchiroController {
 		}
 
 		ChinnchiroDao chinnchiro = new ChinnchiroDao();
-		int[] dice = chinnchiro.ChinchiroGame();
 		session.setAttribute("rolled", true); // フラグをセッションに保存
-		model.addAttribute("dice", dice);//出目を取得
+		model.addAttribute("dice", chinnchiro.ChinchiroGame(userid));//チンチロの結果を渡す
 		model.addAttribute("canRoll", false);//もう触れないことをHTMLに教える
-		model.addAttribute("disount", chinnchiro.settlement_change() * chinnchiro.judgeDice(dice));
 
 		return "chinnchiro";
 	}
@@ -62,11 +67,11 @@ public class ChinnchiroController {
 	}
 
 	@PostMapping("/payment")
-	public String paymentCompleted(@RequestParam("disount") int totalamount, Model model, HttpSession session) {
+	public String paymentCompleted(/*@RequestParam("disount") int totalamount,*/ Model model, HttpSession session) {
 		session.setAttribute("rolled", false);
-		model.addAttribute("total", totalamount);
+		//		model.addAttribute("total", totalamount);
 
-		return "thankyou";
+		return "order_completed";
 	}
 
 }

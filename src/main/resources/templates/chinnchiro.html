@@ -4,66 +4,87 @@
 <head>
 	<title>チンチロ決済画面</title>
 
+	<!-- ページ全体のスタイル -->
 	<style>
+		/* ベースの画面デザイン */
 		body {
-			font-family: "Segoe UI", sans-serif;
-			background-color: #f2f2f2;
+			font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
+			background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+			/* 悪魔っぽい雰囲気の背景*/
 			text-align: center;
 			padding: 50px;
+			margin: 0;
+
 		}
 
+		/* タイトル */
 		h1 {
-			color: #333;
+			color: red;
 			margin-bottom: 30px;
+			font-size: 32px;
 		}
 
 		form {
 			margin: 20px 0;
 		}
 
+		/* ボタンスタイル */
 		button {
-			background-color: #4CAF50;
+			background-color: #00796b;
 			color: white;
 			border: none;
-			padding: 10px 20px;
-			font-size: 16px;
+			padding: 12px 24px;
+			font-size: 18px;
 			cursor: pointer;
-			border-radius: 5px;
-			transition: background-color 0.3s;
+			border-radius: 8px;
+			transition: all 0.3s ease;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 		}
 
 		button:hover {
-			background-color: #45a049;
+			background-color: #004d40;
+			transform: translateY(-2px);
+			/* 浮き上がるような動き */
 		}
 
+		/* 通常のテキスト */
 		p {
 			font-size: 18px;
-			color: #444;
+			color: red;
 			margin: 10px 0;
 		}
 
+		/* サイコロ結果表示ボックス */
 		.result {
-			background-color: #fff;
-			border-radius: 10px;
-			padding: 20px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			background-color: #ffffff;
+			border-radius: 15px;
+			padding: 25px 30px;
+			box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 			display: inline-block;
-			margin-top: 20px;
+			margin-top: 30px;
+			transition: all 0.5s ease;
 		}
 
+		/* エラー表示用 */
 		.error {
-			color: red;
+			color: #d32f2f;
 			font-weight: bold;
+			font-size: 16px;
 		}
 
+		/* サイコロアニメーション */
 		.dice-animation {
-			font-size: 40px;
-			margin: 20px 0;
+			font-size: 50px;
+			margin: 30px 0;
 			display: none;
+			/* 最初は非表示 */
 			font-weight: bold;
 			color: #333;
+			text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+			/* 軽い影 */
 		}
 
+		/* サイコロ回転アニメーション */
 		@keyframes roll {
 			0% {
 				transform: rotate(0deg);
@@ -89,6 +110,39 @@
 		.dice-rolling {
 			display: inline-block;
 			animation: roll 1s ease-in-out infinite;
+			/* 無限ループで回転 */
+		}
+
+		.image-container {
+			position: relative;
+			margin-top: 50px;
+			text-align: right;
+		}
+
+		.image-container_a {
+			position: relative;
+			width: 20%;
+			margin-top: 0px;
+		}
+
+
+		.bottom-image {
+			max-width: 100%;
+			height: auto;
+		}
+
+		.dice-image-container {
+			display: flex;
+			justify-content: center;
+			gap: 20px;
+			/* 画像の間隔 */
+			margin-top: 20px;
+		}
+
+		.dice-image {
+			max-width: 50px;
+			/* 画像サイズを小さく */
+			height: auto;
 		}
 	</style>
 </head>
@@ -96,55 +150,101 @@
 <body>
 	<h1>チンチロリン 決済ゲーム</h1>
 
+	<!-- サイコロを振るボタン（1回のみ） -->
 	<form method="post" action="/roll" th:if="${canRoll}">
 		<button type="submit" id="rollButton">🎲 サイコロを振る</button>
 	</form>
 
+	<!-- すでに振っていた場合のメッセージ -->
 	<p th:if="${!canRoll}">すでにサイコロを振っています。</p>
 
-	<!-- サイコロ転がしのアニメーション -->
+	<!-- ゲームの結果メッセージ（例：勝ち/負け） -->
+	<p th:if="${!canRoll}" th:text="${dice.messege}">11</p>
+
+	<!-- アニメーション用のサイコロ（クリック後表示） -->
 	<p class="dice-animation" id="diceAnimation">🎲 </p>
 
-	<!--結果表示-->
-	<div th:if="${dice}">
-		<p>出目: [[${dice[0]}]], [[${dice[1]}]], [[${dice[2]}]]</p>
-		<p>金額: [[${disount}]]</p>
+	<!-- サイコロの出目と金額の表示 -->
+	<div th:if="${dice}" id="result" style="visibility: visible;" class="result">
+		<!-- 出目の表示 -->
+		<p th:text="'出目: ' + ${dice.dice[0]} + ', ' + ${dice.dice[1]} + ', ' + ${dice.dice[2]}"></p>
+
+		<div class="dice-image-container">
+			<img src="images/saikoro_1.png" alt="saikoro" class="dice-image" th:if="${dice.dice[0]} == 1">
+			<img src="images/saikoro_2.png" alt="saikoro" class="dice-image" th:if="${dice.dice[0]} == 2">
+			<img src="images/saikoro_3.png" alt="saikoro" class="dice-image" th:if="${dice.dice[0]} == 3">
+			<img src="images/saikoro_4.png" alt="saikoro" class="dice-image" th:if="${dice.dice[0]} == 4">
+			<img src="images/saikoro_5.png" alt="saikoro" class="dice-image" th:if="${dice.dice[0]} == 5">
+			<img src="images/saikoro_6.png" alt="saikoro" class="dice-image" th:if="${dice.dice[0]} == 6">
+
+			<img src="images/saikoro_1.png" alt="saikoro" class="dice-image" th:if="${dice.dice[1]} == 1">
+			<img src="images/saikoro_2.png" alt="saikoro" class="dice-image" th:if="${dice.dice[1]} == 2">
+			<img src="images/saikoro_3.png" alt="saikoro" class="dice-image" th:if="${dice.dice[1]} == 3">
+			<img src="images/saikoro_4.png" alt="saikoro" class="dice-image" th:if="${dice.dice[1]} == 4">
+			<img src="images/saikoro_5.png" alt="saikoro" class="dice-image" th:if="${dice.dice[1]} == 5">
+			<img src="images/saikoro_6.png" alt="saikoro" class="dice-image" th:if="${dice.dice[1]} == 6">
+
+			<img src="images/saikoro_1.png" alt="saikoro" class="dice-image" th:if="${dice.dice[2]} == 1">
+			<img src="images/saikoro_2.png" alt="saikoro" class="dice-image" th:if="${dice.dice[2]} == 2">
+			<img src="images/saikoro_3.png" alt="saikoro" class="dice-image" th:if="${dice.dice[2]} == 3">
+			<img src="images/saikoro_4.png" alt="saikoro" class="dice-image" th:if="${dice.dice[2]} == 4">
+			<img src="images/saikoro_5.png" alt="saikoro" class="dice-image" th:if="${dice.dice[2]} == 5">
+			<img src="images/saikoro_6.png" alt="saikoro" class="dice-image" th:if="${dice.dice[2]} == 6">
+		</div>
+
+
+		<!-- 金額表示（discount × sum） -->
+		<p th:text="'金額: ' + (${dice.sum})"></p>
+		↓
+		<p th:text="'金額: ' + (${dice.discount} * ${dice.sum})"></p>
 	</div>
 
+	<!-- エラーメッセージ表示 -->
 	<p class="error" th:if="${error}" th:text="${error}"></p>
 
-	<form method="post" action="/gg">
-		<button type="submit"th:if="${!canRoll}">🚪 セッション削除</button>
-	</form>
-	
+	<!-- セッションをリセットするボタン（テスト用） -->
+	<!--<form method="post" action="/gg">
+		<button type="submit" th:if="${!canRoll}">🚪 セッション削除</button>
+	</form>-->
+
+	<!-- 決済完了画面への遷移ボタン -->
 	<form method="post" action="/payment">
-		<button type="submit"th:if="${!canRoll}">決済完了画面へ</button>
+		<button type="submit" th:if="${!canRoll}">決済完了画面へ</button>
 	</form>
 
-	<script>
-		// サイコロを振るボタンをクリックしたときにアニメーションを表示
-		document.getElementById('rollButton').addEventListener('click', function (event) {
-			event.preventDefault();  // ボタンのデフォルトの動作（フォーム送信）を防ぐ
-			document.getElementById('diceAnimation').style.display = 'block';  // アニメーションを表示
-			document.getElementById('diceAnimation').classList.add('dice-rolling'); // アニメーションを開始
+	<!--カイジの画像-->
+	<div class="image-container">
+		<img src="images/kaizi_zawazawa.png" alt="カイジ画像" class="bottom-image">
+	</div>
 
-			// フォームを送信してサイコロを振る
+	<div class="image-container_a">
+		<img src="images/kaizi_hanntyou.webp" alt="カイジ画像" class="bottom-image">
+	</div>
+
+
+	<!-- JavaScript：サイコロアニメーションと遅延送信処理 -->
+	<script>
+		document.getElementById('rollButton').addEventListener('click', function (event) {
+			event.preventDefault();  // フォーム送信を一旦止める
+			document.getElementById('diceAnimation').style.display = 'block';  // アニメーションを表示
+			document.getElementById('diceAnimation').classList.add('dice-rolling'); // アニメーション開始
+
+			// 1秒後にフォームを実際に送信（アニメーションを見せるため）
 			setTimeout(function () {
 				document.querySelector('form[action="/roll"]').submit();
-			}, 1000); // 1秒後にサイコロを振るフォームを送信
+			}, 1000);
 		});
 
-		// サーバーから結果が返ってきたときにアニメーションを終了し、結果を表示
+		// ページ読み込み時にアニメーション停止（初期化処理）
 		document.addEventListener('DOMContentLoaded', function () {
 			const result = document.getElementById('result');
 			const diceAnimation = document.getElementById('diceAnimation');
 
 			if (result.style.visibility === 'hidden' && diceAnimation.style.display === 'block') {
 				setTimeout(function () {
-					// サイコロ結果が表示されるのを待ってアニメーションを終了
 					diceAnimation.style.display = 'none';
 					result.style.visibility = 'visible';
-				}, 1500);  // アニメーションが終わってから結果を表示
+				}, 1500);
 			}
 		});
 	</script>
