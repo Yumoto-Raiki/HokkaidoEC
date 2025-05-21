@@ -27,8 +27,8 @@ public class CartController {
 	@GetMapping("/addProductToCart")
 	public String addProductToCart(
 			Model model, // 画面（HTMLなど）にデータを渡すための入れ物
-			@RequestParam("") int productId, // リクエストパラメータ（商品ID）→ ""の中に名前が必要
-			@RequestParam("") int count, // リクエストパラメータ（個数）→ ""の中に名前が必要
+			@RequestParam("productId") int productId, // リクエストパラメータ（商品ID）→ ""の中に名前が必要
+			@RequestParam("count") int count, // リクエストパラメータ（個数）→ ""の中に名前が必要
 			HttpSession session // ユーザー情報を一時的に保存しておくセッション
 	) {
 		// セッションからユーザーIDを取り出す
@@ -46,7 +46,7 @@ public class CartController {
 		// 成功したことを画面に渡す（"isComplete"という名前でtrueを渡す）
 		model.addAttribute("isComplete", true);
 
-		return ""; // 表示するビュー名（画面）を返す必要がある（例："cartView"）
+		return "product"; // 表示するビュー名（画面）を返す必要がある（例："cartView"）
 	}
 
 	@GetMapping("/removeProductToCart")
@@ -54,22 +54,22 @@ public class CartController {
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
-			return "cart";
+			return "";
 		}
 		iCart.removeProductToCart(cartId);
 		model.addAttribute("isComplete", true);
-		return "cart";
+		return "";
 	}
 
 	public String updateCartInCount(int cartId, int count, Model model, HttpSession session) {
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
-			return "cart";
+			return "";
 		}
 		iCart.updateCartInCount(cartId, count);
 		model.addAttribute("isComplete", true);
-		return "cart";
+		return "";
 
 	}
 
@@ -84,16 +84,15 @@ public class CartController {
 		return "";
 	}
 
-	@GetMapping("/showCart")
 	public String showCart(Model model, HttpSession session) {
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
-			return "home";
+			return "";
 		}
-		model.addAttribute("cartList", iCart.getCart(userId));
+		model.addAttribute("products", iCart.getCart(userId));
 		model.addAttribute("isComplete", true);
-		return "cart";
+		return "";
 
 	}
 
