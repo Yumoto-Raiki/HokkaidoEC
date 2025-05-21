@@ -25,7 +25,7 @@ public class FavoriteController {
 		// ユーザーIDが0（ログインしていないなど）の場合、失敗として処理
 		if (userId == 0) {
 			model.addAttribute("isComplete", false); // カート追加が失敗したことを画面に渡す
-			return "redirect:/productShow"; // どの画面を表示するか指定されていない（要修正）
+			return "redirect:/productListShow"; // どの画面を表示するか指定されていない（要修正）
 		}
 
 		// カートに商品を追加（データベースに追加）
@@ -34,7 +34,7 @@ public class FavoriteController {
 		// 成功したことを画面に渡す（"isComplete"という名前でtrueを渡す）
 		model.addAttribute("isComplete", true);
 
-		return "redirect:/productShow";
+		return "redirect:/productShow?productId=" + productId;
 	}
 
 	public String removeProductToFavorite(@RequestParam("") int facvoriteId, HttpSession session, Model model) {

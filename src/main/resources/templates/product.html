@@ -200,13 +200,13 @@
 						</form>
 
 						<form th:action="@{/FavoriteController}" method="get">
-							<input type="hidden" name="productId" th:value="${product.productId}">
+							<input type="hidden" name="productId" th:value="${product.productId}"/>
+<!--							<input type="hidden" name="redirectUrl" th:value="${#httpServletRequest.requestURI}"/>-->
 							<button type="submit" class="btn-fav" id="favBtn" aria-label="お気に入りに追加" title="お気に入り">
 								<i class="bi bi-heart-fill"></i>
 							</button>
 						</form>
 					</div>
-					</form>
 
 				</div>
 			</div>
