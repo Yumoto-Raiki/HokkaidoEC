@@ -16,7 +16,12 @@ public class ChinnchiroController {
 	//最初に呼ばれるチンチロ
 	@GetMapping("/chinnchiroStrat")
 	public String chinnchiroStrat(Model model, HttpSession session) {
-		session.setAttribute("userId", 2);
+		System.out.println(session.getAttribute("userId"));
+
+		//テスト用でsessionにuserIdが入っていなかったら1を入れる
+		if (session.getAttribute("userId") == null) {
+			session.setAttribute("userId", 1);
+		}
 		session.setAttribute("rolled", false);
 		Boolean rolled = (Boolean) session.getAttribute("rolled");
 		System.out.println(rolled);
@@ -33,10 +38,11 @@ public class ChinnchiroController {
 	@PostMapping("/roll")
 	public String chinnchiroRoll(Model model, HttpSession session) {
 
-		int userid = (int) session.getAttribute("userId");
-		if (userid == 0) {
-			userid = 2;
+		//テスト用でsessionにuserIdが入っていなかったら1を入れる
+		if (session.getAttribute("userId") == null) {
+			session.setAttribute("userId", 1);
 		}
+		int userid = (int) session.getAttribute("userId");
 		Boolean rolled = (Boolean) session.getAttribute("rolled");
 		//振ったことがあるか判定
 		if (rolled != null && rolled) {
