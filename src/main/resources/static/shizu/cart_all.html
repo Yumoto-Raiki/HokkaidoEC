@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>お気に入り一覧</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap');
+
+    body {
+      background-color: #fdfaf6;
+      font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+      color: #333;
+    }
+
+    h2 {
+      font-family: 'Zen Maru Gothic', "Rounded Mplus 1c", "Meiryo", sans-serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+    }
+
+    .fav-container {
+      max-width: 900px;
+      margin: 2rem auto 3rem;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }
+
+    .fav-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .fav-item:last-child {
+      border-bottom: none;
+    }
+
+    .fav-item img {
+      width: 180px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .fav-name {
+      flex: 1;
+      font-weight: 600;
+    }
+
+    .fav-price {
+      min-width: 100px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .fav-delete button,
+    .fav-add-cart button {
+      background: transparent;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .fav-delete button {
+      color: #cc0000;
+    }
+
+    .fav-add-cart button {
+      color: #29ab08;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2.5rem;
+    }
+
+    .btn-back, .btn-buy {
+      padding: 0.75rem 2rem;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+      border: none;
+      cursor: pointer;
+      user-select: none;
+      transition: background-color 0.3s;
+    }
+
+    .btn-back {
+      background-color: #f4f4f4;
+      color: #555;
+      border: 1px solid #ccc;
+    }
+
+    .btn-back:hover {
+      background-color: #e1e1e1;
+    }
+
+    .btn-buy {
+      background-color: #29ab08;
+      color: white;
+    }
+
+    .btn-buy:hover {
+      background-color: #218f06;
+    }
+  </style>
+</head>
+<body>
+  <div class="fav-container">
+    <h2 class="mb-4">カート一覧</h2>
+
+    <div id="favItemsContainer">
+      <!-- お気に入り商品リストをここに表示 -->
+    </div>
+
+    <div class="btn-group">
+      <button class="btn-back" onclick="window.history.back()">戻る</button>
+      <button class="btn-buy" onclick="location.href='buypage.html'">購入ページへ</button>
+    </div>
+  </div>
+
+  <script>
+    const favItems = [
+      {
+        id: 1,
+        name: "激ウマ‼ホタホタテ",
+        image: "images/hotate.png",
+        price: 2000
+      },
+      {
+        id: 2,
+        name: "美味しいサーモン",
+        image: "https://dummyimage.com/180x140/ccc/000&text=Salmon",
+        price: 1500
+      }
+    ];
+
+    function renderFav() {
+      const container = document.getElementById("favItemsContainer");
+      container.innerHTML = "";
+
+      favItems.forEach((item, idx) => {
+        if(item.deleted) return;
+
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "fav-item";
+
+        itemDiv.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" />
+          <div class="fav-name">${item.name}</div>
+          <div class="fav-price">¥${item.price.toLocaleString()}</div>
+          <div class="fav-add-cart">
+            <button data-index="${idx}" aria-label="カートに追加">＋カートに追加</button>
+          </div>
+          <div class="fav-delete">
+            <button data-index="${idx}" aria-label="削除">× 削除</button>
+          </div>
+        `;
+
+        container.appendChild(itemDiv);
+      });
+
+      addEventListeners();
+    }
+
+    function addToCart(item) {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+      const existing = cart.find(cartItem => cartItem.id === item.id);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ ...item, quantity: 1 });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("カートに追加しました！");
+    }
+
+    function addEventListeners() {
+      document.querySelectorAll(".fav-delete button").forEach(btn => {
+        btn.onclick = (e) => {
+          const idx = e.target.dataset.index;
+          favItems[idx].deleted = true;
+          e.target.closest(".fav-item").style.display = "none";
+        };
+      });
+
+      document.querySelectorAll(".fav-add-cart button").forEach(btn => {
+        btn.onclick = (e) => {
+          const idx = e.target.dataset.index;
+          addToCart(favItems[idx]);
+        };
+      });
+    }
+
+    renderFav();
+  </script>
+</body>
+</html>

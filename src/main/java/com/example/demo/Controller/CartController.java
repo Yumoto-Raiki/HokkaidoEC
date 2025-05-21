@@ -54,22 +54,22 @@ public class CartController {
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
-			return "";
+			return "cart";
 		}
 		iCart.removeProductToCart(cartId);
 		model.addAttribute("isComplete", true);
-		return "";
+		return "cart";
 	}
-
+	
 	public String updateCartInCount(int cartId, int count, Model model, HttpSession session) {
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
-			return "";
+			return "cart";
 		}
 		iCart.updateCartInCount(cartId, count);
 		model.addAttribute("isComplete", true);
-		return "";
+		return "cart";
 
 	}
 
@@ -83,16 +83,17 @@ public class CartController {
 		model.addAttribute("isComplete", true);
 		return "";
 	}
-
+	@GetMapping("/showCart")
 	public String showCart(Model model, HttpSession session) {
-		int userId = (int) session.getAttribute("userId");
+//		int userId = (int) session.getAttribute("userId");
+		int userId = 1;
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
-			return "";
+			return "home";
 		}
-		model.addAttribute("products", iCart.getCart(userId));
+		model.addAttribute("cartList", iCart.getCart(userId));
 		model.addAttribute("isComplete", true);
-		return "";
+		return "cart";
 
 	}
 

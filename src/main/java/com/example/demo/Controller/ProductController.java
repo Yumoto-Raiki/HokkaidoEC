@@ -57,7 +57,7 @@ public class ProductController {
 	@GetMapping("/serchProduct")
 	public String serchProductListShow(Category category, Sort sort, Model model) {
 		model.addAttribute("products", iProduct.searchProduct(category, sort));
-		return "";
+		return "product";
 	}
 
 	//商品の並び替えをしてHTMLに渡す
@@ -82,14 +82,15 @@ public class ProductController {
 	@GetMapping("/serchProductText")
 	public String serchProduxtText(String text, Sort sort, Model model) {
 		model.addAttribute("productstext", iProduct.searchProduct(text, sort));
-		return "";
+		return "product"
+				+ "";
 	}
 
 	//商品詳細を一件取得してHTMLに渡す
 	@GetMapping("/productShow")
 	public String productShow(int productId, Model model) {
-		model.addAttribute("puroduct", iProduct.productDetails(productId));
-		return "";
+		model.addAttribute("product", iProduct.productDetails(productId));
+		return "product";
 	}
 
 }
