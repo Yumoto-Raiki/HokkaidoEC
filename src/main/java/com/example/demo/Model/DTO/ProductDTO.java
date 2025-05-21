@@ -1,7 +1,5 @@
 package com.example.demo.Model.DTO;
 
-import java.awt.image.BufferedImage;
-
 public class ProductDTO {
 
 	private int productId;
@@ -12,30 +10,13 @@ public class ProductDTO {
 	private String text;
 	private String category;
 	private int photo_id;
-	private BufferedImage image;
+	private String imageURL;
 
 	private String volume;
 	private String addeddate;
 	private String seller;
 	private int orderamount;
 
-	/*private String imageUrl; // DBにあるURLだけ保持
-	<img th:src="@{${product.imageUrl}}" />*/
-
-	//一応でバック用にコンストラクタを作った
-	/*public ProductDTO(int productId, String name, int price, int stock, String productionarea, BufferedImage image, String text, Category category, String volume, String addeddate, String seller ,int orderamount) {
-		this.productId = productId;
-		this.name = name;
-		this.price = price;
-		this.stock = stock;
-		this.productionarea = productionarea;
-		this.image = image;
-		this.text = text;
-		this.category = category;
-		this.volume = volume;
-		this.addeddate = addeddate;
-		this.orderamount = orderamount;
-	}*/
 	/**
 	 * @return productId
 	 */
@@ -171,7 +152,7 @@ public class ProductDTO {
 		return "Product[id=" + productId + ",nama=" + name + ",price=" + price + ",stock=" + stock + ",area="
 				+ productionarea + ",text=" + text + ",category="
 				+ category + ",volume=" + volume + ",date=" + addeddate + ",seller=" + seller + ",amount="
-				+ orderamount + "image=" + image + "]\n";
+				+ orderamount + "\n";
 	}
 
 	public int getPhoto_id() {
@@ -182,11 +163,11 @@ public class ProductDTO {
 		this.photo_id = photo_id;
 	}
 
-	public BufferedImage getImage() {
-		return image;
+	public String getImageURL() {
+		return imageURL;
 	}
 
-	public void setImage(BufferedImage image) {
-		this.image = image;
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
 	}
 }

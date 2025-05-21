@@ -1,7 +1,9 @@
 package com.example.demo.Controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Model.Dao.AuthSystemDao;
@@ -17,17 +19,54 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class AuthSystemController {
 
-	@GetMapping("/login")
-	public String login(@RequestParam("") String userName, @RequestParam("") String pass, HttpSession session) {
+	@PostMapping("/login")
+	public String login(@RequestParam("userName") String userName, @RequestParam("pass") String pass,
+			HttpSession session) {
 		IAuthSystem iAuthSystem = new AuthSystemDao();
-		session.setAttribute("userId", iAuthSystem.login(userName, pass));
-		return "";
+
+		if (iAuthSystem.login(userName, pass) != 0) {
+			session.setAttribute("userId", iAuthSystem.login(userName, pass));
+			return "home";
+		} else {
+			return "login";
+		}
 	}
 
-	@GetMapping("/loguot")
+	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("userId");
-		return "";
+		return "home";
 	}
+
+	@GetMapping("/login")
+	public String aa() {
+		return "login";
+	}
+
+	//ここから下が背戸田プラクティスなので消してもOK（起動用getmapping）
+
+	@GetMapping("/account")
+	public String bb(Model model) {
+		model.addAttribute("user.name", " ゆうと");
+
+		return "account";
+
+	}
+
+	@GetMapping("/home")
+	public String home() {
+		return "home";
+	}
+
+	@GetMapping("/account/delete")
+	public String delete() {
+		return "account-delete";
+	}
+
+	//	@PostMapping("/logout")
+	//	public String logout() {
+	//		return "home";
+	//
+	//	}
 
 }

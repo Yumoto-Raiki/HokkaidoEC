@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>個人情報照会</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<!--ロゴ横のフォントです、消さない！-->
+	<link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
+	<style>
+		body {
+			font-family: 'Segoe UI', 'Noto Sans JP', sans-serif;
+			background-color: #fffaf0;
+		}
+
+		.navbar {
+			background: linear-gradient(to right, #fff5ee, #fffaf0);
+		}
+
+		.card {
+			border: none;
+			border-radius: 1rem;
+			background-color: #ffffff;
+		}
+
+		.form-label {
+			font-weight: 500;
+			color: #333;
+		}
+
+		.form-control {
+			border-radius: 0.5rem;
+		}
+
+		.btn-outline-secondary {
+			border-color: #29ab08;
+			color: #29ab08;
+		}
+
+		.btn-outline-secondary:hover {
+			background-color: #29ab08;
+			color: #fff;
+		}
+
+		h3 {
+			color: #2f4f4f;
+		}
+	</style>
+</head>
+
+<body style="margin-top: 80px; background-color: #fffaf0; color: #333;">
+
+	<!-- ヘッダー固定のための余白80px -->
+
+
+
+	<!--ヘッダーここからコピー-->
+
+	<body style="margin-top: 80px; background-color: #fffaf0; color: #333;">
+
+		<!-- ヘッダー固定のための余白80px -->
+
+
+		<header th:replace="header :: header"></header>
+
+		<div class="container mt-5">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<div class="card shadow-lg p-4 mt-3">
+						<div class="card-body">
+							<h3 class="card-title text-center mb-4">個人情報照会</h3>
+
+							<!-- 各情報項目 -->
+							<div class="mb-3">
+								<label class="form-label">ニックネーム</label>
+								<div class="input-group">
+									<input type="text" class="form-control" th:value="${user.name}" readonly>
+									<a th:href="@{/edit-name}" class="btn btn-outline-secondary">編集</a>
+								</div>
+							</div>
+
+							<!-- メールアドレス -->
+							<div class="mb-3">
+								<label class="form-label">メールアドレス</label>
+								<div class="input-group">
+									<input type="email" class="form-control" th:value="${user.mailaddress}" readonly>
+									<a th:href="@{/edit-email}" class="btn btn-outline-secondary">編集</a>
+								</div>
+							</div>
+
+							<!-- パスワード（ダミー表示のまま） -->
+							<div class="mb-3">
+								<label class="form-label">パスワード</label>
+								<div class="input-group">
+									<input type="password" class="form-control" value="********" readonly>
+									<a th:href="@{/edit-password}" class="btn btn-outline-secondary">編集</a>
+								</div>
+							</div>
+
+							<!-- 住所 -->
+							<div class="mb-3">
+								<label class="form-label">住所</label>
+								<div class="input-group">
+									<input type="text" class="form-control" th:value="${user.address}" readonly>
+									<a th:href="@{/edit-address}" class="btn btn-outline-secondary">編集</a>
+								</div>
+							</div>
+
+							<!-- 年齢 -->
+							<div class="mb-3">
+								<label class="form-label">年齢</label>
+								<div class="input-group">
+									<input type="text" class="form-control" th:value="${user.age}" readonly>
+									<a th:href="@{/edit-age}" class="btn btn-outline-secondary">編集</a>
+								</div>
+							</div>
+
+							<!-- 電話番号 -->
+							<div class="mb-3">
+								<label class="form-label">電話番号</label>
+								<div class="input-group">
+									<input type="text" class="form-control" th:value="${user.telephoneNumber}" readonly>
+									<a th:href="@{/edit-tel}" class="btn btn-outline-secondary">編集</a>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- フッター -->
+		<footer th:replace="footer :: footer"></footer>
+	</body>
+
+</html>

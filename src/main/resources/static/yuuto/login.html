@@ -148,11 +148,11 @@
 				<div class="card shadow-lg p-4">
 					<div class="card-body">
 						<h3 class="card-title text-center mb-4">ログイン</h3>
-						<form action="/login" method="post">
+						<form th:action="@{/login}" method="post">
 							<div class="mb-3">
-								<label for="email" class="form-label">メールアドレス</label>
-								<input type="email" class="form-control" id="email" name="email" required
-									placeholder="example@example.com">
+								<label for="username" class="form-label">名前</label>
+								<input type="text" class="form-control" id="username" name="username" required
+									placeholder="名前を入力">
 							</div>
 							<div class="mb-4">
 								<label for="password" class="form-label">パスワード</label>
@@ -167,7 +167,7 @@
 							</div>
 						</form>
 						<div class="d-grid">
-							<a href="/account_touroku.html" class="btn btn-outline-secondary btn-lg">新規登録はこちらから</a>
+							<a th:href="@{/account_touroku}" class="btn btn-outline-secondary btn-lg">新規登録はこちらから</a>
 						</div>
 					</div>
 				</div>

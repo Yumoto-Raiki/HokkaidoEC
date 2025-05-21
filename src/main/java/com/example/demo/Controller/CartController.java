@@ -60,7 +60,7 @@ public class CartController {
 		model.addAttribute("isComplete", true);
 		return "cart";
 	}
-	
+
 	public String updateCartInCount(int cartId, int count, Model model, HttpSession session) {
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
@@ -83,10 +83,10 @@ public class CartController {
 		model.addAttribute("isComplete", true);
 		return "";
 	}
+
 	@GetMapping("/showCart")
 	public String showCart(Model model, HttpSession session) {
-//		int userId = (int) session.getAttribute("userId");
-		int userId = 1;
+		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
 			return "home";

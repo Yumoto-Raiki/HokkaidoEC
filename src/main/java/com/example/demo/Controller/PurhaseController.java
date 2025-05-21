@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Model.DTO.CartDTO;
-import com.example.demo.Model.Dao.UserDAO;
+import com.example.demo.Model.Dao.AccountDao;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -18,9 +18,10 @@ public class PurhaseController {
 	@GetMapping
 	public String showPurhase(HttpSession session, Model model, @RequestParam("") List<CartDTO> cartDTOs) {
 		model.addAttribute("cartDTOs", cartDTOs);
-		UserDAO user = new UserDAO();
+		AccountDao acountDTO = new AccountDao();
 		int userId = (int) session.getAttribute("userId");
-		user.getUserInfo(userId);
+		model.addAttribute("acountDTO", acountDTO.getAccountInfo(userId));
+		model.addAttribute("cartDTOs", cartDTOs);
 		return "";
 
 	}

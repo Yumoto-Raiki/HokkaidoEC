@@ -78,17 +78,19 @@
 </style>
 <style>
 	.results-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start; /* ← 左詰め */
-  gap: 20px;
-  max-width: 1100px;
-  margin: 40px auto; /* ← 左右中央に配置 */
-  padding: 0 20px; /* ← 左右の余白 */
-  box-sizing: border-box;
-}
-
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		/* ← 左詰め */
+		gap: 20px;
+		max-width: 1100px;
+		margin: 40px auto;
+		/* ← 左右中央に配置 */
+		padding: 0 20px;
+		/* ← 左右の余白 */
+		box-sizing: border-box;
 	}
+
 </style>
 
 
@@ -226,8 +228,8 @@
 				onmouseover="this.style.color='#29ab08';" onmouseout="this.style.color='black';">キャンペーン</a>
 		</div>
 
-<!--検索結果（タイトル的な）-->
-<div style="
+		<!--検索結果（タイトル的な）-->
+		<div style="
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -236,124 +238,48 @@
   font-family: 'Helvetica Neue', sans-serif;
 ">
 
-  <!-- 左側：見出しと件数 -->
-  <div>
-    <h2 style="margin: 0; font-size: 24px; color: #333;">検索結果</h2>
-    <p style="margin: 5px 0 0; font-size: 14px; color: #666;">全4件</p>
-  </div>
+			<!-- 左側：見出しと件数 -->
+			<div>
+				<h2 style="margin: 0; font-size: 24px; color: #333;">検索結果</h2>
+				<p style="margin: 5px 0 0; font-size: 14px; color: #666;">全4件</p>
+			</div>
 
-  <!-- 右側：並び替えプルダウン -->
-  <div>
-    <label for="sortSelect" style="margin-right: 8px; font-size: 14px; color: #333;">並び替え：</label>
-    <select id="sortSelect" name="sort" style="
+			<!-- 右側：並び替えプルダウン -->
+			<div>
+				<label for="sortSelect" style="margin-right: 8px; font-size: 14px; color: #333;">並び替え：</label>
+				<select id="sortSelect" name="sort" style="
       padding: 6px 10px;
       font-size: 14px;
       border: 1px solid #ccc;
       border-radius: 4px;
       background-color: #fff;
     ">
-      <option value="new">新しい順</option>
-      <option value="price_high">価格順（高い順）</option>
-           <option value="orice_low">価格順（安い順）</option>
-      <option value="popular">人気順</option>
- 
-    </select>
-  </div>
+					<option value="new">新しい順</option>
+					<option value="price_high">価格順（高い順）</option>
+					<option value="orice_low">価格順（安い順）</option>
+					<option value="popular">人気順</option>
 
-</div>
+				</select>
+			</div>
+
+		</div>
 
 
 		<div class="results-container">
 			<!-- 商品カードたちをここに並べる -->
-			<a href="item1.html" class="item-link">
+			<a th:each="product : products" href="item1.html" class="item-link">
 				<div class="item-card" onmouseover="this.classList.add('hovered')"
 					onmouseout="this.classList.remove('hovered')">
 					<div class="item-image">
-						<img src="images/user_icon.png" alt="商品名">
-					</div>
-					<div class="item-title">
-						高級いちごジャムギフトセットおおおおおおおおおおおおおおおおおおおおおおおおおおおおおお
+						<img src="images/user_icon.png" alt="[[${product.name}]]">
 					</div>
 					<div class="item-price">
-						<span>¥3,200</span><span>（税込）</span>
+						<span"[[${product.price}]]" /span><span>（税込）</span>
 					</div>
 				</div>
 			</a>
 
-			<!--もう一個！-->
-			<div class="item-card" onmouseover="this.classList.add('hovered')"
-				onmouseout="this.classList.remove('hovered')">
-				<div class="item-image">
-					<img src="images/user_icon.png" alt="商品名">
-				</div>
-				<div class="item-title">
-					高級いちごジャムギフトセットおおおおおおおおおおおおおおおおおおおおおおおおおおおおおお
-				</div>
-				<div class="item-price">
-					<span>¥3,200</span><span>（税込）</span>
-				</div>
-			</div>
-			</a>
 
-			<!--もう一個！-->
-			<div class="item-card" onmouseover="this.classList.add('hovered')"
-				onmouseout="this.classList.remove('hovered')">
-				<div class="item-image">
-					<img src="images/user_icon.png" alt="商品名">
-				</div>
-				<div class="item-title">
-					高級いちごジャムギフトセットおおおおおおおおおおおおおおおおおおおおおおおおおおおおおお
-				</div>
-				<div class="item-price">
-					<span>¥3,200</span><span>（税込）</span>
-				</div>
-			</div>
-			</a>
-
-			<!--もう一個！-->
-			<div class="item-card" onmouseover="this.classList.add('hovered')"
-				onmouseout="this.classList.remove('hovered')">
-				<div class="item-image">
-					<img src="images/user_icon.png" alt="商品名">
-				</div>
-				<div class="item-title">
-					高級いちごジャムギフトセットおおおおおおおおおおおおおおおおおおおおおおおおおおおおおお
-				</div>
-				<div class="item-price">
-					<span>¥3,200</span><span>（税込）</span>
-				</div>
-			</div>
-			</a>
-
-			<!--もう一個！-->
-			<div class="item-card" onmouseover="this.classList.add('hovered')"
-				onmouseout="this.classList.remove('hovered')">
-				<div class="item-image">
-					<img src="images/user_icon.png" alt="商品名">
-				</div>
-				<div class="item-title">
-					高級いちごジャムギフトセットおおおおおおおおおおおおおおおおおおおおおおおおおおおおおお
-				</div>
-				<div class="item-price">
-					<span>¥3,200</span><span>（税込）</span>
-				</div>
-			</div>
-			</a>
-
-			<!--もう一個！-->
-			<div class="item-card" onmouseover="this.classList.add('hovered')"
-				onmouseout="this.classList.remove('hovered')">
-				<div class="item-image">
-					<img src="images/user_icon.png" alt="商品名">
-				</div>
-				<div class="item-title">
-					高級いちごジャムギフトセットおおおおおおおおおおおおおおおおおおおおおおおおおおおおおお
-				</div>
-				<div class="item-price">
-					<span>¥3,200</span><span>（税込）</span>
-				</div>
-			</div>
-			</a>
 
 
 		</div>

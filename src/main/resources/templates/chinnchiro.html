@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>チンチロ決済画面</title>
+
+	<style>
+		body {
+			font-family: "Segoe UI", sans-serif;
+			background-color: #f2f2f2;
+			text-align: center;
+			padding: 50px;
+		}
+
+		h1 {
+			color: #333;
+			margin-bottom: 30px;
+		}
+
+		form {
+			margin: 20px 0;
+		}
+
+		button {
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+			border-radius: 5px;
+			transition: background-color 0.3s;
+		}
+
+		button:hover {
+			background-color: #45a049;
+		}
+
+		p {
+			font-size: 18px;
+			color: #444;
+			margin: 10px 0;
+		}
+
+		.result {
+			background-color: #fff;
+			border-radius: 10px;
+			padding: 20px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			display: inline-block;
+			margin-top: 20px;
+		}
+
+		.error {
+			color: red;
+			font-weight: bold;
+		}
+
+		.dice-animation {
+			font-size: 40px;
+			margin: 20px 0;
+			display: none;
+			font-weight: bold;
+			color: #333;
+		}
+
+		@keyframes roll {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			25% {
+				transform: rotate(90deg);
+			}
+
+			50% {
+				transform: rotate(180deg);
+			}
+
+			75% {
+				transform: rotate(270deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		.dice-rolling {
+			display: inline-block;
+			animation: roll 1s ease-in-out infinite;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>チンチロリン 決済ゲーム</h1>
+
+	<form method="post" action="/roll" th:if="${canRoll}">
+		<button type="submit" id="rollButton">🎲 サイコロを振る</button>
+	</form>
+
+	<p th:if="${!canRoll}">すでにサイコロを振っています。</p>
+
+	<!-- サイコロ転がしのアニメーション -->
+	<p class="dice-animation" id="diceAnimation">🎲 </p>
+
+	<!--結果表示-->
+	<div th:if="${dice}">
+		<p>出目: [[${dice[0]}]], [[${dice[1]}]], [[${dice[2]}]]</p>
+		<p>金額: [[${disount}]]</p>
+	</div>
+
+	<p class="error" th:if="${error}" th:text="${error}"></p>
+
+	<form method="post" action="/gg">
+		<button type="submit"th:if="${!canRoll}">🚪 セッション削除</button>
+	</form>
+	
+	<form method="post" action="/payment">
+		<button type="submit"th:if="${!canRoll}">決済完了画面へ</button>
+	</form>
+
+	<script>
+		// サイコロを振るボタンをクリックしたときにアニメーションを表示
+		document.getElementById('rollButton').addEventListener('click', function (event) {
+			event.preventDefault();  // ボタンのデフォルトの動作（フォーム送信）を防ぐ
+			document.getElementById('diceAnimation').style.display = 'block';  // アニメーションを表示
+			document.getElementById('diceAnimation').classList.add('dice-rolling'); // アニメーションを開始
+
+			// フォームを送信してサイコロを振る
+			setTimeout(function () {
+				document.querySelector('form[action="/roll"]').submit();
+			}, 1000); // 1秒後にサイコロを振るフォームを送信
+		});
+
+		// サーバーから結果が返ってきたときにアニメーションを終了し、結果を表示
+		document.addEventListener('DOMContentLoaded', function () {
+			const result = document.getElementById('result');
+			const diceAnimation = document.getElementById('diceAnimation');
+
+			if (result.style.visibility === 'hidden' && diceAnimation.style.display === 'block') {
+				setTimeout(function () {
+					// サイコロ結果が表示されるのを待ってアニメーションを終了
+					diceAnimation.style.display = 'none';
+					result.style.visibility = 'visible';
+				}, 1500);  // アニメーションが終わってから結果を表示
+			}
+		});
+	</script>
+
+</body>
+
+</html>

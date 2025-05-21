@@ -1,9 +1,13 @@
 package com.example.demo.Controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.Model.DTO.ProductDTO;
 import com.example.demo.Model.Dao.ProductDao;
 import com.example.demo.Model.Enum.Category;
 import com.example.demo.Model.Enum.Sort;
@@ -14,19 +18,8 @@ public class ProductController {
 
 	IProduct iProduct;
 
-	/**
-	 * defaultのCategory
-	 */
-	private Category defaultShowCategory;
-	/**
-	 * defaultのSort
-	 */
-	private Sort defaultSort;
-
 	public ProductController() {
 
-		this.defaultShowCategory = Category.魚介;
-		this.defaultSort = Sort.PRICE_ASC;
 		iProduct = new ProductDao();
 
 	}
@@ -41,42 +34,36 @@ public class ProductController {
 	@GetMapping("/productListShow")
 	public String productListShow(Model model) {
 
-		// 人気順の商品リスト
-		model.addAttribute("productsFavorite", iProduct.productfavoriteShow());
-		System.out.println("人気リスト");
-		// 新着順の商品リスト
-		model.addAttribute("productsNewdate", iProduct.newproductShow());
-		System.out.println("新着リスト");
+		model.addAttribute("productsfavorite", iProduct.productfavoriteShow());
+		model.addAttribute("productsnewdate", iProduct.newproductShow());
+		//FIXME: なぜかビューでcategory.labelでエラーになってしまう
+		// model.addAttribute("categories", Category.values());
 
 		// もどるHTMｌ
-		return "home.html";
+		return "home";
 
 	}
 
 	//指定したカテゴリーの一覧を取得してHTMLに渡す
-	@GetMapping("/serchProduct")
-	public String serchProductListShow(Category category, Sort sort, Model model) {
-		model.addAttribute("products", iProduct.searchProduct(category, sort));
-		return "product";
+	@GetMapping("/searchProduct")
+	public String serchProductListShow(@RequestParam("category") Category category, @RequestParam("sort") Sort sort,
+			Model model) {
+		List<ProductDTO> products = iProduct.searchProduct(category, sort);
+		model.addAttribute("products", products);
+		model.addAttribute("category", category);
+		return "search";
 	}
 
-	//商品の並び替えをしてHTMLに渡す
-	//カテゴリー別も検索もSortがあるからいらないかも？
-	@GetMapping("/changeSort")
-	public String changeSort(String sort, Model model) {
-
-		try {
-			// Enumのなかみと一致するときEnumに変換
-			Sort day = Sort.valueOf(sort);
-
-		} catch (IllegalArgumentException e) {
-			System.out.println("指定された文字列は有効なDayではありません: " + sort);
-			return "";
-		}
-		// 取得したEnumで検索
-
-		return "";
-	}
+	//	//商品の並び替えをしてHTMLに渡す
+	//	//カテゴリー別も検索もSortがあるからいらないかも？
+	//	@GetMapping("/changeSort")
+	//	public String changeSort(@RequestParam("productDTO") List<ProductDTO> productDTO, @RequestParam("sort") Sort sort,
+	//			Model model) {
+	//
+	//		// 取得したEnumで検索
+	//
+	//		return "";
+	//	}
 
 	//商品を検索して取得したデータをHTMLに渡す
 	@GetMapping("/serchProductText")
