@@ -120,6 +120,7 @@
 </head>
 
 <body>
+	<header th:replace="header::header"></header>
 	<div class="history-container">
 		<h2>購入履歴</h2>
 
@@ -127,18 +128,18 @@
 		<div class="purchase-item">
 			<img src="https://drive.google.com/uc?export=view&id=1TQ-2TcsT9IwFSv2fS_ND6ROMNwbiTNSc" alt="商品画像" />
 			<div class="item-details">
-				<div th:each="c : ${products}">
+				<div th:each="history : ${histories}">
 					<p>
-						商品名：<span th:text="${c.productDTO.name}"></span>
+						商品名：<span th:text="${history.product.name}"></span>
 					</p>
 					<p>
-						価格：<span th:text="${c.productDTO.price}"></span>円
+						価格：<span th:text="${history.product.price}"></span>円
 					</p>
 					<p>
-						個数：<span th:text="${c.count}"></span>
+						個数：<span th:text="${history.count}"></span>
 					</p>
 					<p>
-						購入日：<span th:text="${c.buydate}"></span>
+						購入日：<span th:text="${history.buydate}"></span>
 					</p>
 
 					<div class="review-box">

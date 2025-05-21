@@ -8,6 +8,8 @@ public class HistoryDTO {
 	private int count;
 	private LocalDateTime buydate;
 
+	private ProductDTO product;
+
 	public int getUserId() {
 		return userId;
 	}
@@ -38,6 +40,14 @@ public class HistoryDTO {
 
 	public void setBuydate(LocalDateTime buydate) {
 		this.buydate = buydate;
+	}
+
+	public ProductDTO getProduct() {
+		return product;
+	}
+
+	public void setProduct(ProductDTO product) {
+		this.product = product;
 	}
 
 }
