@@ -136,7 +136,10 @@
     </div>
 
     <div class="confirm-buttons">
+	<form method="post" action="/payment">
+		<input type="hidden" name="totalPrice" th:value="4000" />
       <button id="confirmOrder">ご注文を確定</button>
+	</form>
       <form method="get" action="/chinnchiroStrat">
       <button type="submit">ご注文を確定ちんちろ～！</button>
       </form>
@@ -146,13 +149,6 @@
       <button class="back-button" onclick="history.back()">戻る</button>
     </div>
   </div>
-
-  <script>
-    document.getElementById('confirmOrder').addEventListener('click', function(event) {
-      event.preventDefault();
-      window.location.href = 'thankyou.html';
-    });
-  </script>
 </body>
 </html>
 

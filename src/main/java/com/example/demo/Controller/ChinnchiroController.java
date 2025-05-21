@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Model.Dao.ChinnchiroDao;
 
@@ -15,8 +16,13 @@ public class ChinnchiroController {
 	//最初に呼ばれるチンチロ
 	@GetMapping("/chinnchiroStrat")
 	public String chinnchiroStrat(Model model, HttpSession session) {
-		session.setAttribute("userId", 2);
-		//		session.setAttribute("rolled", false);
+		System.out.println(session.getAttribute("userId"));
+
+		//テスト用でsessionにuserIdが入っていなかったら1を入れる
+		if (session.getAttribute("userId") == null) {
+			session.setAttribute("userId", 1);
+		}
+		session.setAttribute("rolled", false);
 		Boolean rolled = (Boolean) session.getAttribute("rolled");
 		System.out.println(rolled);
 		//振ったことがあるか判定
@@ -32,10 +38,11 @@ public class ChinnchiroController {
 	@PostMapping("/roll")
 	public String chinnchiroRoll(Model model, HttpSession session) {
 
-		int userid = (int) session.getAttribute("userId");
-		if (userid == 0) {
-			userid = 2;
+		//テスト用でsessionにuserIdが入っていなかったら1を入れる
+		if (session.getAttribute("userId") == null) {
+			session.setAttribute("userId", 1);
 		}
+		int userid = (int) session.getAttribute("userId");
 		Boolean rolled = (Boolean) session.getAttribute("rolled");
 		//振ったことがあるか判定
 		if (rolled != null && rolled) {
@@ -67,10 +74,10 @@ public class ChinnchiroController {
 	}
 
 	@PostMapping("/payment")
-	public String paymentCompleted(/*@RequestParam("disount") int totalamount,*/ Model model, HttpSession session) {
+	public String paymentCompleted(@RequestParam("totalPrice") double totalPrice, Model model, HttpSession session) {
 		session.setAttribute("rolled", false);
-		//		model.addAttribute("total", totalamount);
-
+		model.addAttribute("total", (int) totalPrice);
+		System.out.println(totalPrice);
 		return "order_completed";
 	}
 

@@ -1,13 +1,10 @@
 package com.example.demo.Controller;
 
-import java.util.List;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.Model.DTO.CartDTO;
 import com.example.demo.Model.Dao.CartDao;
 import com.example.demo.Model.intarface.ICart;
 
@@ -32,15 +29,14 @@ public class CartController {
 			Model model, // 画面（HTMLなど）にデータを渡すための入れ物
 			@RequestParam("productId") int productId, // リクエストパラメータ（商品ID）→ ""の中に名前が必要
 			@RequestParam("count") int count, // リクエストパラメータ（個数）→ ""の中に名前が必要
-			HttpSession session // ユーザー情報を一時的に保存しておくセッション
-	) {
+			HttpSession session) {
 		// セッションからユーザーIDを取り出す
 		int userId = (int) session.getAttribute("userId");
 
 		// ユーザーIDが0（ログインしていないなど）の場合、失敗として処理
 		if (userId == 0) {
 			model.addAttribute("isComplete", false); // カート追加が失敗したことを画面に渡す
-			return ""; // どの画面を表示するか指定されていない（要修正）
+			return "redirect:/productShow"; // どの画面を表示するか指定されていない（要修正）
 		}
 
 		// カートに商品を追加（データベースに追加）
@@ -49,7 +45,7 @@ public class CartController {
 		// 成功したことを画面に渡す（"isComplete"という名前でtrueを渡す）
 		model.addAttribute("isComplete", true);
 
-		return "product"; // 表示するビュー名（画面）を返す必要がある（例："cartView"）
+		return "redirect:/productShow?productId=" + productId; // 表示するビュー名（画面）を返す必要がある（例："cartView"）
 	}
 
 	@GetMapping("/removeProductToCart")
@@ -90,13 +86,12 @@ public class CartController {
 
 	@GetMapping("/showCart")
 	public String showCart(Model model, HttpSession session) {
-		int userId = (int) session.getAttribute("userId");
-		//		int userId = 1;
-		if (userId == 0) {
-			model.addAttribute("isComplete", false);
-			return "cart";
+		Integer userId = (Integer) session.getAttribute("userId");
+
+		if (userId == null || userId == 0) {
+			return "redirect:/login";
 		}
-		List<CartDTO> cartsCartDTOs = iCart.getCart(userId);
+
 		model.addAttribute("products", iCart.getCart(userId));
 		model.addAttribute("isComplete", true);
 		return "cart";
