@@ -152,11 +152,7 @@
 
 
 
-
-
-
-
-
+	<header th:replace="header :: header"></header>
 	<div class="cart-container">
 		<h2 class="mb-4">ショッピングカート</h2>
 
@@ -184,11 +180,11 @@
 			}
 
 			const baseSum = calculateSum();
-			document.getElementById('total1').textContent = baseSum+"円";
+			document.getElementById('total1').textContent = baseSum + "円";
 			const postage = 1000;
-			document.getElementById('postage').textContent = postage+"円";
+			document.getElementById('postage').textContent = postage + "円";
 			const finalSum = baseSum + postage;
-			document.getElementById('total2').textContent = finalSum+"円";
+			document.getElementById('total2').textContent = finalSum + "円";
 		</script>
 
 
