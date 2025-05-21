@@ -53,9 +53,10 @@
 			ご注文内容はご注文履歴からご確認いただけます。</p>
 		<p class="amount" th:text="'ご購入金額：¥' + ${total}">ご購入金額：¥4,800</p>
 		<p class="point'" th:text="'獲得ポイント数：' + ${total} / 100">獲得ポイント数：48ポイント</p>
+		<h1>残り秒数: <span id="countdown">5</span>秒</h1>
 	</div>
 
-	<h1>残り秒数: <span id="countdown">5</span>秒</h1>
+	
 	<script>
 		let seconds = 5;
 		const countdownElement = document.getElementById('countdown');
