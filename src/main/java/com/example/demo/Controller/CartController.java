@@ -53,17 +53,16 @@ public class CartController {
 	}
 
 	@GetMapping("/removeProductToCart")
-	public String removeProductToCart(Model model, @RequestParam("products") List<CartDTO> products,
+	public String removeProductToCart(Model model,
 			@RequestParam("cartId") int cartId, HttpSession session) {
 		int userId = (int) session.getAttribute("userId");
-		model.addAttribute("products", products);
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
-			return "cart";
+			return "redirect:/showCart";
 		}
 		iCart.removeProductToCart(cartId);
 		model.addAttribute("isComplete", true);
-		return "cart";
+		return "redirect:/showCart";
 	}
 
 	public String updateCartInCount(int cartId, int count, Model model, HttpSession session) {
