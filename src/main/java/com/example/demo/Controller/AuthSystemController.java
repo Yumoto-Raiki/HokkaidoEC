@@ -26,7 +26,7 @@ public class AuthSystemController {
 
 		if (iAuthSystem.login(userName, pass) != 0) {
 			session.setAttribute("userId", iAuthSystem.login(userName, pass));
-			return "home";
+			return "redirect:/productListShow";
 		} else {
 			return "login";
 		}
@@ -35,7 +35,7 @@ public class AuthSystemController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("userId");
-		return "home";
+		return "redirect:/productListShow";
 	}
 
 	@GetMapping("/login")
@@ -56,20 +56,11 @@ public class AuthSystemController {
 		return "account";
 	}
 
-	//	@GetMapping("/home")
-	//	public String home() {
-	//		return "home";
-	//	}
+	@GetMapping("/account/delete")
+	public String delete() {
+		return "account-delete";
+	}
 
-	//	@GetMapping("/account/delete")
-	//	public String delete() {
-	//		return "account-delete";
-	//	}
-
-	//	@PostMapping("/logout")
-	//	public String logout() {
-	//		return "home";
-	//
 	//	}
 
 }

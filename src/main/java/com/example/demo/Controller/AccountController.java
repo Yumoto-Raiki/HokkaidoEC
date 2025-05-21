@@ -37,7 +37,7 @@ public class AccountController {
 
 		httpSession.setAttribute("userId", myId);
 
-		return "home";
+		return "redirect:/productListShow";
 
 	}
 
@@ -50,7 +50,7 @@ public class AccountController {
 		int userId = (int) httpSession.getAttribute("userId");
 		iAccount.removeAAccount(userId);
 		httpSession.removeAttribute("userId");
-		return "home";
+		return "redirect:/productListShow";
 
 	}
 
