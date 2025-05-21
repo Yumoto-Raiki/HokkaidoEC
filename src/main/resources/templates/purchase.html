@@ -166,13 +166,13 @@
 		<p th:if="${#lists.size(products) <= 0}">カートに商品がありません。</p>
 
 		<ul id="item-list">
-			<li th:each="product : ${products}" th:text="${product.productDTO.price}" class="price-value"></li>
+			<li th:each="product : ${products}" th:text="${product.productDTO.price}+'円'" class="price-value"></li>
 		</ul>
 
 		<div class="summary-box">
-			<div class="summary-row">商品合計金額 <span id="total1">0</span>円</div>
-			<div class="summary-row">配送料 <span>1000</span>円</div>
-			<div class="total-box">お支払い合計金額 <span id="total2">0</span>円</div>
+			<div class="summary-row">商品合計金額 <span id="total1">0</span></div>
+			<div class="summary-row">配送料 <span id="postage">1000円</span></div>
+			<div class="total-box">お支払い合計金額 <span id="total2">0</span></div>
 		</div>
 
 		<script>
@@ -184,10 +184,11 @@
 			}
 
 			const baseSum = calculateSum();
-			document.getElementById('total1').textContent = baseSum;
-
-			const finalSum = baseSum + 1000;
-			document.getElementById('total2').textContent = finalSum;
+			document.getElementById('total1').textContent = baseSum+"円";
+			const postage = 1000;
+			document.getElementById('postage').textContent = postage+"円";
+			const finalSum = baseSum + postage;
+			document.getElementById('total2').textContent = finalSum+"円";
 		</script>
 
 
