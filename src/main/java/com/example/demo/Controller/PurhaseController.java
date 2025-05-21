@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class PurhaseController {
 
-	@GetMapping
+	@GetMapping("/showPurhase")
 	public String showPurhase(HttpSession session, Model model, @RequestParam("") List<CartDTO> cartDTOs) {
 		model.addAttribute("cartDTOs", cartDTOs);
 		AccountDao acountDTO = new AccountDao();

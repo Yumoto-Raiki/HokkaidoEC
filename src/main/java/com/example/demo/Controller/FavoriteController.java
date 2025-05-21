@@ -1,4 +1,4 @@
-
+package com.example.demo.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +37,7 @@ public class FavoriteController {
 		return "/favorite";
 	}
 
+	@GetMapping("/removeProductToFavorite")
 	public String removeProductToFavorite(@RequestParam("") int facvoriteId, HttpSession session, Model model) {
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
@@ -48,6 +49,7 @@ public class FavoriteController {
 		return "/favorite";
 	}
 
+	@GetMapping("/clearFavorite")
 	public String clearFavorite(Model model, HttpSession session) {
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
@@ -59,16 +61,17 @@ public class FavoriteController {
 		return "/favorite";
 
 	}
-@GetMapping("/showFavorite") 
-//	public String showFavorite(HttpSession session, Model model) {
-public String showFavorite( Model model) {
-//	int userId = (int) session.getAttribute("userId");
-	int userId = 1;
+
+	@GetMapping("/showFavorite")
+	//	public String showFavorite(HttpSession session, Model model) {
+	public String showFavorite(Model model) {
+		//	int userId = (int) session.getAttribute("userId");
+		int userId = 1;
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
 			return "favorite";
 		}
-		
+
 		model.addAttribute("products", iFavorite.getFavorite(userId));
 		model.addAttribute("isComplete", true);
 		return "favorite";
