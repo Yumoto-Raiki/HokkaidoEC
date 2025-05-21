@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
-
+ 
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,7 +13,7 @@
 			margin: 0;
 			padding: 0;
 		}
-
+ 
 		.container {
 			max-width: 960px;
 			margin: 40px auto;
@@ -22,18 +22,18 @@
 			border-radius: 12px;
 			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 		}
-
+ 
 		h1 {
 			font-size: 24px;
 			margin-bottom: 24px;
 			border-bottom: 2px solid #ddd;
 			padding-bottom: 10px;
 		}
-
+ 
 		.section {
 			margin-bottom: 30px;
 		}
-
+ 
 		.section-title {
 			font-weight: bold;
 			margin-bottom: 10px;
@@ -41,50 +41,50 @@
 			border-left: 4px solid #29ab08;
 			padding-left: 10px;
 		}
-
+ 
 		.info-box {
 			border: 1px solid #e0dccc;
 			border-radius: 8px;
 			padding: 16px;
 			background-color: #faf9f5;
 		}
-
+ 
 		.info-row {
 			margin-bottom: 10px;
 		}
-
+ 
 		.info-label {
 			font-weight: bold;
 			color: #555;
 			margin-right: 6px;
 		}
-
+ 
 		.order-summary {
 			border-top: 1px dashed #ccc;
 			margin-top: 20px;
 			padding-top: 10px;
 		}
-
+ 
 		.order-item {
 			display: flex;
 			justify-content: space-between;
 			padding: 6px 0;
 		}
-
+ 
 		.order-total {
 			font-weight: bold;
 			font-size: 18px;
 			text-align: right;
 			margin-top: 10px;
 		}
-
+ 
 		.confirm-buttons {
 			display: flex;
 			justify-content: center;
 			gap: 20px;
 			margin-top: 30px;
 		}
-
+ 
 		.confirm-buttons button {
 			padding: 10px 20px;
 			font-size: 16px;
@@ -96,17 +96,17 @@
 			/* 透明度0.6 */
 			transition: background-color 0.2s ease;
 		}
-
+ 
 		.confirm-buttons button:hover {
 			background-color: rgba(41, 171, 8, 1);
 			/* ホバー時は元の緑色 */
 		}
-
+ 
 		.back-button-container {
 			text-align: center;
 			margin-top: 20px;
 		}
-
+ 
 		.back-button {
 			padding: 10px 24px;
 			font-size: 16px;
@@ -118,9 +118,71 @@
 		}
 	</style>
 </head>
-
+ 
 <body>
-
+	<div class="container">
+		<h1>ご注文内容の確認</h1>
+ 
+		<div class="section">
+			<div class="section-title">お届け先情報</div>
+			<div class="info-box">
+				<div class="info-row"><span class="info-label">お名前：</span>[[${accountShowDTO.name}]]</div>
+				<div class="info-row"><span class="info-label">住所：</span>[[${accountShowDTO.address}]]</div>
+				<div class="info-row"><span class="info-label">電話番号：</span>[[${accountShowDTO.telephoneNumber}]]</div>
+			</div>
+		</div>
+ 
+		<div class="section">
+			<div class="section-title">お支払方法</div>
+			<div class="info-box">
+				<div class="info-row"><span class="info-label">クレジットカード</span></div>
+			</div>
+		</div>
+ 
+		<div class="section">
+			<div class="section-title">ご注文商品</div>
+ 
+			<div class="info-box order-summary" th:each="product : ${products}">
+				<div class="order-item"><span th:text="${product.productDTO.name}"></span>
+					<span class="price-value" th:text="${product.productDTO.price}+'円'">¥1,200</span>
+				</div>
+ 
+			</div>
+			<div class="order-item"><span>送料</span><span id="total1">0</span></div>
+			<div class="order-total">合計金額：¥<span id="total">0</span></div>
+ 
+		</div>
+ 
+		<div class="confirm-buttons">
+			<form method="post" action="/payment">
+				<input type="hidden" name="totalPrice" th:value="4000" />
+				<button id="confirmOrder">ご注文を確定</button>
+			</form>
+			<form method="get" action="/chinnchiroStrat">
+				<button type="submit">ご注文を確定ちんちろ～！</button>
+			</form>
+		</div>
+ 
+		<div class="back-button-container">
+			<button class="back-button" onclick="history.back()">戻る</button>
+		</div>
+	</div>
+ 
+	<script>
+		function calculateSum() {
+			const values = document.querySelectorAll('.price-value');
+			let sum = 0;
+			values.forEach(el => {sum += parseInt(el.textContent, 10) || 0;});
+			return sum;
+		}
+ 
+		const baseSum = calculateSum();
+		document.getElementById('total1').textContent = baseSum + "円";
+		const postage = 1000;
+		document.getElementById('postage').textContent = postage + "円";
+		const finalSum = baseSum + postage;
+		document.getElementById('total2').textContent = finalSum + "円";
+	</script>
 </body>
-
+ 
 </html>
