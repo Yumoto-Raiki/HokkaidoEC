@@ -47,7 +47,7 @@ public class AuthSystemController {
 
 	@GetMapping("/account")
 	public String bb(Model model) {
-		model.addAttribute("user.name", " ゆうと");
+		//		model.addAttribute("user.name", " ゆうと");
 
 		return "account";
 
