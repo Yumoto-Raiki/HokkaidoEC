@@ -50,7 +50,7 @@ public class AccountController {
 		int userId = (int) httpSession.getAttribute("userId");
 		iAccount.removeAAccount(userId);
 		httpSession.removeAttribute("userId");
-		return "/productListShow";
+		return "home";
 
 	}
 
