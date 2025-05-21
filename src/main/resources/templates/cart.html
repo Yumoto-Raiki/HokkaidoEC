@@ -133,7 +133,6 @@
   </p>
   <form th:action = "@{/removeProductToCart}" method="get">
   <input type hidden name="cartId" th:value = "${c.cartId}">
-  <input type hidden name="products" th:value = "${c}">
    <button class="btn-buy">削除</button>
   </form>
   
