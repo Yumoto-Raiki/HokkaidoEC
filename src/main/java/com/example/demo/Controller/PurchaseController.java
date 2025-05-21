@@ -20,9 +20,9 @@ public class PurchaseController {
 		IAccount iAccount = new AccountDao();
 		ICart iCart = new CartDao();
 		int userId = (int) session.getAttribute("userId");
-		model.addAttribute("acountShowDTO", iAccount.getAccountInfo(userId));
+		model.addAttribute("accountShowDTO", iAccount.getAccountInfo(userId));
 		model.addAttribute("products", iCart.getCart(userId));
-		return "purchase";
+		return "gochumon_kakunin";
 
 	}
 

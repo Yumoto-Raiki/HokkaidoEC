@@ -110,7 +110,7 @@ public class CartDao extends DBConectDao implements ICart {
 
 			while (rs.next()) {
 				CartDTO dto = new CartDTO();
-				dto.setCartId(rs.getInt("id") );
+				dto.setCartId(rs.getInt("id"));
 				//カート情報(個数など)をcartDtoにセット
 				dto.setCount(rs.getInt("item_count"));
 				ProductDTO product = new ProductDTO();
@@ -166,7 +166,8 @@ public class CartDao extends DBConectDao implements ICart {
 	public static void main(String[] args) {
 		// CartDaoのインスタンスを作成
 		CartDao test = new CartDao();
-		System.out.println(test.getCart(1));
+		//		System.out.println(test.getCart(1));
+		System.out.println(test.getCart(19));
 
 		//		System.out.println(test.sumPrice());
 	}
