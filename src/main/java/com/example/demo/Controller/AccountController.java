@@ -81,4 +81,16 @@ public class AccountController {
 
 	}
 
+	@GetMapping("/AccountShow2")
+	public String AccountShow(HttpSession session, Model model) {
+		Integer userId = (Integer) session.getAttribute("userId");
+
+		AccountDao dao = new AccountDao();
+		AccountShowDTO user = dao.getAccountInfo(userId);
+
+		model.addAttribute("user", user);
+		System.out.println(userId);
+		return "humanfile"; // 個人情報画面のhtml（humanfile.html）を表示
+
+	}
 }
