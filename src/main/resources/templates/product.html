@@ -180,7 +180,7 @@
 
 
 
-						<form th:action="@{'/addProductToCart'}" method="get">
+						<form th:action="@{/addProductToCart}" method="get">
 							<div class="row mb-3 align-items-center gx-2">
 
 								<label for="quantity" class="col-auto col-form-label">数量をご入力ください：</label>
@@ -199,9 +199,9 @@
 								</button>
 						</form>
 
-						<form th:action="@{'/addProductToFavorite'}" method="get">
+						<form th:action="@{/FavoriteController}" method="get">
 							<input type="hidden" name="productId" th:value="${product.productId}">
-							<button type="submitn" class="btn-fav" id="favBtn" aria-label="お気に入りに追加" title="お気に入り">
+							<button type="submit" class="btn-fav" id="favBtn" aria-label="お気に入りに追加" title="お気に入り">
 								<i class="bi bi-heart-fill"></i>
 							</button>
 						</form>
