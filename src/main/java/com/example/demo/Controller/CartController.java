@@ -29,8 +29,7 @@ public class CartController {
 			Model model, // 画面（HTMLなど）にデータを渡すための入れ物
 			@RequestParam("productId") int productId, // リクエストパラメータ（商品ID）→ ""の中に名前が必要
 			@RequestParam("count") int count, // リクエストパラメータ（個数）→ ""の中に名前が必要
-			HttpSession session // ユーザー情報を一時的に保存しておくセッション
-	) {
+			HttpSession session) {
 		// セッションからユーザーIDを取り出す
 		int userId = (int) session.getAttribute("userId");
 
@@ -46,7 +45,7 @@ public class CartController {
 		// 成功したことを画面に渡す（"isComplete"という名前でtrueを渡す）
 		model.addAttribute("isComplete", true);
 
-		return "redirect:/productShow"; // 表示するビュー名（画面）を返す必要がある（例："cartView"）
+		return "redirect:/productShow?productId=" + productId; // 表示するビュー名（画面）を返す必要がある（例："cartView"）
 	}
 
 	@GetMapping("/removeProductToCart")
