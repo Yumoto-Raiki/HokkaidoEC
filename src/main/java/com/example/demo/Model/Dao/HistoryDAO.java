@@ -55,7 +55,7 @@ public class HistoryDAO extends DBConectDao {
 	public static void main(String[] args) {
 		HistoryDAO test = new HistoryDAO();
 		List<HistoryDTO> histories = test.historyShow(2);
-		System.out.println(histories.get(0).getBuydate());
+	
 
 	}
 }
