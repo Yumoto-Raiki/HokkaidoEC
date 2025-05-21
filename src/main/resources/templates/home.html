@@ -403,7 +403,7 @@
 				</style>
 				<!-- 商品カードここから、表示させたい商品の数分コピペします。 -->
 				<li th:each="product, stat : ${productsfavorite}">
-					<a href="item1.html" class="item-link">
+					<a th:href="@{'/productShow?productId=' + ${product.productId}}" class="item-link">
 						<div th:switch="${stat.index}">
 
 							<div th:case="0" class="item-card gold-border" onmouseover="this.classList.add('hovered')"
