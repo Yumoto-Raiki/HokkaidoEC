@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Model.Dao.ChinnchiroDao;
 
@@ -17,8 +16,9 @@ public class ChinnchiroController {
 	@GetMapping("/chinnchiroStrat")
 	public String chinnchiroStrat(Model model, HttpSession session) {
 		session.setAttribute("userId", 2);
-		session.setAttribute("rolled", false);
+		//		session.setAttribute("rolled", false);
 		Boolean rolled = (Boolean) session.getAttribute("rolled");
+		System.out.println(rolled);
 		//振ったことがあるか判定
 		if (rolled != null && rolled) {
 			model.addAttribute("canRoll", false);
@@ -67,11 +67,11 @@ public class ChinnchiroController {
 	}
 
 	@PostMapping("/payment")
-	public String paymentCompleted(@RequestParam("disount") int totalamount, Model model, HttpSession session) {
+	public String paymentCompleted(/*@RequestParam("disount") int totalamount,*/ Model model, HttpSession session) {
 		session.setAttribute("rolled", false);
-		model.addAttribute("total", totalamount);
+		//		model.addAttribute("total", totalamount);
 
-		return "thankyou";
+		return "order_completed";
 	}
 
 }

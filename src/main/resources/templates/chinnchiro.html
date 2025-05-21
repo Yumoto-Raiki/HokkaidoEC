@@ -15,11 +15,6 @@
 			padding: 50px;
 			margin: 0;
 
-			font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
-			background: #f0f0f0;
-			text-align: center;
-			padding: 50px;
-			margin: 0;
 		}
 
 		/* タイトル */
@@ -119,13 +114,17 @@
 		}
 
 		.image-container {
-			position: fixed;
-			bottom: 0;
-			left: 0;
-			width: 100%;
-			text-align: center;
-			/* 画像をセンタリング */
+			position: relative;
+			margin-top: 50px;
+			text-align: right;
 		}
+
+		.image-container_a {
+			position: relative;
+			width: 20%;
+			margin-top: 0px;
+		}
+
 
 		.bottom-image {
 			max-width: 100%;
@@ -172,22 +171,41 @@
 
 		<div class="dice-image-container">
 			<img src="images/saikoro_1.png" alt="saikoro" class="dice-image" th:if="${dice.dice[0]} == 1">
+			<img src="images/saikoro_2.png" alt="saikoro" class="dice-image" th:if="${dice.dice[0]} == 2">
+			<img src="images/saikoro_3.png" alt="saikoro" class="dice-image" th:if="${dice.dice[0]} == 3">
+			<img src="images/saikoro_4.png" alt="saikoro" class="dice-image" th:if="${dice.dice[0]} == 4">
+			<img src="images/saikoro_5.png" alt="saikoro" class="dice-image" th:if="${dice.dice[0]} == 5">
+			<img src="images/saikoro_6.png" alt="saikoro" class="dice-image" th:if="${dice.dice[0]} == 6">
+
+			<img src="images/saikoro_1.png" alt="saikoro" class="dice-image" th:if="${dice.dice[1]} == 1">
 			<img src="images/saikoro_2.png" alt="saikoro" class="dice-image" th:if="${dice.dice[1]} == 2">
+			<img src="images/saikoro_3.png" alt="saikoro" class="dice-image" th:if="${dice.dice[1]} == 3">
+			<img src="images/saikoro_4.png" alt="saikoro" class="dice-image" th:if="${dice.dice[1]} == 4">
+			<img src="images/saikoro_5.png" alt="saikoro" class="dice-image" th:if="${dice.dice[1]} == 5">
+			<img src="images/saikoro_6.png" alt="saikoro" class="dice-image" th:if="${dice.dice[1]} == 6">
+
+			<img src="images/saikoro_1.png" alt="saikoro" class="dice-image" th:if="${dice.dice[2]} == 1">
+			<img src="images/saikoro_2.png" alt="saikoro" class="dice-image" th:if="${dice.dice[2]} == 2">
 			<img src="images/saikoro_3.png" alt="saikoro" class="dice-image" th:if="${dice.dice[2]} == 3">
+			<img src="images/saikoro_4.png" alt="saikoro" class="dice-image" th:if="${dice.dice[2]} == 4">
+			<img src="images/saikoro_5.png" alt="saikoro" class="dice-image" th:if="${dice.dice[2]} == 5">
+			<img src="images/saikoro_6.png" alt="saikoro" class="dice-image" th:if="${dice.dice[2]} == 6">
 		</div>
 
 
 		<!-- 金額表示（discount × sum） -->
+		<p th:text="'金額: ' + (${dice.sum})"></p>
+		↓
 		<p th:text="'金額: ' + (${dice.discount} * ${dice.sum})"></p>
 	</div>
 
 	<!-- エラーメッセージ表示 -->
 	<p class="error" th:if="${error}" th:text="${error}"></p>
 
-	<!-- セッションをリセットするボタン（テストや再挑戦用） -->
-	<form method="post" action="/gg">
+	<!-- セッションをリセットするボタン（テスト用） -->
+	<!--<form method="post" action="/gg">
 		<button type="submit" th:if="${!canRoll}">🚪 セッション削除</button>
-	</form>
+	</form>-->
 
 	<!-- 決済完了画面への遷移ボタン -->
 	<form method="post" action="/payment">
@@ -198,6 +216,11 @@
 	<div class="image-container">
 		<img src="images/kaizi_zawazawa.png" alt="カイジ画像" class="bottom-image">
 	</div>
+
+	<div class="image-container_a">
+		<img src="images/kaizi_hanntyou.webp" alt="カイジ画像" class="bottom-image">
+	</div>
+
 
 	<!-- JavaScript：サイコロアニメーションと遅延送信処理 -->
 	<script>

@@ -113,5 +113,4 @@ public class ChinnchiroDao extends DBConectDao {
 		//		System.out.println(chinchiro.ChinchiroGame());
 		System.out.println(chinnchiro.ChinchiroGame(2));
 	}
-
 }
