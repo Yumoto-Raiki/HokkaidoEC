@@ -16,6 +16,7 @@ public class AccountDao extends DBConectDao implements IAccount {
 	 * @return
 	 */
 	public int addAAccount(AccountAddDTO accountAddDTO) {
+
 		int id = 0;
 
 		// データベースに接続する（親クラスのメソッド）
@@ -43,6 +44,9 @@ public class AccountDao extends DBConectDao implements IAccount {
 			System.out.println(e);
 		}
 
+		// DB切断
+		close();
+
 		return id;
 
 	}
@@ -65,6 +69,9 @@ public class AccountDao extends DBConectDao implements IAccount {
 			System.out.println(e); // エラー表示
 		}
 
+		// DB切断
+		close();
+
 	}
 
 	/**
@@ -72,26 +79,22 @@ public class AccountDao extends DBConectDao implements IAccount {
 	 * @return
 	 */
 	public void updateAAccount(int userId, AccountUpdateDTO accountUpdateDTO) {
-		//		connect();
-		//		String sql = "update hba2025_3.user set name=? age=? address=?  where id=?";
-		//		try (PreparedStatement ps = con.prepareStatement(sql)) {
-		//			ps.setInt(1, accountDTO.);// 削除するカートのIDを指定
-		//			ps.setInt(2, cartId);// 削除するカートのIDを指定
-		//			ps.executeUpdate(); // 実行（削除）
-		//		} catch (SQLException e) {
-		//			System.out.println(e); // エラー表示
-		//		}
-		//
-		//		// DB切断
-		//		close();
-	}
 
-	/**
-	 * アカウント情報を取得
-	 * @return
-	 */
-	public void AccountShow() {
+		connect();
 
+		String sql = "update hba2025_3.users set name=?,age=?,address=?  where id=?";
+		try (PreparedStatement ps = con.prepareStatement(sql)) {
+			ps.setString(1, accountUpdateDTO.getName());// 名前
+			ps.setInt(2, accountUpdateDTO.getAge());// 年
+			ps.setString(3, accountUpdateDTO.getAddress());// 住所
+			ps.setInt(4, userId);
+			ps.executeUpdate(); // 住所
+		} catch (SQLException e) {
+			System.out.println(e); // エラー表示
+		}
+
+		// DB切断
+		close();
 	}
 
 	/**
@@ -100,14 +103,20 @@ public class AccountDao extends DBConectDao implements IAccount {
 	 * @return
 	 */
 	public AccountShowDTO getAccountInfo(int userId) {
+
 		AccountShowDTO user = new AccountShowDTO();
+
 		connect();
 
-		String sql = "SELECT id, name, age, telephonenumber, address, poin FROM users WHERE id = ?;";
+		String sql = "SELECT id, name, age, telephonenumber, address,mailaddress, point FROM hba2025_3.users WHERE id = ?;";
 		try (PreparedStatement ps = con.prepareStatement(sql)) {
 			ps.setInt(1, userId);
 			ResultSet rs = ps.executeQuery();
+			if (!rs.next()) {
 
+				return user;
+
+			}
 			user.setName(rs.getString("name"));
 			user.setAge(rs.getInt("age"));
 			user.setTelephoneNumber(rs.getString("telephonenumber"));
@@ -120,11 +129,15 @@ public class AccountDao extends DBConectDao implements IAccount {
 			System.out.println(e);
 		}
 		return user;
+
 	}
 
 	public static void main(String[] args) {
 
 		AccountDao accountDao = new AccountDao();
+		AccountUpdateDTO accountUpdateDTO = new AccountUpdateDTO();
+		accountUpdateDTO.setName("hogehoge");
+		accountUpdateDTO.setAddress("b");
 		//		AccountDTO dto = new AccountDTO();
 		//		dto.setName("A");
 		//		dto.setAge(56);
@@ -133,7 +146,7 @@ public class AccountDao extends DBConectDao implements IAccount {
 		//		dto.setMailaddress("ytuytu.gmail.com");
 		//		dto.setPass("A1B2C3");
 		//		accountDao.addAAccount(dto);
-		accountDao.removeAAccount(16);
+		System.out.println(accountDao.getAccountInfo(2));
 
 	}
 

@@ -93,4 +93,10 @@ public class AccountShowDTO {
 		this.point = point;
 	}
 
+	public String toString() {
+		return "Product[name=" + name + ",age=" + age + ",telephoneNumber=" + telephoneNumber + ",address=" + address
+				+ ",mailaddress="
+				+ mailaddress + ",point=" + point + "\n";
+	}
+
 }

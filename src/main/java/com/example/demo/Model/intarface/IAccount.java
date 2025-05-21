@@ -1,6 +1,7 @@
 package com.example.demo.Model.intarface;
 
 import com.example.demo.Model.DTO.AccountAddDTO;
+import com.example.demo.Model.DTO.AccountShowDTO;
 import com.example.demo.Model.DTO.AccountUpdateDTO;
 
 public interface IAccount {
@@ -27,6 +28,6 @@ public interface IAccount {
 	 * アカウント情報を取得
 	 * @return
 	 */
-	public void AccountShow();
+	public AccountShowDTO getAccountInfo(int userId);
 
 }
