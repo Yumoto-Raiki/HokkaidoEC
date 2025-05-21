@@ -43,7 +43,7 @@ public class AuthSystemController {
 		return "login";
 	}
 
-	//ここから下が背戸田プラクティスなので消してもOK（起動用getmapping）
+	//ここから下が背戸田プラクティスなので（起動用getmapping）
 
 	@GetMapping("/account")
 	public String bb(Model model, HttpSession session) {
@@ -56,15 +56,15 @@ public class AuthSystemController {
 		return "account";
 	}
 
-	@GetMapping("/home")
-	public String home() {
-		return "home";
-	}
+	//	@GetMapping("/home")
+	//	public String home() {
+	//		return "home";
+	//	}
 
-	@GetMapping("/account/delete")
-	public String delete() {
-		return "account-delete";
-	}
+	//	@GetMapping("/account/delete")
+	//	public String delete() {
+	//		return "account-delete";
+	//	}
 
 	//	@PostMapping("/logout")
 	//	public String logout() {
