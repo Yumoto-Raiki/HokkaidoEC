@@ -1,10 +1,13 @@
 package com.example.demo.Controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.Model.DTO.CartDTO;
 import com.example.demo.Model.Dao.CartDao;
 import com.example.demo.Model.intarface.ICart;
 
@@ -50,26 +53,28 @@ public class CartController {
 	}
 
 	@GetMapping("/removeProductToCart")
-	public String removeProductToCart(Model model, @RequestParam("") int cartId, HttpSession session) {
+	public String removeProductToCart(Model model, @RequestParam("products") List<CartDTO> products,
+			@RequestParam("cartId") int cartId, HttpSession session) {
 		int userId = (int) session.getAttribute("userId");
+		model.addAttribute("products", products);
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
-			return "";
+			return "cart";
 		}
 		iCart.removeProductToCart(cartId);
 		model.addAttribute("isComplete", true);
-		return "";
+		return "cart";
 	}
 
 	public String updateCartInCount(int cartId, int count, Model model, HttpSession session) {
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
-			return "";
+			return "cart";
 		}
 		iCart.updateCartInCount(cartId, count);
 		model.addAttribute("isComplete", true);
-		return "";
+		return "cart";
 
 	}
 
@@ -77,20 +82,22 @@ public class CartController {
 		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
-			return "";
+			return "cart";
 		}
 		iCart.clearCart(userId);
 		model.addAttribute("isComplete", true);
-		return "";
+		return "cart";
 	}
-@GetMapping("/showCart")
+
+	@GetMapping("/showCart")
 	public String showCart(Model model, HttpSession session) {
 		int userId = (int) session.getAttribute("userId");
-//		int userId = 1;
+		//		int userId = 1;
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
 			return "cart";
 		}
+		List<CartDTO> cartsCartDTOs = iCart.getCart(userId);
 		model.addAttribute("products", iCart.getCart(userId));
 		model.addAttribute("isComplete", true);
 		return "cart";

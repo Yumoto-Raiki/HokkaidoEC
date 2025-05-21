@@ -59,16 +59,16 @@ public class FavoriteController {
 		return "/favorite";
 
 	}
-@GetMapping("/showFavorite") 
-//	public String showFavorite(HttpSession session, Model model) {
-public String showFavorite( Model model) {
-//	int userId = (int) session.getAttribute("userId");
-	int userId = 1;
+
+	@GetMapping("/showFavorite")
+	public String showFavorite(HttpSession session, Model model) {
+
+		int userId = (int) session.getAttribute("userId");
 		if (userId == 0) {
 			model.addAttribute("isComplete", false);
 			return "favorite";
 		}
-		
+
 		model.addAttribute("products", iFavorite.getFavorite(userId));
 		model.addAttribute("isComplete", true);
 		return "favorite";
