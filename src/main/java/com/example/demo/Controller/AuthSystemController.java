@@ -26,7 +26,7 @@ public class AuthSystemController {
 
 		if (iAuthSystem.login(userName, pass) != 0) {
 			session.setAttribute("userId", iAuthSystem.login(userName, pass));
-			return "home";
+			return "/productListShow";
 		} else {
 			return "login";
 		}
@@ -35,7 +35,7 @@ public class AuthSystemController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.removeAttribute("userId");
-		return "home";
+		return "/productListShow";
 	}
 
 	@GetMapping("/login")
