@@ -20,12 +20,11 @@ public class FavoriteController {
 
 	@GetMapping("/FavoriteController")
 	public String addProductToFavorite(Model model, @RequestParam("") int productId, HttpSession session) {
-		int userId = (int) session.getAttribute("userId");
+		Integer userId = (Integer) session.getAttribute("userId");
 
 		// ユーザーIDが0（ログインしていないなど）の場合、失敗として処理
-		if (userId == 0) {
-			model.addAttribute("isComplete", false); // カート追加が失敗したことを画面に渡す
-			return "redirect:/productListShow"; // どの画面を表示するか指定されていない（要修正）
+		if (userId == null || userId == 0) {
+			return "redirect:/login";
 		}
 
 		// カートに商品を追加（データベースに追加）
