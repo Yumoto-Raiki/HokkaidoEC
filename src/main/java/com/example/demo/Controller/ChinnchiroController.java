@@ -6,7 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.Model.Dao.CartDao;
 import com.example.demo.Model.Dao.ChinnchiroDao;
+import com.example.demo.Model.Dao.ProductDao;
+import com.example.demo.Model.intarface.ICart;
+import com.example.demo.Model.intarface.IProduct;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -79,6 +83,23 @@ public class ChinnchiroController {
 		model.addAttribute("total", (int) totalPrice);
 		System.out.println(totalPrice);
 		return "order_completed";
+	}
+
+	@GetMapping("/cartdelete")
+	public String cartdelete(Model model, HttpSession session) {
+		ICart iCart = new CartDao();
+		int userId = (int) session.getAttribute("userId");
+		if (userId == 0) {
+			model.addAttribute("isComplete", false);
+			return "home";
+		}
+		iCart.clearCart(userId);
+		model.addAttribute("isComplete", true);
+
+		IProduct iProduct = new ProductDao();
+		model.addAttribute("productsfavorite", iProduct.productfavoriteShow());
+		model.addAttribute("productsnewdate", iProduct.newproductShow());
+		return "home";
 	}
 
 }
