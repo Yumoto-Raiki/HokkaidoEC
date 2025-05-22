@@ -31,12 +31,11 @@ public class CartController {
 			@RequestParam("count") int count, // リクエストパラメータ（個数）→ ""の中に名前が必要
 			HttpSession session) {
 		// セッションからユーザーIDを取り出す
-		int userId = (int) session.getAttribute("userId");
+		Integer userId = (Integer) session.getAttribute("userId");
 
 		// ユーザーIDが0（ログインしていないなど）の場合、失敗として処理
-		if (userId == 0) {
-			model.addAttribute("isComplete", false); // カート追加が失敗したことを画面に渡す
-			return "redirect:/productShow"; // どの画面を表示するか指定されていない（要修正）
+		if (userId == null || userId == 0) {
+			return "redirect:/login";
 		}
 
 		// カートに商品を追加（データベースに追加）
