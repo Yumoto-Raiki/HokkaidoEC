@@ -34,11 +34,12 @@ public class HistoryController {
 	}
 
 	@GetMapping("/addHistory")
-	public String addHistory(HttpSession session, @RequestParam("") int productId, @RequestParam("") int count) {
+	public String addHistory(HttpSession session, @RequestParam("productId") int productId,
+			@RequestParam("count") int count) {
 		HistoryDAO history = new HistoryDAO();
 		int userId = (int) session.getAttribute("userId");
 		history.addHistory(userId, productId, count, LocalDateTime.now());
-		return "";
+		return "gochumon_kakunin";
 
 	}
 }
